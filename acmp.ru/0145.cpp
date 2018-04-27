@@ -410,7 +410,9 @@ bool operator!=(const Int& a, const Int& b) { return a.compare(b) != 0; }
 
 
 int main() {
-    int n; std::cin >> n; 
-    std::cout << pow(Int(2), n) << std::endl;
+    Int a;
+    int b;
+    std::cin >> a >> b;
+    std::cout << a / b << std::endl;
     return 0;
 }
