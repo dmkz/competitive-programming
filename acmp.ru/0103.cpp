@@ -412,6 +412,6 @@ bool operator!=(const Int& a, const Int& b) { return a.compare(b) != 0; }
 int main() {
     Int a, b;
     std::cin >> a >> b;
-    std::cout << a * b << std::endl;
+    std::cout << (a + b) << std::endl;
     return 0;
 }
