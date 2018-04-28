@@ -7,7 +7,7 @@
 #include <functional>
 #include <complex>
 
-const double PI = std::acos(-1.0);
+const long double PI = std::acos(-1.0L);
 
 struct Int;
 
@@ -210,7 +210,7 @@ struct Int {
             fft (a0, invert);
             fft (a1, invert);
 
-            double ang = 2*PI / n * (invert ? -1 : 1);
+            long double ang = 2*PI / n * (invert ? -1 : 1);
             std::complex<long double> w (1),  wn (std::cos(ang), std::sin(ang));
             for (int i = 0; i < n / 2; ++i) {
                 a[i] = a0[i] + w * a1[i];
