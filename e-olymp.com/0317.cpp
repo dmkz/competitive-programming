@@ -386,27 +386,27 @@ std::pair<UInt, UInt> UInt::div_mod(const UInt& other) const {
         return {std::move(*this / other.digits[0]), *this % other.digits[0]};
     }
     const int norm = BASE / (other.digits.back() + 1);
-	const UInt a = *this * norm;
-	const UInt b = other * norm;
+    const UInt a = *this * norm;
+    const UInt b = other * norm;
     const int a_size = (int)a.digits.size();
     const int b_size = (int)b.digits.size();
-	UInt q, r;
-	q.digits.resize(a_size);
-	for (int i = a_size - 1; i >= 0; --i) {
-	    r *= BASE;
-	    r += a.digits[i];
-	    int s1 = (int)r.digits.size() <= b_size ? 0 : r.digits[b_size];
-	    int s2 = (int)r.digits.size() <= b_size - 1 ? 0 : r.digits[b_size - 1];
-	    int d = (1LL * BASE * s1 + s2) / b.digits.back();
-	    auto temp = b * d;
-	    while (r < temp) {
+    UInt q, r;
+    q.digits.resize(a_size);
+    for (int i = a_size - 1; i >= 0; --i) {
+        r *= BASE;
+        r += a.digits[i];
+        int s1 = (int)r.digits.size() <= b_size ? 0 : r.digits[b_size];
+        int s2 = (int)r.digits.size() <= b_size - 1 ? 0 : r.digits[b_size - 1];
+        int d = (1LL * BASE * s1 + s2) / b.digits.back();
+        auto temp = b * d;
+        while (r < temp) {
             r += b;
             --d;
         }
         r -= temp;
-	    q.digits[i] = d;
-	}
-	return {std::move(q.normalize()), std::move(r /= norm)};
+        q.digits[i] = d;
+    }
+    return {std::move(q.normalize()), std::move(r /= norm)};
 }
 
 // Сравнение: result < 0 (меньше), result == 0 (равно), result > 0 (больше)
