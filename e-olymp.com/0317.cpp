@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include <iomanip>
 #include <vector>
 #include <algorithm>
@@ -9,494 +10,506 @@
 
 const long double PI = std::acos(-1.0L);
 
-struct Int;
-
-std::istream& operator>>(std::istream&, Int&);
-std::ostream& operator<<(std::ostream&, const Int&);
-bool operator<(const Int&, const Int&);
-bool operator>(const Int&, const Int&);
-bool operator==(const Int&, const Int&);
-bool operator<=(const Int&, const Int&);
-bool operator>=(const Int&, const Int&);
-bool operator!=(const Int&, const Int&);
-Int operator+(const Int&, const Int&);
-Int operator+(const int, const Int&);
-Int operator-(const Int&, const Int&);
-Int operator*(const int, const Int&);
-Int operator/(const Int& a, const int);
-int operator%(const Int& a, const int);
-Int pow(Int, int);
-
-struct Int {
+struct UInt {
     static const int BASE = (int)1e9; // Основание системы счисления
     static const int WIDTH = 9;       // Количество десятичных цифр, которые хранятся в одной цифре
     
     // Вектор под цифры числа:
     std::vector<int> digits; 
     
-    // Нормализуем вид числа - удаляем лидирующие нули
-    Int& to_normal() {
-        while (digits.back() == 0 && (int)digits.size() > 1) {
-            digits.pop_back();
-        }
-        return *this;
-    }   
-    
-    // Конструктор от короткого целого
-    Int (int64_t number = 0) {
-        assert(number >= 0);
-        do {
-            digits.push_back(number % BASE);
-            number /= BASE;
-        } while (number > 0);
-        to_normal();
-    }
-    
-    // Конструктор от вектора из цифр:
-    Int (const std::vector<int>& digits) : digits(digits) { to_normal(); }
-    
-    // Конструктор от строчки:
-    Int (std::string s) {
-        const int size = (int)s.size();
-        for (int idGroup = 1, nGroups = size / WIDTH; idGroup <= nGroups; ++idGroup) {            
-            digits.push_back(std::stoi(s.substr(size-idGroup * WIDTH, WIDTH)));
-        }
-        if (size % WIDTH != 0) {
-            digits.push_back(std::stoi(s.substr(0, size % WIDTH)));
-        }
-        to_normal();
-    }
-    
-    // Прибавление:
-    Int& operator+=(const int num) {
-        if (num >= BASE) {
-            return *this += Int(num);
-        } 
-        int rem = num;
-        for (int i = 0; rem > 0; ++i) {
-            if (i >= size()) digits.push_back(0);
-            rem += at(i);
-            at(i) = rem % BASE;
-            rem /= BASE;
-        }
-        return this->to_normal();
-    }
-    
-    // Прибавление:
-    Int& operator+=(const Int& other) {
-        if (other.size() == 1) {
-            return *this += other.at(0);
-        }
-        const int s1 = this->size();
-        const int s2 = other.size();
-        int rem = 0;
-        for (int i = 0; i < s1 || i < s2 || rem > 0; ++i) {
-            int d1 = i < s1 ? this->at(i) : 0;
-            int d2 = i < s2 ? other.at(i) : 0;
-            rem += d1 + d2;
-            if (i >= s1) digits.push_back(0);
-            at(i) = rem % BASE;
-            rem /= BASE;
-        }
-        return this->to_normal();
-    }
-    
-    // Вычитание короткого:
-    Int& operator-=(const int num) {
-        if (num >= BASE) {
-            return *this -= Int(num);
-        }
-        int rem = -num;
-        for (int i = 0; rem < 0; ++i) {
-            assert(i < size());
-            rem += at(i);
-            if (rem < 0) {
-                at(i) = (rem + BASE) % BASE;
-                rem = -1;
-            } else {
-                at(i) = rem % BASE;
-                rem = 0;
-            }
-        }
-        return this->to_normal();
-    }
-    
-    // Вычитание длинного:
-    Int& operator-=(const Int& other) {
-        if (other.size() == 1) {
-            return *this -= other.at(0);
-        }
-        assert(*this >= other);
-        const int s1 = this->size();
-        const int s2 = other.size();
-        int rem = 0;
-        for (int i = 0; i < s1 || i < s2; ++i) {
-            int d1 = i < s1 ? this->at(i) : 0;
-            int d2 = i < s2 ? other.at(i) : 0;
-            rem += d1 - d2;
-            if (i >= s1) digits.push_back(0);
-            if (rem < 0) {
-                at(i) = (rem + BASE) % BASE;
-                rem = -1;
-            } else {
-                at(i) = rem % BASE;
-                rem = 0;
-            }
-        }
-        return this->to_normal();
-    }
-    
-    // Умножение на короткое:
-    Int& operator*=(const int num) {
-        // std::cout << "call Int& operator*=(const int num)" << std::endl;
-        if (num >= BASE) {
-            return *this *= Int(num);
-        }
-        int64_t rem = 0;
-        for (int i = 0; i < size() || rem > 0; ++i) {
-            // std::cout << "i = " << i << std::endl;
-            if (i >= size()) digits.push_back(0);
-            rem += 1LL * at(i) * num;
-            at(i) = rem % BASE;
-            rem /= BASE;
-        }
-        return this->to_normal();
-    }
-    
-    // Умножение:
-    Int operator*(const int num) const {
-        return num >= BASE ? *this * Int(num) : Int(*this) *= num;
-    }
-    
-    // Медленное произведение:
-    Int slow_mult(const Int& other) const {
-        // std::cout << "call Int operator*(const Int& other)" << std::endl;
-        if (other.size() == 1) {
-            return *this * other.at(0);
-        }
-        const int s1 = this->size();
-        const int s2 = other.size();
-        std::vector<int> temp(s1+s2);
-        for (int i = 0; i < s1; ++i) {
-            int64_t rem = 0;
-            for (int j = 0; j < s2; ++j) {
-                rem += temp.at(i+j) + 1LL * this->at(i) * other.at(j);
-                temp.at(i+j) = rem % BASE;
-                rem /= BASE;
-            }
-            if (rem > 0) {
-                temp.at(i+s2) += rem;
-                assert(0 <= temp.at(i+s2) && temp.at(i+s2) < BASE);
-            }
-        }
-        return Int(temp);
-    }
-    
-    // Быстрое умножение на основе быстрого преобразования Фурье:
-    Int operator*(const Int& other) const {
-        // Быстрое преобразование Фурье:
-        std::function<void(std::vector<std::complex<long double>>&, bool)> fft = 
-            [&fft](std::vector<std::complex<long double>> & a, bool invert) 
-        {
-            int n = (int) a.size();
-            if (n == 1)  return;
-
-            std::vector<std::complex<long double>> a0 (n/2),  a1 (n/2);
-            for (int i = 0, j = 0; i < n; i += 2, ++j) {
-                a0[j] = a[i];
-                a1[j] = a[i+1];
-            }
-
-            fft (a0, invert);
-            fft (a1, invert);
-
-            long double ang = 2*PI / n * (invert ? -1 : 1);
-            std::complex<long double> w (1),  wn (std::cos(ang), std::sin(ang));
-            for (int i = 0; i < n / 2; ++i) {
-                a[i] = a0[i] + w * a1[i];
-                a[i+n/2] = a0[i] - w * a1[i];
-                if (invert) {
-                    a[i] /= 2;  
-                    a[i+n/2] /= 2;
-                }
-                w *= wn;
-            }
-        };
-        // Подготавливаем вектора из комплексных коэффициентов fa и fb:
-        std::vector<std::complex<long double>> fa, fb;
-        fa.reserve(3*this->size());
-        fb.reserve(3*other.size());
-        assert(BASE == 1000 * 1000 * 1000);
-        for (auto d : this->digits) {
-            fa.push_back(d % 1000);
-            fa.push_back(d / 1000 % 1000);
-            fa.push_back(d / 1000000);
-        }
-        for (auto d : other.digits) {
-            fb.push_back(d % 1000);
-            fb.push_back(d / 1000 % 1000);
-            fb.push_back(d / 1000000);
-        }
-        // Округляем размер до ближайшей степени двойки:
-        int n = 1;
-        while (n < (int)std::max(fa.size(), fb.size())) {
-            n <<= 1;
-        }
-        n <<= 1;
-        fa.resize(n),  fb.resize(n);
-        // Вызываем прямое преобразование и обратное:
-        fft (fa, false),  fft (fb, false);
-        for (int i = 0; i < n; ++i) {
-            fa[i] *= fb[i];
-        }
-        fft (fa, true);
-        // Копируем ответ с округлениями:
-        std::vector<int64_t> temp(n);
-        for (int i = 0; i < (int)fa.size(); ++i) {
-            temp[i] = int64_t (fa[i].real() + 0.5);
-        }
-        // Не забываем про переносы в старшие разряды:
-        int64_t carry = 0;
-        for (int i = 0; i < n || carry > 0; ++i) {
-            if (i >= n) temp.push_back(0);
-            temp[i] += carry;
-            carry = temp[i] / 1000;
-            temp[i] %= 1000;
-        }
-        // Формируем ответ:
-        std::vector<int> res;
-        for (int i = 0; i < n; i += 3) {
-            int c = temp[i];
-            int b = i+1 < n ? temp[i+1] : 0;
-            int a = i+2 < n ? temp[i+2] : 0;
-            res.push_back(c + 1000 * (b + 1000 * a));
-        }
-        return Int(res);
-    }
-    
-    // Умножение:
-    Int& operator*=(const Int& other) {
-        // std::cout << "call Int& operator*=(const Int& other)" << std::endl;
-        return other.size() == 1 ? *this *= other.at(0) : *this = *this * other;
-    }
-    
-    // Деление на короткое:
-    Int& operator/= (const int num) {
-        // std::cout << "call Int& operator/= (const int num)" << std::endl;
-        if (num >= BASE) {
-            return *this /= Int(num);
-        }
-        assert(0 < num && num < BASE);
-        int64_t rem = 0;
-        for (int j = size()-1; j >= 0; --j) {
-            // std::cout << "j = " << j << std::endl;
-            (rem *= BASE) += at(j);
-            // std::cout << "at(j) = " << at(j) << std::endl;
-            at(j) = rem / num;
-            assert(0 <= at(j) && at(j) < BASE);
-            rem %= num;
-        }
-        // std::cout << "gool end!" << std::endl;
-        return this->to_normal();
-    }
-    
-    // Взятие остатка от деления:
-    Int& operator%=(const int num) {
-        return *this = *this % num;
-    }
-    
-    static Int div(Int a, Int b) {
-    // Данный метод работает за O(m*n)
-    // Условия:
-    // base^(m-1) <= a < base^m (1)
-    // base^n / 2 <= b < base^n (2)
-        // Условие (1) выполняется всегда для m = a.size()
-        // Условие (2) необходимо обеспечить равносильным преобразованием следующим образом:
-        if (2 * b.digits.back() < Int::BASE) {
-            int d = (1LL * Int::BASE + 2 * b.digits.back() - 1) / (2 * b.digits.back());
-            a *= d;
-            b *= d;
-        }
-
-        const int n = b.size(), m = a.size();
-
-        std::function<Int(Int, Int)> special_div = [&special_div](const Int& a, const Int& b) {
-            // Данный метод работает за O(n), при следующих условиях:
-            // 0 <= a <= base^(n+1)
-            // b^n / 2 <= b < base^n
-            const int n = b.size();
-            // Проверки на соответствии условиям метода:
-            assert(a.size() - b.size() == 1);
-            if (a >= b * BASE) {
-                return Int(BASE) + special_div(a-b * BASE, b);
-            } else {
-                int64_t q = (BASE * 1LL * a.at(n) + a.at(n-1)) / b.at(n-1);
-                assert(0 <= q && q < BASE);
-                auto t = q * b;
-                if (t > a) { --q, t -= b; }
-                if (t > a) { --q, t -= b; }
-                assert(t <= a);
-                return Int(q);
-            }
-        };     
-        
-        if (m < n) {
-            return 0; // O(1)
-        } else if (m == n) {
-            return a >= b ? 1 : 0; // O(n)
-        } else if (m == n+1) {
-            return special_div(a, b); // O(n)
-        } else {
-            Int a_temp = std::vector<int>(a.digits.begin()+m-n-1, a.digits.begin()+m); // O(n)
-            Int s = std::vector<int>(a.digits.begin(), a.digits.begin()+m-n-1); // O(n)
-            Int q_temp = special_div(a_temp, b); // O(n)
-            Int r_temp = a_temp - q_temp * b; // O(n)
-            Int q = div(r_temp.shift_left(m-n-1)+s, b); // O(m-n) рекурсивных вызовов -> общая асимптотика O(m*n)
-            return q_temp.shift_left(m-n-1) + q; // O(n)
-        }
-    }
-    
-    Int operator/(const Int& other) const {
-        // std::cout << "call operator/(const Int& other)" << std::endl;
-        return (other.size() == 1) ? *this / other.at(0) : div(*this, other);
-    }
-    
-    Int& operator/=(const Int& other) {
-        // std::cout << "call Int& operator/=(const Int& other)" << std::endl;
-        return *this = *this / other;
-    }
-    
-    Int operator%(const Int& other) const {
-        // std::cout << "call operator%(const Int& other)" << std::endl;
-        return *this - *this / other * other;
-    }
-    
-    Int& operator%=(const Int& other) {
-        return *this = *this % other;
-    }
-    
-    // Сравнение: result < 0 (меньше), result == 0 (равно), result > 0 (больше)
-    int compare(const Int& other) const {
-        if (this->size() > other.size()) return 1;
-        if (this->size() < other.size()) return -1;
-        for (int i = size()-1; i >= 0; --i) {
-            if (this->at(i) > other.at(i)) return 1;
-            if (this->at(i) < other.at(i)) return -1;
-        }
-        return 0;
-    }
-    
-    int& at(int pos) {
-        assert(0 <= pos && pos < size());
-        return digits.at(pos);
-    }
-    
-    const int& at(int pos) const {
-        assert(0 <= pos && pos < size());
-        return digits.at(pos);
-    }
-    
-    inline int size() const {
-        return (int)digits.size();
-    }
-    
-    Int& shift_left(int pow) {
-        assert(pow >= 0);
-        digits.resize((int)digits.size()+pow);
-        for (int i = (int)digits.size()-1; i >= pow; --i) {
-            digits[i] = digits[i-pow];
-        }
-        for (int i = pow-1; i >= 0; --i) {
-            digits[i] = 0;
-        }
-        return to_normal();
-    }
-    
-    Int& shift_right(int pow) {
-        assert(pow >= 0);
-        if (pow >= (int)digits.size()) {
-            return *this = 0;
-        }
-        for (int i = 0; i + pow < (int)digits.size(); ++i) {
-            digits[i] = digits[i+pow];
-        }
-        digits.resize((int)digits.size()-pow);
-        return to_normal();
-    }
+    // Конструкторы
+    UInt(int64_t number = 0);
+    UInt(const std::string& s);
+    UInt(const std::vector<int>& digits);
+    // Методы
+    UInt& normalize(); // удаление лидирующих нулей и проверка на принадлежность цифр диапазону [0, BASE)
+    int compare(const UInt& other) const; // Сравнение (меньше = -1, равно = 0, больше = 1)
+    UInt slow_mult(const UInt& other) const; // Медленное произведение (работает довольно быстро на числах небольшой длины)
+    UInt fast_mult(const UInt& other) const; // Быстрое произведение (на основе Быстрого Преобразования Фурье комплексные числа)
+    UInt mult(const UInt& other) const; // Комбинированный метод умножения на основе экспериментальных данных
+    std::pair<UInt, UInt> div_mod(const UInt& other) const; // Целая часть и остаток от деления
+    // Операторы:
+    UInt& operator+=(const int num);     // Прибавление короткого
+    UInt& operator+=(const UInt& other); // Прибавление длинного
+    UInt& operator-=(const int num);     // Вычитание короткого
+    UInt& operator-=(const UInt& other); // Вычитание длинного
+    UInt& operator*=(const int num);     // Умножение на короткое
+    UInt& operator*=(const UInt& other); // Умножение на длинное
+    UInt& operator/=(const int num);     // Деление на короткое
+    UInt& operator/=(const UInt& other); // Деление на длинное
+    UInt& operator%=(const UInt& other); // Остаток от деления на длинное
 };
 
-// Ввод из потока:
-std::istream& operator>>(std::istream& is, Int& number) {
-    std::string s;
-    is >> s;
-    number = Int(s);
-    return is;
+UInt operator+(const UInt&, const UInt&);
+UInt operator-(const UInt&, const UInt&);
+UInt operator*(const UInt&, const UInt&);
+UInt operator/(const UInt&, const UInt&);
+UInt operator%(const UInt&, const UInt&);
+
+UInt operator+(const UInt&, const int);
+UInt operator+(const int, const UInt&);
+UInt operator-(const UInt&, const int);
+UInt operator*(const UInt&, const int);
+UInt operator*(const int, const UInt&);
+UInt operator/(const UInt&, const int);
+UInt operator^(const UInt&, const int); // Возведение в степень
+
+bool operator<(const UInt&, const UInt&);
+bool operator>(const UInt&, const UInt&);
+bool operator<=(const UInt&, const UInt&);
+bool operator>=(const UInt&, const UInt&);
+bool operator==(const UInt&, const UInt&);
+bool operator!=(const UInt&, const UInt&);
+
+UInt& UInt::normalize() {
+    while (digits.back() == 0 && (int)digits.size() > 1) digits.pop_back();
+    for (auto d : digits) assert(0 <= d && d < BASE);
+    return *this;
+}   
+
+// Конструктор от короткого целого
+UInt::UInt(int64_t number) {
+    assert(number >= 0);
+    do {
+        digits.push_back(number % BASE);
+        number /= BASE;
+    } while (number > 0);
+    normalize();
 }
 
-// Вывод в поток:
-std::ostream& operator<<(std::ostream& os, const Int& number) {
-    os << number.digits.back();
-    for (int i = (int)number.digits.size()-2; i >= 0; --i) {
-        os << std::setw(Int::WIDTH) << std::setfill('0') << number.digits[i];
+// Конструктор от вектора из цифр:
+UInt::UInt(const std::vector<int>& digits) : digits(digits) { 
+    normalize();
+}
+
+// Конструктор от строчки:
+UInt::UInt(const std::string& s) {
+    const int size = (int)s.size();
+    for (int idGroup = 1, nGroups = size / WIDTH; idGroup <= nGroups; ++idGroup) {            
+        digits.push_back(std::stoi(s.substr(size-idGroup * WIDTH, WIDTH)));
     }
-    return os << std::setfill(' ');
+    if (size % WIDTH != 0) {
+        digits.push_back(std::stoi(s.substr(0, size % WIDTH)));
+    }
+    normalize();
 }
 
-// Сложение:
-Int operator+(const Int& a, const Int& b) {
-    return Int(a) += b;
+// Прибавление короткого:
+UInt& UInt::operator+=(const int num) {
+    assert(num >= 0);
+    if (num >= BASE) {
+        return *this += UInt(num);
+    } 
+    int rem = num;
+    for (int i = 0; rem > 0; ++i) {
+        if (i >= (int)digits.size()) digits.push_back(0);
+        rem += digits[i];
+        if (rem >= BASE) {
+            digits[i] = rem - BASE;
+            rem = 1;
+        } else {
+            digits[i] = rem;
+            rem = 0;
+        }
+    }
+    return this->normalize();
 }
 
-// Вычитание:
-Int operator-(const Int& a, const Int& b) {
-    return Int(a) -= b;
+// Прибавление длинного:
+UInt& UInt::operator+=(const UInt& other) {
+    if (other.digits.size() == 1u) {
+        return *this += other.digits[0];
+    }
+    const int s1 = this->digits.size();
+    const int s2 = other.digits.size();
+    for (int i = 0, rem = 0; i < s1 || i < s2 || rem > 0; ++i) {
+        int d1 = i < s1 ? this->digits[i] : (digits.push_back(0), 0);
+        int d2 = i < s2 ? other.digits[i] : 0;
+        rem += d1 + d2;
+        if (rem >= BASE) {
+            digits[i] = rem - BASE;
+            rem = 1;
+        } else {
+            digits[i] = rem;
+            rem = 0;
+        }
+    }
+    return this->normalize();
 }
 
-// Умножение:
-Int operator*(const int a, const Int& b) {
-    return b * a;
+// Вычитание короткого:
+UInt& UInt::operator-=(const int num) {
+    assert(num >= 0);
+    if (num >= BASE) {
+        return *this -= UInt(num);
+    }
+    int rem = -num;
+    for (int i = 0; i < (int)digits.size() && rem < 0; ++i) {
+        rem += digits[i];
+        if (rem < 0) { // Занимаем разряд
+            digits[i] = rem + BASE;
+            rem = -1;
+        } else {
+            digits[i] = rem;
+            rem = 0;
+        }
+    }
+    assert(rem == 0);
+    return this->normalize();
 }
 
-// Деление:
-Int operator/(const Int& a, const int num) {
-    // std::cout << "operator/(const Int& a, const int num)" << std::endl;
-    return Int(a) /= num;
+// Вычитание длинного:
+UInt& UInt::operator-=(const UInt& other) {
+    if (other.digits.size() == 1u) {
+        return *this -= other.digits[0];
+    }
+    const int s1 = this->digits.size();
+    const int s2 = other.digits.size();
+    assert(s1 >= s2);
+    int rem = 0;
+    for (int i = 0; i < s1; ++i) {
+        int d2 = i < s2 ? other.digits[i] : 0;
+        rem += this->digits[i] - d2;
+        if (rem < 0) {
+            digits[i] = rem + BASE;
+            rem = -1;
+        } else {
+            digits[i] = rem;
+            rem = 0;
+            break;
+        }
+    }
+    assert(rem == 0); // Иначе *this < other
+    return this->normalize();
 }
 
-// Остаток от деления:
-int operator%(const Int& a, const int num) {
+// Умножение на короткое:
+UInt& UInt::operator*=(const int num) {
+    assert(num >= 0);
+    if (num >= BASE) {
+        return *this *= UInt(num);
+    }
     int64_t rem = 0;
-    for (int i = a.size()-1; i >= 0; --i) {
-        ((rem *= Int::BASE) += a.at(i)) %= num;
+    for (auto& d : digits) {
+        rem += 1LL * d * num;
+        auto div = rem / BASE;
+        d = rem - div * BASE;
+        rem = div;
+    }
+    if (rem > 0) digits.push_back(rem);
+    return this->normalize();
+}
+
+// Медленное произведение:
+UInt UInt::slow_mult(const UInt& other) const {
+    if (other.digits.size() == 1u) {
+        return *this * other.digits[0];
+    }
+    const int s1 = (int)this->digits.size();
+    const int s2 = (int)other.digits.size();
+    std::vector<int> temp(s1+s2);
+    for (int i = 0; i < s1; ++i) {
+        int64_t rem = 0;
+        for (int j = 0; j < s2; ++j) {
+            rem += temp[i+j] + 1LL * this->digits[i] * other.digits[j];
+            auto div = rem / BASE;
+            temp[i+j] = rem - div * BASE;
+            rem = div;
+        }
+        if (rem > 0) temp[i+s2] += rem;
+    }
+    return UInt(temp);
+}
+
+// Быстрое умножение на основе быстрого преобразования Фурье:
+UInt UInt::fast_mult(const UInt& other) const {
+    if (other.digits.size() == 1u) {
+        return *this * other.digits[0];
+    }
+    
+    // Разворот битов в числе num:
+    std::function<int(int, int)> reverse = [](int number, int nBits) {
+        int res = 0;
+        for (int i = 0; i < nBits; ++i) {
+            if (number & (1 << i)) {
+                res |= 1 << (nBits-1-i);
+            }
+        }
+        return res;
+    };
+    
+    typedef std::complex<long double> complex;
+    // Быстрое преобразование Фурье:
+    std::function<void(std::vector<complex>&, bool)> fft = [&reverse](std::vector<complex> & a, bool invert) {
+        const int n = (int)a.size();
+        int nBits = 0;
+        while ((1 << nBits) < n) ++nBits;
+
+        for (int i = 0; i < n; ++i) {
+            if (i < reverse(i, nBits)) {
+                std::swap(a[i], a[reverse(i, nBits)]);
+            }
+        }
+
+        for (int len = 2; len <= n; len <<= 1) {
+            auto ang = 2*PI / len * (invert ? -1 : 1);
+            complex wlen (std::cos(ang), std::sin(ang));
+            for (int i = 0; i < n; i += len) {
+                complex w(1);
+                for (int j = 0; j < len / 2; ++j) {
+                    complex u = a[i+j];
+                    complex v = a[i+j+len / 2] * w;
+                    a[i+j] = u + v;
+                    a[i+j+len/2] = u - v;
+                    w *= wlen;
+                }
+            }
+        }
+        if (invert) {
+            for (int i = 0; i < n; ++i) {
+                a[i] /= n;
+            }
+        }
+    };
+    
+    // Подготавливаем вектора из комплексных коэффициентов fa и fb:
+    // Так как происходит потеря точности из-за арифметики с плавающей точкой, основание системы необходимо понизить:
+    assert(BASE == 1000 * 1000 * 1000);
+    std::function<std::vector<complex>(const UInt&)> prepare = [](const UInt& number) {
+        std::vector<complex> result; 
+        result.reserve(3 * number.digits.size());
+        for (auto d : number.digits) {
+            result.push_back(d % 1000);
+            result.push_back(d / 1000 % 1000);
+            result.push_back(d / 1000000);    
+        }
+        return result;
+    };
+    
+    auto fa = prepare(*this);
+    auto fb = prepare(other);
+    
+    // Округляем размер векторов до ближайшей степени двойки:
+    int n = 1;
+    while (n < (int)std::max(fa.size(), fb.size())) n *= 2;
+    n *= 2;
+    fa.resize(n);
+    fb.resize(n);
+    
+    // Вызываем прямое преобразование Фурье:
+    fft (fa, false);
+    fft (fb, false);
+    // Перемножаем результаты:
+    for (int i = 0; i < n; ++i) {
+        fa[i] *= fb[i];
+    }
+    // Вызываем обратное преобразование Фурье:
+    fft (fa, true);
+    // Копируем ответ с округлениями:
+    std::vector<int64_t> temp(n);
+    for (int i = 0; i < (int)fa.size(); ++i) {
+        temp[i] = int64_t (fa[i].real() + 0.5);
+    }
+    // Не забываем про переносы в старшие разряды:
+    int64_t carry = 0;
+    for (int i = 0; i < n || carry > 0; ++i) {
+        if (i >= n) temp.push_back(0);
+        temp[i] += carry;
+        carry = temp[i] / 1000;
+        temp[i] -= carry * 1000;
+        assert(temp[i] >= 0);
+    }
+    // Формируем ответ:
+    std::vector<int> res;
+    res.reserve(this->digits.size() + other.digits.size());
+    
+    for (int i = 0; i < n; i += 3) {
+        int c = temp[i];
+        int b = i+1 < n ? temp[i+1] : 0;
+        int a = i+2 < n ? temp[i+2] : 0;
+        res.push_back(c + 1000 * (b + 1000 * a));
+    }
+    return UInt(res);
+}
+
+// Комбинированный метод умножения:
+UInt UInt::mult(const UInt& other) const {
+// Выбор метода умножения:
+    int len1 = (int)this->digits.size();
+    int len2 = (int)other.digits.size();
+    int temp = 3 * std::max(len1, len2);
+    int pow = 1;
+    while (pow < temp) pow *= 2;
+    pow *= 2;
+    int op1 = len1 * len2;
+    int op2 = 3 * pow * std::log(pow) / std::log(2);
+    return op1 >= 15 * op2 ? fast_mult(other) : slow_mult(other);
+}
+
+// Деление на короткое:
+UInt& UInt::operator/=(const int num) {
+    assert(num > 0);
+    if (num >= BASE) {
+        return *this /= UInt(num);
+    }
+    int64_t rem = 0;
+    for (int j = (int)digits.size()-1; j >= 0; --j) {
+        (rem *= BASE) += digits[j];
+        int div = rem / num;
+        digits[j] = div;
+        rem = rem - div * num;
+    }
+    return this->normalize();
+}
+
+// Остаток от деления на короткое:
+int operator%(const UInt& a, const int num) {
+    assert(num > 0);
+    int64_t rem = 0;
+    for (int i = (int)a.digits.size()-1; i >= 0; --i) {
+        ((rem *= UInt::BASE) += a.digits[i]) %= num;
     }
     return rem;
 }
 
-// Возведение в степень:
-Int pow(Int a, int n) {
-    Int res = 1;
-    while (n > 0) {
-        if (n % 2 != 0) {
-            res *= a;
+// Целая часть и остаток от деления:
+std::pair<UInt, UInt> UInt::div_mod(const UInt& other) const {
+    if (other.digits.size() == 1u) {
+        return {std::move(*this / other.digits[0]), *this % other.digits[0]};
+    }
+    const int norm = BASE / (other.digits.back() + 1);
+	const UInt a = *this * norm;
+	const UInt b = other * norm;
+    const int a_size = (int)a.digits.size();
+    const int b_size = (int)b.digits.size();
+	UInt q, r;
+	q.digits.resize(a_size);
+	for (int i = a_size - 1; i >= 0; --i) {
+	    r *= BASE;
+	    r += a.digits[i];
+	    int s1 = (int)r.digits.size() <= b_size ? 0 : r.digits[b_size];
+	    int s2 = (int)r.digits.size() <= b_size - 1 ? 0 : r.digits[b_size - 1];
+	    int d = (1LL * BASE * s1 + s2) / b.digits.back();
+	    auto temp = b * d;
+	    while (r < temp) {
+		    r += b;
+            --d;
         }
+        r -= temp;
+	    q.digits[i] = d;
+	}
+	return {std::move(q.normalize()), std::move((r / norm).normalize())};
+}
+
+// Сравнение: result < 0 (меньше), result == 0 (равно), result > 0 (больше)
+int UInt::compare(const UInt& other) const {
+    if (this->digits.size() > other.digits.size()) return 1;
+    if (this->digits.size() < other.digits.size()) return -1;
+    for (int i = (int)digits.size()-1; i >= 0; --i) {
+        if (this->digits[i] > other.digits[i]) return 1;
+        if (this->digits[i] < other.digits[i]) return -1;
+    }
+    return 0;
+}
+
+// Операторы сравнения:
+bool operator< (const UInt& a, const UInt& b) { return a.compare(b) < 0; }
+bool operator> (const UInt& a, const UInt& b) { return a.compare(b) > 0; }
+bool operator==(const UInt& a, const UInt& b) { return a.compare(b) == 0; }
+bool operator<=(const UInt& a, const UInt& b) { return a.compare(b) <= 0; }
+bool operator>=(const UInt& a, const UInt& b) { return a.compare(b) >= 0; }
+bool operator!=(const UInt& a, const UInt& b) { return a.compare(b) != 0; }
+
+// Ввод из потока:
+std::istream& operator>>(std::istream& is, UInt& number) {
+    std::string s;
+    is >> s;
+    number = UInt(s);
+    return is;
+}
+
+// Вывод в поток:
+std::ostream& operator<<(std::ostream& os, const UInt& number) {
+    os << number.digits.back();
+    for (int i = (int)number.digits.size()-2; i >= 0; --i) {
+        os << std::setw(UInt::WIDTH) << std::setfill('0') << number.digits[i];
+    }
+    return os << std::setfill(' ');
+}
+
+// Сумма:
+UInt operator+(const UInt& a, const UInt& b) { 
+    return UInt(a) += b; 
+}
+
+// Разность:
+UInt operator-(const UInt& a, const UInt& b) { 
+    return UInt(a) -= b; 
+}
+
+// Произведение:
+UInt operator*(const UInt& a, const UInt& b) { 
+    return a.mult(b);
+}
+
+// Деление:
+UInt operator/(const UInt& a, const UInt& b) {
+    return a.div_mod(b).first;
+}
+
+// Взятие остатка:
+UInt operator%(const UInt& a, const UInt& b) {
+    return a.div_mod(b).second;
+}
+
+// Умножение:
+UInt& UInt::operator*=(const UInt& other) {
+    return *this = *this * other;
+}
+
+// Деление с присваиванием:
+UInt& UInt::operator/=(const UInt& other) {
+    return *this = *this / other;
+}
+
+// Взятие остатка с присваиванием:
+UInt& UInt::operator%=(const UInt& other) {
+    return *this = *this % other;
+}
+
+// Возведение в степень:
+UInt pow(UInt a, int n) {
+    UInt res = 1;
+    while (n > 0) {
+        if (n % 2 != 0) res *= a;
         a *= a;
         n /= 2;
     }
     return res;
 }
 
-// Операторы сравнения:
-bool operator<(const Int& a, const Int& b) { return a.compare(b) < 0; }
-bool operator>(const Int& a, const Int& b) { return a.compare(b) > 0; }
-bool operator==(const Int& a, const Int& b) { return a.compare(b) == 0; }
-bool operator<=(const Int& a, const Int& b) { return a.compare(b) <= 0; }
-bool operator>=(const Int& a, const Int& b) { return a.compare(b) >= 0; }
-bool operator!=(const Int& a, const Int& b) { return a.compare(b) != 0; }
+// Наибольший общий делитель:
+UInt gcd(UInt a, UInt b) {
+    while (b != 0) {
+        auto rem = a % b;
+        a = b;
+        b = rem;
+    }
+    return a;
+}
+
+UInt operator+(const UInt& a, const int b) { return UInt(a) += b; }
+UInt operator+(const int a, const UInt& b) { return b * a; }
+UInt operator-(const UInt& a, const int b) { return UInt(a) -= b; }
+UInt operator*(const UInt& a, const int b) { return UInt(a) *= b; }
+UInt operator*(const int a, const UInt& b) { return b * a; }
+UInt operator/(const UInt& a, const int b) { return UInt(a) /= b; }
+UInt operator^(const UInt& a, const int n) { return pow(a, n); }
 
 int main() {
     std::ios_base::sync_with_stdio(false);
     std::cin.tie(0); std::cout.tie(0);
-    Int a, b;
+    UInt a, b;
     std::cin >> a >> b;
     std::cout << a * b << std::endl;
     return 0;
