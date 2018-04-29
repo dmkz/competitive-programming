@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import os, sys
-
 from fractions import *
 
+# Функция, решающая задачу:
 def solve(p, q):
     count = 1
     fact = 1
@@ -16,11 +16,17 @@ def solve(p, q):
         answ.append(num)
     return answ
 
-input_data = os.read(0, 100*1000*1000)
-p, q = (int(x) for x in input_data.split())
+# Чтение p и q:
+s_in = sys.stdin.read()
+p, q = (int(x) for x in s_in.split())
 
+# Получение ответа:
 answ = solve(p, q)
 
-results = [str.encode(str(len(answ)+1))]
-results = (str.encode(str(x)) for x in answ)
-os.write(1, "".join(results))
+# Формирование строки вывода:
+s_out = str(len(answ)+1) + "\n";
+for it in answ: 
+    s_out = s_out + str(it) + "\n";
+
+# Вывод:
+os.write(1, s_out.encode())
