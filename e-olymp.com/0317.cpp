@@ -1,5 +1,4 @@
 #include <iostream>
-#include <sstream>
 #include <iomanip>
 #include <vector>
 #include <algorithm>
@@ -21,13 +20,19 @@ struct UInt {
     UInt(int64_t number = 0);
     UInt(const std::string& s);
     UInt(const std::vector<int>& digits);
-    // Методы
+    
+    // Методы нормализации и сравнения:
     UInt& normalize(); // удаление лидирующих нулей и проверка на принадлежность цифр диапазону [0, BASE)
     int compare(const UInt& other) const; // Сравнение (меньше = -1, равно = 0, больше = 1)
+    
+    // Методы умножения:
     UInt slow_mult(const UInt& other) const; // Медленное произведение (работает довольно быстро на числах небольшой длины)
     UInt fast_mult(const UInt& other) const; // Быстрое произведение (на основе Быстрого Преобразования Фурье комплексные числа)
     UInt mult(const UInt& other) const; // Комбинированный метод умножения на основе экспериментальных данных
+    
+    // Метод деления:
     std::pair<UInt, UInt> div_mod(const UInt& other) const; // Целая часть и остаток от деления
+    
     // Операторы:
     UInt& operator+=(const int num);     // Прибавление короткого
     UInt& operator+=(const UInt& other); // Прибавление длинного
@@ -39,6 +44,12 @@ struct UInt {
     UInt& operator/=(const UInt& other); // Деление на длинное
     UInt& operator%=(const UInt& other); // Остаток от деления на длинное
 };
+
+std::istream& operator>>(std::istream&, UInt&); // Ввод из потока
+std::ostream& operator<<(std::ostream&, const UInt&); // Вывод в поток
+
+UInt pow(UInt, int); // Возведение в степень
+UInt gcd(UInt, UInt); // Наибольший общий делитель
 
 UInt operator+(const UInt&, const UInt&);
 UInt operator-(const UInt&, const UInt&);
@@ -52,7 +63,7 @@ UInt operator-(const UInt&, const int);
 UInt operator*(const UInt&, const int);
 UInt operator*(const int, const UInt&);
 UInt operator/(const UInt&, const int);
-UInt operator^(const UInt&, const int); // Возведение в степень
+UInt operator^(const UInt&, const int); // возведение в степень
 
 bool operator<(const UInt&, const UInt&);
 bool operator>(const UInt&, const UInt&);
@@ -122,17 +133,14 @@ UInt& UInt::operator+=(const UInt& other) {
     }
     const int s1 = this->digits.size();
     const int s2 = other.digits.size();
-    for (int i = 0, rem = 0; i < s1 || i < s2 || rem > 0; ++i) {
+    int rem = 0;
+    for (int i = 0; i < s1 || i < s2 || rem > 0; ++i) {
         int d1 = i < s1 ? this->digits[i] : (digits.push_back(0), 0);
         int d2 = i < s2 ? other.digits[i] : 0;
         rem += d1 + d2;
-        if (rem >= BASE) {
-            digits[i] = rem - BASE;
-            rem = 1;
-        } else {
-            digits[i] = rem;
-            rem = 0;
-        }
+        auto div = rem / BASE;
+        digits[i] = rem - div * BASE;
+        rem = div;
     }
     return this->normalize();
 }
@@ -176,7 +184,7 @@ UInt& UInt::operator-=(const UInt& other) {
         } else {
             digits[i] = rem;
             rem = 0;
-            break;
+            if (i >= s2) break;
         }
     }
     assert(rem == 0); // Иначе *this < other
@@ -355,9 +363,9 @@ UInt& UInt::operator/=(const int num) {
     int64_t rem = 0;
     for (int j = (int)digits.size()-1; j >= 0; --j) {
         (rem *= BASE) += digits[j];
-        int div = rem / num;
+        auto div = rem / num;
         digits[j] = div;
-        rem = rem - div * num;
+        rem -= div * num;
     }
     return this->normalize();
 }
@@ -392,13 +400,13 @@ std::pair<UInt, UInt> UInt::div_mod(const UInt& other) const {
 	    int d = (1LL * BASE * s1 + s2) / b.digits.back();
 	    auto temp = b * d;
 	    while (r < temp) {
-		    r += b;
+            r += b;
             --d;
         }
         r -= temp;
 	    q.digits[i] = d;
 	}
-	return {std::move(q.normalize()), std::move((r / norm).normalize())};
+	return {std::move(q.normalize()), std::move(r /= norm)};
 }
 
 // Сравнение: result < 0 (меньше), result == 0 (равно), result > 0 (больше)
@@ -477,6 +485,14 @@ UInt& UInt::operator%=(const UInt& other) {
     return *this = *this % other;
 }
 
+UInt operator+(const UInt& a, const int b) { return UInt(a) += b; }
+UInt operator+(const int a, const UInt& b) { return b * a; }
+UInt operator-(const UInt& a, const int b) { return UInt(a) -= b; }
+UInt operator*(const UInt& a, const int b) { return UInt(a) *= b; }
+UInt operator*(const int a, const UInt& b) { return b * a; }
+UInt operator/(const UInt& a, const int b) { return UInt(a) /= b; }
+UInt operator^(const UInt& a, const int n) { return pow(a, n); } // Возведение в степень
+
 // Возведение в степень:
 UInt pow(UInt a, int n) {
     UInt res = 1;
@@ -497,14 +513,6 @@ UInt gcd(UInt a, UInt b) {
     }
     return a;
 }
-
-UInt operator+(const UInt& a, const int b) { return UInt(a) += b; }
-UInt operator+(const int a, const UInt& b) { return b * a; }
-UInt operator-(const UInt& a, const int b) { return UInt(a) -= b; }
-UInt operator*(const UInt& a, const int b) { return UInt(a) *= b; }
-UInt operator*(const int a, const UInt& b) { return b * a; }
-UInt operator/(const UInt& a, const int b) { return UInt(a) /= b; }
-UInt operator^(const UInt& a, const int n) { return pow(a, n); }
 
 int main() {
     std::ios_base::sync_with_stdio(false);
