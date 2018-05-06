@@ -9,8 +9,8 @@ int main() {
     
     std::vector<Int> a(n); for (auto& it : a) std::cin >> it;
     
+    // Построим граф из вершин - индексов чисел в массиве a:
     std::vector<std::vector<bool>> g(n, std::vector<bool>(n, false));
-    
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < n; ++j) {
             if (i == j) continue;
@@ -21,8 +21,9 @@ int main() {
         }
     }
     
+    // Расстояние от выбранной вершины до всех остальных:
     std::vector<int> dist;
-    
+    // Поиск в глубину от выбранной вершины:
     std::function<void(int)> dfs = [&](int s) {
         for (int t = 0; t < n; ++t) {
             if (g[s][t] && dist[t] == INF) {
@@ -30,7 +31,7 @@ int main() {
                 dfs(t);
             }
         }
-        if (dist[s] == n-1) {
+        if (dist[s] == n-1) { // Нашли ответ - выведем его:
             std::vector<int> answ{s};
             while (dist[s] != 0) {
                 for (int i = 0; i < n; ++i) {
@@ -50,6 +51,7 @@ int main() {
         }
         dist[s] = INF;
     };
+    // Запуск серии поисков в глубину для нахождения ответа:
     for (int i = 0; i < n; ++i) {
         dist.assign(n, INF);
         dist[i] = 0;
