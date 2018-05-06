@@ -4,11 +4,11 @@ int solve(int k, const std::vector<int>& a) {
     int n = (int)a.size();
     assert(0 <= k && k <= n);
     
-    if (k == 0) {
+    if (k == 0) { // Крайний случай
         return a[0] == 1 ? -1 : a[0]-1;
     }
     
-    for (auto& it : a) {
+    for (auto& it : a) { // Можно вернуть элемент, который уже есть в массиве, так как условие на подсчет элементов <=
         int count = int(std::upper_bound(a.begin(), a.end(), it) - a.begin());
         if (count == k) return it;
     }
