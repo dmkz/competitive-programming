@@ -1,3 +1,9 @@
+/*
+    Динамическое программирование:
+        len(it) = len(it-1)+1, если it-1 есть в массиве и расположен левее элемента it
+    Затем восстановим ответ по известным длинам
+*/
+
 #include <bits/stdc++.h>
 
 int main() {
@@ -15,19 +21,7 @@ int main() {
         }
         lastIndex[a[i]] = i;
     }
-    /*
-    for (int i = 1; i <= n; ++i) {
-        std::cout << i << " ";
-    }
-    std::cout << std::endl;
-    for (int i = 0; i < n; ++i) {
-        std::cout << a[i] << " ";
-    }
-    std::cout << std::endl;
-    for (int i = 0; i < n; ++i) {
-        std::cout << maxLen[i] << " ";
-    }
-    std::cout << std::endl; */
+
     auto t = int(std::max_element(maxLen.begin(), maxLen.end()) - maxLen.begin());
     std::vector<int> answ{t};
     while (maxLen[t] != 1) {
