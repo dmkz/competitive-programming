@@ -1,6 +1,7 @@
 /*
     Эйлеров цикл существует <=> валентность каждой вершины четна. 
-    Разобьем граф на компоненты связности и проверим существование эйлерова цикла
+    Компонента связности = цикл <=> валентность каждой вершины равна 2.
+    Разобьем граф на компоненты связности и проверим, что это цикл
 */
 
 #include <bits/stdc++.h>
@@ -51,7 +52,7 @@ int main() {
         assert(curr < compCount);
         bool flag = compSize[curr] >= 3;
         while (flag && i < nVert && pairs[i].first == curr) {
-            if (edges[pairs[i].second].size() % 2 == 1) {
+            if (edges[pairs[i].second].size() != 2u) {
                 flag = false;
                 break;
             }
