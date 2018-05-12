@@ -14,8 +14,7 @@ int main() {
             scanf("%d", &item[row][col]);
         }
     }
-    // Замена всех ненулевых элементов и добавление их в очередь
-    // из ненулевых элементов и запустим поиск в ширину
+    // Замена всех ненулевых элементов их номерами по-порядку и добавление их в очередь
     const int INF = (int)1e9+1;
     std::vector<int> values{0};
     std::queue<Point> queue;
@@ -30,6 +29,7 @@ int main() {
             }
         }
     }
+    // Поиск в ширину
     while (!queue.empty()) {
         int row = queue.front().row;
         int col = queue.front().col;
