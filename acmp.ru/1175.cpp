@@ -10,7 +10,7 @@ struct DataStruct {
     
     DataStruct(int size = 0, int item = 0) {
         arr.assign(size, item);
-        min.assign(size / GSIZE+1, 0);
+        min.assign(size / GSIZE+1, item);
     }
     
     void set(int p, int v) {
