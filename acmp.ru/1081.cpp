@@ -5,10 +5,10 @@ int main() {
     int n; 
     scanf("%d", &n);
     std::vector<ll> sum(1+n);
-    std::vector<int> arr(1+n); 
     for (int i = 1; i <= n; ++i) {
-        scanf("%d", &arr[i]);
-        sum[i] = sum[i-1] + arr[i];
+        int value;
+        scanf("%d", &value);
+        sum[i] = sum[i-1] + value;
     }
     int nQueries; 
     scanf("%d", &nQueries);
