@@ -4,9 +4,6 @@
 int main() {
     int number, need;
     std::cin >> number >> need;
-    // number % base == need
-    // number == need + base * t
-    // (number - need) = base * t
     std::vector<int> answer;
     int a = need % 10, b = need / 10;
     // number = a + b * base + base^2*(...)
