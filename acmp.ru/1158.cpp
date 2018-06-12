@@ -90,16 +90,12 @@ int main() {
             const int mid = (low + high) / 2;
             const ull hash2_a = (pref2[p1+mid+1] - pref2[p1]) * pow2[mxPow-(p1+mid)];
             const ull hash2_b = (pref2[p2+mid+1] - pref2[p2]) * pow2[mxPow-(p2+mid)];
-            if (hash2_a != hash2_b) {
-                high = mid;
-                continue;
-            }
             const int hash1_a = (0LL + pref1[p1+mid+1] - pref1[p1] + mod1) * pow1[mxPow-(p1+mid)] % mod1;
             const int hash1_b = (0LL + pref1[p2+mid+1] - pref1[p2] + mod1) * pow1[mxPow-(p2+mid)] % mod1;
-            if (hash1_a != hash1_b) {
-                high = mid;
-            } else {
+            if (hash1_a == hash1_b && hash2_a == hash2_b) {
                 low = mid;
+            } else {
+                high = mid;
             }
         }
         if (low+1 == n) {
