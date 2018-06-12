@@ -24,20 +24,6 @@ int next_prime(int number, int steps = 1) {
     return number;
 }
 
-bool worst_case(std::string s) {
-    if (s.size() != 100000u) {
-        return false;
-    }
-    std::sort(s.begin(), s.end());
-    for (int i = 1; i < (int)s.size()-1; ++i) {
-        if (s[i] != s[i-1]) {
-            return false;
-        }
-    }
-    const int n = s.size();
-    return s[n-1] != s[n-2];
-}
-
 int main() {
     std::srand(std::time(0));
     
