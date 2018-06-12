@@ -103,6 +103,7 @@ int main() {
         }
         return s[p1+low+1] < s[p2+low+1];
     });
+    
     printf("%d\n", int(std::find(shifts.begin(), shifts.end(), 0) - shifts.begin()) + 1);
     std::string answer;
     for (auto p : shifts) {
