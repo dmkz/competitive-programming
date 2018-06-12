@@ -28,6 +28,5 @@ int main() {
     table.erase(std::unique(table.begin(), table.end()), table.end());
      
     printf("%d", (int)table.size());
-     
     return 0;
 }
