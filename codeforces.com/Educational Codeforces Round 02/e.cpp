@@ -1,5 +1,5 @@
 /*
-    Solution: Euler tour + Mo algorithm, O(n log(n))
+    Solution: Euler tour + Mo algorithm, O(n sqrt(n))
 */
 
 #include <iostream>
