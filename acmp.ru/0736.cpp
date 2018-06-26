@@ -6,19 +6,8 @@
 #include <algorithm>
 #include <cassert>
 
-inline int solve1(int n, int k, int a) {
-// Работает за O(sqrt(n)) для k <= sqrt(n)
-
-    const int answ = n;
-    while (a >= k && a % k != 0) {
-        n -= n / k;
-        a -= a / k;
-    }
-    return answ - n + a / k;
-}
-
-inline int solve2(int n, int k, int a) {
-// Работает за O(sqrt(n)) для k >= sqrt(n)
+inline int solve(int n, int k, int a) {
+// Работает за O(sqrt(n))
 
     const int answ = n;
     while (a >= k && a % k != 0) {
@@ -47,7 +36,7 @@ int main() {
     while (q--) {
         int item;
         scanf("%d", &item);
-        printf("%d\n", 1LL * k * k <= n ? solve1(n, k, item) : solve2(n, k, item));
+        printf("%d\n", solve(n, k, item));
     }
 
      
