@@ -1,18 +1,30 @@
 /*
-    "Покорение вселенной": обработка строк, простые числа
+    "Покорение вселенной": обработка строк, решето Эратосфена, O(n)
 */
 
 #include <stdio.h>
 #include <string>
+#include <vector>
 #include <cassert>
+#include <cmath>
 
 bool is_prime(int n) {
-    for (int i = 2; i * i <= n; ++i) {
-        if (n % i == 0) {
-            return false;
+    static bool evaluated = false;
+    static const int MAX_N = 500000;
+    static std::vector<bool> prime(1+MAX_N, true);
+    if (!evaluated) {
+        prime[1] = prime[0] = false;
+        for (int i = 2; i * i <= MAX_N; ++i) {
+            if (!prime[i]) {
+                continue;
+            }
+            for (int j = i * i; j <= MAX_N; j += i) {
+                prime[j] = false;
+            }
         }
+        evaluated = true;
     }
-    return n > 1;
+    return prime[n];
 }
 
 int main() {
