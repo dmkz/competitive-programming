@@ -30,6 +30,7 @@ int main() {
         erased[i] = erased[i-1] + (n - erased[i-1]) / k;
     }
     
+    // Отвечаем на запросы:
     while (q--) {
         int item;
         scanf("%d", &item);
