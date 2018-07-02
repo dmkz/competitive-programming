@@ -9,24 +9,24 @@
 #include <functional>
 
 struct DSU {
-    // Система непересекающихся множеств: size - размер множества, parent - представитель множества
+    // Disjoin Set Union: size[item] = size of set(item), parent[item] = parent of set(item)
     std::vector<int> size, parent;
-    // Конструктор для множества фиксированного размера:
+    // Construct DSU fixed size:
     DSU(const int nItems) : size(nItems, 0), parent(nItems, -1) { 
         for (int v = 0; v < (int)size.size(); ++v) {
             parent[v] = v;
             size[v] = 1;
         }
     }
-    // Нахождение представителя множества, к которому относится вершина v:
+    // Find parent of set(v):
     int find_set(const int v) {
         return v == parent[v] ? v : parent[v] = find_set(parent[v]);
     }
-    // Нахождение размера множества для вершины v:
+    // Find size of set(v):
     int get_size(const int v) {
         return size.at(find_set(v));
     }
-    // Объединение множеств для вершин a и b:
+    // Union set(a) and set(b):
     void union_sets(int a, int b) {
         a = find_set(a);
         b = find_set(b);
@@ -42,7 +42,7 @@ struct DSU {
 
 typedef long long ll;
 
-struct Edge {
+struct Edge { // struct for edge
     int u, v, cost, id;
 };
 
@@ -97,7 +97,7 @@ int main() {
         }
     }
     
-    // Construct sparse table:
+    // Construct Sparse Table for maximum on tree:
     
     std::vector<std::vector<int>> prev(20, std::vector<int>(nVert, -1));
     std::vector<std::vector<int>> max(20, std::vector<int>(nVert));
@@ -127,7 +127,7 @@ int main() {
         }
     }
     
-    // Query to sparse table on tree to get max edge on path fron u to v:    
+    // Query to sparse table on tree to get max edge on path from u to v:    
     std::function<int(int,int)> get_max = [&](int u, int v) {
         if (depth[u] > depth[v]) {
             return get_max(v, u);
