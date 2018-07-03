@@ -1,5 +1,5 @@
 /*
-    Solution: trees, constructive, O(n)
+    Solution: Trees, Constructive, O(n)
 */
 
 #include <iostream>
