@@ -1,12 +1,10 @@
 /*
     Solution: Prefix sum, O(n^2)
 */
+
 #include <iostream>
 #include <iomanip>
 #include <vector>
-#include <map>
-#include <cassert>
-#include <string>
 
 int main() {
     std::ios_base::sync_with_stdio(false);
