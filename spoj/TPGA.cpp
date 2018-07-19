@@ -86,6 +86,7 @@ int main() {
     std::vector<int> fact{1};
     
     int nTest; std::cin >> nTest;
+    
     while (nTest--) {
         
         // Input number of items in permutation:
