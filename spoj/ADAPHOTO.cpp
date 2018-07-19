@@ -125,6 +125,7 @@ struct PolyHash {
     
 };
 
+
 // Init static variables of class PolyHash:
 int PolyHash::base((int)1e9+7);
 std::vector<ull> PolyHash::pow{1};
