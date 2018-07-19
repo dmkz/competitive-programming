@@ -1,4 +1,6 @@
 /*
+    Problem: 1000F. One Occurrence
+
     Solution: Mo's algorithm, Sqrt-Decomposition, O(n sqrt(n))
 */
 
@@ -21,11 +23,9 @@ struct Statistic {
         count[value]++;
         if (count[value] == 1) {
             nOnes[value / gsize]++;
-            
         }
         if (count[value] == 2) {
             nOnes[value / gsize]--;
-            
         }
     }
     
@@ -33,11 +33,9 @@ struct Statistic {
         count[value]--;
         if (count[value] == 1) {
             nOnes[value / gsize]++;
-            
         }
         if (count[value] == 0) {
             nOnes[value / gsize]--;
-            
         }
     }
     

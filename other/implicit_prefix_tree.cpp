@@ -1,7 +1,9 @@
 /*
-    Problem: "Arun-sir-and-his-girlfriend"
+    Problem: Arun sir and his girlfriend!
     
-    Solution: sort + implicit prefix tree + binary search, O(n * log(n) * WORD_WIDTH)
+    Link: https://www.hackerrank.com/contests/ab-yeh-kar-ke-dikhao/challenges/arun-sir-and-his-girlfriend/problem
+    
+    Solution: sorting, implicit prefix tree, binary search, O(n * log(n) * W)
 */
 
 #include <iostream>

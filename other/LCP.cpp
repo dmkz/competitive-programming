@@ -1,125 +1,149 @@
 /*
-    Problem: https://www.hackerrank.com/contests/ab-yeh-kar-ke-dikhao/challenges/jitu-and-strings
+    Problem: Jitu and Strings
     
-    Solution: polynomial hashes + binary search, O(n * log(n))
+    Link: https://www.hackerrank.com/contests/ab-yeh-kar-ke-dikhao/challenges/jitu-and-strings
+    
+    Solution: rolling hash, hashing, binary search, O(n * log(n))
 */
 
-#include <iostream>
-#include <iomanip>
-#include <string>
-#include <vector>
-#include <algorithm>
+#include <stdio.h>
 #include <cassert>
-#include <cstdlib>
-#include <ctime>
-#include <functional>
+#include <algorithm>
+#include <vector>
+#include <random>
+#include <chrono>
+#include <string>
+#include <iostream>
 
 typedef unsigned long long ull;
 
-// -----------------------------------------------------------------------------
-bool is_prime(int n) {
-    for (int i = 2; i * i <= n; ++i) {
-        if (n % i == 0) {
-            return false;
+// Generate random base in (before, after) open interval:
+int gen_base(const int before, const int after) {
+    auto seed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+    std::mt19937 mt_rand(seed ^ ull(new ull));
+    int base = std::uniform_int_distribution<int>(before+1, after)(mt_rand);
+    return base % 2 == 0 ? base-1 : base;
+}
+
+struct PolyHash {
+    // -------- Static variables --------
+    static const int MOD = 2147483647;
+    static std::vector<int> pow1;        // powers of base modulo mod
+    static std::vector<ull> pow2;        // powers of base modulo 2^64
+    static int base;                     // base (point of hashing)
+    
+    // --------- Static functons --------
+    static inline int diff(int a, int b) { 
+    	// Diff between `a` and `b` modulo mod (0 <= a < MOD, 0 <= b < MOD)
+        return (a -= b) < 0 ? a + MOD : a;
+    }
+    
+    static inline int mod(ull x) {
+        x += MOD;
+        x = (x >> 31) + (x & MOD);
+        return int((x >> 31) + (x & MOD));
+    }
+    
+    // -------------- Variables of class -------------
+    std::vector<int> pref1; // Hash on prefix modulo mod
+    std::vector<ull> pref2; // Hash on prefix modulo 2^64
+    
+    // Cunstructor from string:
+    PolyHash(const std::string& s)
+        : pref1(s.size()+1u, 0)
+        , pref2(s.size()+1u, 0)
+    {
+        while (pow1.size() <= s.size()) { // Pre-compute powers of base:
+            pow1.push_back(mod((ull)pow1.back() * base));
+            pow2.push_back(pow2.back() * base);
+        }
+        for (int i = 0; i < (int)s.size(); ++i) { // Fill arrays with polynomial hashes on prefix:
+            pref1[i+1] = mod(pref1[i] + (ull)s[i] * pow1[i]);
+            pref2[i+1] = pref2[i] + s[i] * pow2[i];
         }
     }
-    return n > 1;
-}
-// -----------------------------------------------------------------------------
-int next_prime(int number, int steps = 1) {
-    while (steps--) {
-        while (!is_prime(++number));
-    }
-    return number;
-}
-// -----------------------------------------------------------------------------
-
-int solve(const std::string& s, const std::string& t) {
-    // Constants of hashing:
-    const int base = next_prime(256, std::rand() % 77 + 33);
-    const int mod1 = next_prime(1e9, std::rand() % 77 + 33);
-    const int n = (int)s.size();
-    const int mxPow = n;
     
-    // Calculation powers of base:
-    std::vector<int> pow1(1+mxPow, 1);
-    std::vector<ull> pow2(1+mxPow, 1);
-    for (int i = 1; i <= mxPow; ++i) {
-        pow1[i] = 1LL * pow1[i-1] * base % mod1;
-        pow2[i] = pow2[i-1] * base;
-    }
-    
-    // Find hashes on prefixes s and t:
-    std::vector<int> s_pref1{0}, t_pref1{0};
-    std::vector<ull> s_pref2{0}, t_pref2{0};
-    for (int i = 0; i < n; ++i) {
-        // Hash modulo mod1:
-        s_pref1.push_back((s_pref1.back() + 1LL * s[i] * pow1[i]) % mod1);
-        t_pref1.push_back((t_pref1.back() + 1LL * t[i] * pow1[i]) % mod1);
-        // Hash modulo mod2 = 2^64:
-        s_pref2.push_back(s_pref2.back() + s[i] * pow2[i]);
-        t_pref2.push_back(t_pref2.back() + t[i] * pow2[i]);
-    }
-    
-    // Find first not equal symbol:
-    int f = 0;
-    while (f < n && s[f] == t[f]) ++f;
-    
-    std::function<std::pair<int, ull>(int,int,int)> hash_on_prefix_after_swap = [&] (const int r, const int f, const int l) {
-        // Function for calculating polynomial hash on substring s[0..r] after swap s[f] and s[l]
-        int hash1 = 0; ull hash2 = 0;
-        // Add hash on s[0, f);
-        hash1 += s_pref1[std::min(r+1, f)];
-        hash2 += s_pref2[std::min(r+1, f)];
-        if (r < f) return std::make_pair(hash1, hash2);
-        // Add s[l]:
-        hash1 = (hash1 + 1LL * s[l] * pow1[f]) % mod1;
-        hash2 += s[l] * pow2[f];
-        if (r == f) return std::make_pair(hash1, hash2);
-        // Add hash on s[f+1, l): 
-        hash1 = (0LL + hash1 + s_pref1[std::min(l, r+1)] - s_pref1[f+1] + mod1) % mod1;
-        hash2 += s_pref2[std::min(l, r+1)] - s_pref2[f+1];
-        if (r < l) return std::make_pair(hash1, hash2);
-        // Add s[f]:
-        hash1 = (hash1 + 1LL * s[f] * pow1[l]) % mod1;
-        hash2 += s[f] * pow2[l];
-        if (r == l) return std::make_pair(hash1, hash2);
-        // Add s[l+1, r]:
-        hash1 = (0LL + hash1 + s_pref1[r+1] - s_pref1[l+1] + mod1) % mod1;
-        hash2 += s_pref2[r+1] - s_pref2[l+1];
+    // Polynomial hash of subsequence [pos, pos+len)
+    // If mxPow != 0, value automatically multiply on base in needed power. Finally base ^ mxPow
+    inline std::pair<int, ull> operator()(const int pos, const int len, const int mxPow = 0) const {
+        int hash1 = diff(pref1[pos+len], pref1[pos]);
+        ull hash2 = pref2[pos+len] - pref2[pos];
+        if (mxPow != 0) {
+            hash1 = mod((ull)hash1 * pow1[mxPow-(pos+len-1)]);
+            hash2 *= pow2[mxPow-(pos+len-1)];
+        }
         return std::make_pair(hash1, hash2);
-    };    
+    }
     
-    // Try to change the first unequal symbol with all that stand after:
-    int answ = f;
-    for (int l = f+1; l < n; ++l) {
-        // Binary search: s[0..low] == t[0..low], s[0..high] != t[0..high]
-        int low = f-1, high = n;
-        while (high - low > 1) {
-            int mid = (low + high) / 2;
-            auto h1 = hash_on_prefix_after_swap(mid, f, l);
-            if (h1.first == t_pref1[mid+1] && h1.second == t_pref2[mid+1]) {
+    // Polynomial hash on prefix [0, len) after swap items i and j (chars ci and cj):
+    inline std::pair<int, ull> prefix_after_swap(const int len, const int i, const int j, const char ci, const char cj) const {
+        // Prefix before i:
+        int hash1 = pref1[std::min(len, i)];
+        ull hash2 = pref2[std::min(len, i)];
+        if (len <= i) return std::make_pair(hash1, hash2);
+        // Add symbol on position i after swap:
+        hash1 = mod(hash1 + (ull)cj * pow1[i]);
+        hash2 += cj * pow2[i];
+        // Prefix prefore j:
+        hash1 = mod(hash1 + (ull)diff(pref1[std::min(len, j)], pref1[i+1]));
+        hash2 += pref2[std::min(len,j)] - pref2[i+1];
+        if (len <= j) return std::make_pair(hash1, hash2);
+        // Add symbol on position j after swap:
+        hash1 = mod(hash1 + (ull)ci * pow1[j]);
+        hash2 += ci * pow2[j];
+        // Prefix before len:
+        hash1 = mod(hash1 + (ull)diff(pref1[len], pref1[j+1]));
+        hash2 += pref2[len] - pref2[j+1];
+        return std::make_pair(hash1, hash2);
+    }
+};
+
+// Init static variables of PolyHash class:
+int PolyHash::base((int)1e9+7);    
+std::vector<int> PolyHash::pow1{1};
+std::vector<ull> PolyHash::pow2{1};
+
+int solve(const int n, const std::string& s, const std::string& t) {
+    // Gen random base of hashing:
+    PolyHash::base = gen_base(256, PolyHash::MOD);
+    
+    // Construct polynomial hashes on prefixes of strings s and t:
+    PolyHash hash_s(s), hash_t(t);
+    
+    // Find first not-equal symbol:
+    int pos1 = 0;
+    while (pos1 < n && s[pos1] == t[pos1]) ++pos1;
+    
+    // Try to swap pos1 with everything symbol after and use binary search for finding LCP:
+    int answ = pos1;
+    for (int pos2 = pos1+1; pos2 < n; ++pos2) {
+        // Binary search:
+        int low = 0, high = n+1;
+        while (high-low > 1) {
+            const int mid = (low + high) / 2;
+            const auto hs = hash_s.prefix_after_swap(mid, pos1, pos2, s[pos1], s[pos2]);
+            if (hs == hash_t(0, mid)) {
                 low = mid;
             } else {
                 high = mid;
-            }            
+            }
         }
         // Update answer:
-        answ = std::max(answ, low+1);
+        answ = std::max(answ, low);
     }
     return answ;
 }
 
 int main() {
-    std::srand(std::time(0));
-    std::ios_base::sync_with_stdio(false);
-    std::cin.tie(0); std::cout.tie(0); std::cerr.tie(0);
-    
-    int n; 
-    std::cin >> n;
-    std::string s, t;
-    std::cin >> s >> t;
-    assert(s.size() == t.size());
-    std::cout << solve(s, t);
-    return 0; 
+    // Input:
+    int n;
+    scanf("%d", &n);
+    char buf[1+200000];
+    scanf("%200000s", buf);
+    std::string s(buf);
+    scanf("%200000s", buf);
+    std::string t(buf);
+    // Solve and output:
+    printf("%d", solve(n,s,t));
+    return 0;
 }
