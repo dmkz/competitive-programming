@@ -2,6 +2,8 @@
     Problem: 271D. Good Substrings
     
     Solution: rolling hash, hashing, hash table, strings, O(n^2)
+    
+    Author: Dmitry Kozyrev, https://github.com/dmkz , dmkozyrev@rambler.ru
 */
 
 #include <stdio.h>
