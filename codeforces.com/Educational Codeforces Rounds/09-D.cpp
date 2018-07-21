@@ -2,6 +2,8 @@
     Problem: 632D. Longest Subsequence
     
     Solution: math, number theory, sort, O(n log(n))
+    
+    Author: Dmitry Kozyrev, https://github.com/dmkz , dmkozyrev@rambler.ru
 */
 
 #include <iostream>
