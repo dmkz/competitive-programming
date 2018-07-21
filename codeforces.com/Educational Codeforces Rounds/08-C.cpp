@@ -2,6 +2,8 @@
     Problem: 628C. Bear and String Distance
 
     Solution: greedy, strings, O(n)
+    
+    Author: Dmitry Kozyrev, https://github.com/dmkz , dmkozyrev@rambler.ru
 */
 
 #include <iostream>
