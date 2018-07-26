@@ -2,6 +2,8 @@
     Problem: 1000F. One Occurrence
 
     Solution: Mo's algorithm, Sqrt-Decomposition, O(n sqrt(n))
+    
+    Author: Dmitry Kozyrev, github: dmkz, e-mail: dmkozyrev@rambler.ru
 */
 
 #include <iostream>
