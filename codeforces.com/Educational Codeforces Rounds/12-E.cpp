@@ -3,7 +3,7 @@
     
     Solution: sort, binary search, implicit prefix tree, O(n*log(n)*W)
     
-    Author: Dmitry Kozyrev, https://github.com/dmkz , dmkozyrev@rambler.ru
+    Author: Dmitry Kozyrev, github: dmkz, e-mail: dmkozyrev@rambler.ru
 */
 
 #include <iostream>
