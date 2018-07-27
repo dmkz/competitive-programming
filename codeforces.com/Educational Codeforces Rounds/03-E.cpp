@@ -2,6 +2,8 @@
     Problem: 609E. Minimum spanning tree for each edge
     
     Solution: Sparse Table, DSU, MST, O(n log(n))
+    
+    Author: Dmitry Kozyrev, github: dmkz, e-mail: dmkozyrev@rambler.ru
 */
 
 #include <iostream>
