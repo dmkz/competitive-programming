@@ -2,6 +2,8 @@
     Problem: 600E. Lomsat gelral
 
     Solution: euler tour, mo's algorithm, O(n sqrt(n))
+    
+    Author: Dmitry Kozyrev, github: dmkz, dmkozyrev@rambler.ru
 */
 
 #include <iostream>
