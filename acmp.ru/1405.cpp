@@ -14,6 +14,14 @@ inline int mod(int a, int MOD) {
     return a >= 0 ? a % MOD : MOD - (-a) % MOD;
 }
 
+inline int add(int a, int b, int MOD) {
+    return (a += b) >= MOD ? a - MOD : a;
+}
+
+inline int sub(int a, int b, int MOD) {
+    return (a -= b) < 0 ? a + MOD : a;
+}
+
 int main() {
     int n; scanf("%d", &n);
     
@@ -26,8 +34,8 @@ int main() {
     static int jump[2][32][200000]; // [inverse][pow][pos] --> jump
     
     for (int i = 0; i < n; ++i) {
-        jump[0][0][i] = mod(i + a[i], n);
-        jump[1][0][i] = mod(i - a[i], n);
+        jump[0][0][i] = add(i, a[i], n);
+        jump[1][0][i] = sub(i, a[i], n);
     }
     
     for (int pow = 1; pow < 32; ++pow) {
