@@ -1,7 +1,7 @@
 /*
     Задача: 1083. Sqrt-декомпозиция
     
-    Решение: Segment Tree, ленивое проталкивание, O(n log(n))
+    Решение: Segment Tree, ленивое проталкивание, O(n + q * log(n))
     
     Автор: Дмитрий Козырев, github: dmkz, e-mail: dmkozyrev@rambler.ru
 */
