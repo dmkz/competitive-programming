@@ -10,6 +10,9 @@
 #include <vector>
 #include <set>
 #include <cmath>
+#include <ctime>
+#include <cstdlib>
+#include <algorithm>
 
 struct Point {
     int x, y;
@@ -48,22 +51,30 @@ bool less(const Point& from, const Point& to1, const Point& to2) {
 }
 
 int main() {
+    double time = (double)clock();
+    std::vector<Point> pt;
+    /* Генерация худшего теста:
+    for (int i = 0; i < 5000; ++i) {
+        pt.insert(pt.end(), Point{   0,    i});
+        pt.insert(pt.end(), Point{5000,    i});
+        pt.insert(pt.end(), Point{   i, 5000});
+        pt.insert(pt.end(), Point{   i,    0});
+    }
+    */
     // Чтение точек:
     int n; scanf("%d", &n);
-    std::set<Point> pt;
     for (int i = 0; i < n; ++i) {
         int x, y; scanf("%d %d", &x, &y);
-        pt.insert(Point{x,y});
+        pt.insert(pt.end(), Point{x,y});
     }
+    std::sort(pt.begin(), pt.end());
+    pt.erase(std::unique(pt.begin(), pt.end()), pt.end());
     // Точно войдет первая точка
     std::vector<Point> hull{*pt.begin()};
     pt.erase(pt.begin());
     
     // Кидаем остальные точки
     while (!pt.empty()) {
-        if (hull.size() > 1u) { // Для проверки того, что выпуклая оболочка замкнулась
-            pt.insert(hull[0]); // кидаем начальную точку выпуклой оболочки
-        }
         // Ищем точку с максимальным углом:
         auto max = pt.begin();
         for (auto it = pt.begin(); it != pt.end(); it++) {
@@ -71,13 +82,13 @@ int main() {
                 max = it;
             }
         }
+        // Проверяем не выгоднее ли замкнуть оболочку вместо добавления новой точки:
+        if (hull.size() > 1u && less(hull.back(), hull.front(), *max)) {
+            break;
+        }
         // Добавляем в выпуклую оболочку:
         hull.push_back(*max);
         pt.erase(max);
-        // Проверяем условия выхода из цикла:
-        if (hull.front() == hull.back() || pt.empty()) {
-            break;
-        }
     }
     // Если по каким-то причинам выпуклая оболочка не замкнулась - замыкаем:
     if (!(hull.back() == hull.front())) {
@@ -88,6 +99,7 @@ int main() {
     for (int i = 1; i < (int)hull.size(); ++i) {
         square += cross(hull[i-1], hull[i]);
     }
-    printf("%d", (int)std::round(std::abs(square)/2.0));
+    printf("%d\n", (int)std::round(std::abs(square)/2.0));
+    fprintf(stderr, "time = %0.3fs\n", ((double)clock() - time) / CLOCKS_PER_SEC);
     return 0;
 }
