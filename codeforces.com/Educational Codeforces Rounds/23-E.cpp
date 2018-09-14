@@ -1,7 +1,7 @@
 /*
     Problem: 817E. Choosing The Commander
     
-    Solution: trie, prefix tree, bits, O(n log(n))
+    Solution: bits, trie, prefix tree, O(n log(n))
     
     Author: Dmitry Kozyrev, github: dmkz, e-mail: dmkozyrev@rambler.ru
 */
