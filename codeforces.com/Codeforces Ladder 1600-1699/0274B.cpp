@@ -39,7 +39,6 @@ int main() {
     topsort(1, 0);
     // Greedy over order of topsorting:
     std::vector<ll> inc(1+n), dec(1+n), value(1+n);
-    ll nInc = 0, nDec = 0;
     for (int i = 1; i <= n; ++i) {
         std::cin >> value[i];
     }
@@ -50,12 +49,10 @@ int main() {
         } else {
             inc[u] -= val;
         }
-        nInc = std::max(nInc, inc[u]);
-        nDec = std::max(nDec, dec[u]);
         int p = parent[u];
         inc[p] = std::max(inc[p], inc[u]);
         dec[p] = std::max(dec[p], dec[u]);
     }
-    std::cout << nInc + nDec << std::endl;
+    std::cout << inc[0] + dec[0] << std::endl;
     return 0;
 }
