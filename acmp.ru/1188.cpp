@@ -1,64 +1,59 @@
-#include <stdio.h>
+/*
+    Задача: 1188. Дерево с изменением отрезка
+    
+    Решение: Дерево Фенвика, O(n log(n))
+    
+    Автор: Дмитрий Козырев, github: dmkz, e-mail: dmkozyrev@rambler.ru
+*/
+
+#include <iostream>
+#include <algorithm>
 #include <vector>
-#include <cassert>
 
 typedef long long ll;
 
-struct SqrtDecomposition {
-    std::vector<ll> arr, extra;
+struct Fenwick {
     
-    SqrtDecomposition(int size, int element) {
-        arr.assign(size, element);
-        extra.assign((size+GSIZE-1) / GSIZE, 0);
-    }
+    std::vector<ll> data;
+
+    Fenwick(int n = 0) : data(n) { }
     
-    const int GSIZE = 256;
-    
-    void add(int l, int r, int x) {
-        const int gl = l / GSIZE;
-        const int gr = r / GSIZE;
-        if (gl == gr) {
-            for (int i = l; i <= r; ++i) {
-                arr[i] += x;
-            }
-        } else {
-            for (int i = l, after = (gl+1)*GSIZE; i < after; ++i) {
-                arr[i] += x;
-            }
-            for (int g = gl+1; g < gr; ++g) {
-                extra[g] += x;
-            }
-            for (int i = gr * GSIZE; i <= r; ++i) {
-                arr[i] += x;
-            }
+    void inc(int p, int x) {
+        for (int i = p; i < (int)data.size(); i |= i+1) {
+            data[i] += x;
         }
     }
     
-    ll get(int pos) {
-        return arr[pos] + extra[pos / GSIZE];
+    ll get(int r) const {
+        ll ret = 0;
+        for (int i = r; i >= 0; i = (i & (i + 1)) - 1) {
+            ret += data[i];
+        }
+        return ret;
     }
 };
 
 int main() {
-    int n; scanf("%d", &n);
-    SqrtDecomposition sd(n, 0);
-    for (int i = 0; i < n; ++i) {
-        int value; 
-        scanf("%d", &value);
-        sd.add(i, i, value);
+    std::ios_base::sync_with_stdio(false);
+    std::cin.tie(0); std::cout.tie(0); std::cerr.tie(0);
+    int n; std::cin >> n;
+    Fenwick fenwick(1+n+1);
+    for (int i = 1, v; i <= n; ++i) {
+        std::cin >> v;
+        fenwick.inc(  i, +v);
+        fenwick.inc(i+1, -v);
     }
-    int q; scanf("%d", &q);
+    int q; std::cin >> q;
     while (q--) {
-        char t; scanf(" %c", &t);
+        char t; std::cin >> t;
         if (t == 'g') {
-            int pos; scanf("%d", &pos);
-            printf("%I64d ", sd.get(pos-1));
+            int r; std::cin >> r;
+            std::cout << fenwick.get(r) << " ";
         } else {
-            assert(t == 'a');
-            int l, r, x;
-            scanf("%d %d %d", &l, &r, &x);
-            --l, --r;
-            sd.add(l, r, x);
+            int l, r, x; std::cin >> l >> r >> x;
+            fenwick.inc(  l,+x);
+            fenwick.inc(r+1,-x);
         }
     }
+    return 0;
 }
