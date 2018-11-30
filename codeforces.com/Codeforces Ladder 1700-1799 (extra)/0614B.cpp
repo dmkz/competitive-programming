@@ -19,6 +19,8 @@ int get_power_10(std::string& s) {
 }
 
 int main() {
+    std::ios_base::sync_with_stdio(false);
+    std::cin.tie(0); std::cout.tie(0); std::cerr.tie(0);
     int n;
     while (std::cin >> n) {
         bool was_zero = false;
@@ -26,7 +28,10 @@ int main() {
         std::string number = "";
         for (int i = 0; i < n; ++i) {
             std::string s; std::cin >> s;
-            was_zero = was_zero || (s == "0");
+            if (s == "0") {
+                was_zero = true;
+                continue;
+            }
             int pow = get_power_10(s);
             cntZeros += pow;
             if (s != "1") {
