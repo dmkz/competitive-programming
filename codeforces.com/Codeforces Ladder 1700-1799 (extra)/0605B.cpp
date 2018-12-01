@@ -1,7 +1,7 @@
 /*
     Problem: 605B. Lazy Student
     
-    Solution: MST, contructive, sorting, binary search, O(n*log(n))
+    Solution: MST, constructive, sorting, binary search, O(n*log(n))
     
     Author: Dmitry Kozyrev, github: dmkz, e-mail: dmkozyrev@rambler.ru
 */
