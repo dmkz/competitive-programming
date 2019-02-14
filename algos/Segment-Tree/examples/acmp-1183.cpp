@@ -1,11 +1,7 @@
 /**
- *  Efficient template SegmentTree<ItemType, ItemTraits> bottom-to-top implementation.
- *  ItemTraits should contain static functions `update`, `merge` and `neutral` (see examples below).
- *  Default Segment Tree is SegmentTree<int64_t, TraitsMinSet<int64_t>> with operations:
- *      1) min-query on segment `[l, r]` (zero-indexed)
- *      2) set-query on position `p` with value `x`
+ *  Given array `arr[N]` with integers 1 <= arr[i] <= 10^9
+ *  Need to answer on M queries gcd(arr[l..r])
  */
-#pragma once
 
 #include <iostream>
 #include <algorithm>
@@ -22,18 +18,14 @@ namespace SegmentTree {
         static void update(T& dst, T src) { dst = src; }
         static void merge(T& dst, const T& lhs, const T& rhs) { dst = std::min(lhs, rhs); }
     };
-    
     /**
-     *  List of additional traits, implemented below
+     *  Additional traits, implemented below
      */
     template<typename T> struct TraitsMaxSet; // max on segment, set single element
     template<typename T> struct TraitsSumSet; // sum on segment, set single element
-    template<typename T> struct TraitsGCDSet; // gcd on segment, set single element
     template<typename T> struct TraitsMinAdd; // min on segment, add to single element
     template<typename T> struct TraitsMaxAdd; // max on segment, add to single element
     template<typename T> struct TraitsSumAdd; // sum on segment, add to single element
-    template<typename T> struct TraitsGCDAdd; // gcd on segment, add to single element
-    
     /**
      * SegmentTree class. Effective bottom-to-top implementation
      */
@@ -104,16 +96,6 @@ namespace SegmentTree {
     };
     
     /**
-     * Traits for gcd on segment and set single element queries
-     */
-    template<typename T>
-    struct TraitsGCDSet {
-        static T neutral() { return T(0); }
-        static void update(T& dst, T src) { dst = src; }
-        static void merge(T& dst, const T& lhs, const T& rhs) { dst = std::__gcd(lhs, rhs); }
-    };
-    
-    /**
      * Traits for min on segment and add to single element queries
      */
     template<typename T>
@@ -141,16 +123,43 @@ namespace SegmentTree {
         static T neutral() { return T(0); }
         static void update(T& dst, T src) { dst += src; }
         static void merge(T& dst, const T& lhs, const T& rhs) { dst = lhs + rhs; }
-    };
-
-    /**
-     * Traits for gcd on segment and add to single element queries
-     */
-    template<typename T>
-    struct TraitsGCDAdd {
-        static T neutral() { return T(0); }
-        static void update(T& dst, T src) { dst += src; }
-        static void merge(T& dst, const T& lhs, const T& rhs) { dst = std::__gcd(lhs, rhs); }
-    };
-    
+    };        
 } /** SegmentTree namespace end */
+
+template<typename T>
+T gcd(T a, T b) {
+    while (b != T(0)) {
+        T r = a % b;
+        a = b;
+        b = r;
+    }
+    return a;
+}
+
+/**
+ * Traits for gcd on segment and set single element queries
+ */
+template<typename T>
+struct TraitsGCDSet {
+    static T neutral() { return T(0); }
+    static void update(T& dst, T src) { dst = src; }
+    static void merge(T& dst, const T& lhs, const T& rhs) { dst = std::__gcd(lhs, rhs); }
+};
+
+int main() {
+    std::ios_base::sync_with_stdio(false);
+    std::cin.tie(0); std::cout.tie(0); std::cerr.tie(0);
+    int n; std::cin >> n;
+    std::vector<int> arr(n);
+    for (auto &it : arr) {
+        std::cin >> it;
+    }
+    SegmentTree::SegmentTree<int, TraitsGCDSet<int>> segtree;
+    segtree.build(arr);
+    int q; std::cin >> q;
+    while (q--) {
+        int l, r; std::cin >> l >> r;
+        std::cout << segtree.get(l-1, r-1) << ' ';
+    }
+    return 0;
+}
