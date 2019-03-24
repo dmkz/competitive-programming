@@ -10,7 +10,7 @@ namespace FastIO {
             bool was;
         public:
             Reader(FILE* file_ = stdin, const int size_ = 1 << 16)
-                : file(file_), buffer(size_, '\0'), pos(0), was(true) { read(); }
+                : file(file_), buffer(size_, '\0'), pos(size_), was(true) { }
             operator bool() const { return was; }
             char getChar();
             std::string getStr();
