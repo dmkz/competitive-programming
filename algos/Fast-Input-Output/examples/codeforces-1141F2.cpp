@@ -1,5 +1,3 @@
-#pragma once
-
 #include <bits/stdc++.h>
 
 namespace FastIO {
@@ -37,18 +35,11 @@ namespace FastIO {
     struct Writer {
         private:
             FILE* file; std::vector<char> buffer; int pos;
-            int defaultPrecision, defaultWidth; char defaultFill;
         public:
             Writer(FILE* file_ = stdout, const int size_ = 1 << 16) 
-                : file(file_), buffer(size_, '\0'), pos(0), defaultPrecision(6), defaultWidth(0), defaultFill(' ') { }
+                : file(file_), buffer(size_, '\0'), pos(0) { }
             ~Writer() { flush(); }
             void flush() { putChar(EOF); }
-            void setprecision(int precision) { defaultPrecision = precision; }
-            void setw(int width) { defaultWidth = width; }
-            void setfill(char fill) { defaultFill = fill; }
-            int getPrecision() const { return defaultPrecision; }
-            int getWidth() const { return defaultWidth; }
-            char getFill() const { return defaultFill; }
             void putChar(char c);
             void putStr(const std::string&);
             template<typename T> void putInt(T value, int width = 0, char fill = ' ');
@@ -60,16 +51,53 @@ namespace FastIO {
     Writer& operator<<(Writer& writer, const std::string& s) { return writer.putStr(s), writer; }
     
     template<class T> typename std::enable_if<std::is_floating_point<T>::value, Writer&>::type
-    operator<<(Writer& writer, const T& t) {
-        writer.putReal(t, writer.getPrecision(), writer.getWidth(), writer.getFill());
-        return writer; 
-    }
+    operator<<(Writer& writer, const T& t) { return writer.putReal(t), writer; }
     
     template<class T> typename std::enable_if<std::is_integral<T>::value, Writer&>::type
-    operator<<(Writer& writer, const T& t) { 
-        writer.putInt(t, writer.getWidth(), writer.getFill());
-        return writer;
+    operator<<(Writer& writer, const T& t) { return writer.putInt(t), writer; }    
+}
+
+struct Seg { int l, r; };
+
+struct LessByR {
+    bool operator()(Seg a, Seg b) {
+        return a.r < b.r || (a.r == b.r && a.l < b.l);
     }
+};
+
+int main() {
+    FastIO::Reader fin;
+    FastIO::Writer fout;
+    typedef std::vector<int> vi;
+    for (int n; fin >> n; fout << '\n') {
+        vi a(n); fin >> a;
+        std::map<int, std::set<Seg, LessByR>> map;
+        for (int l = 0; l < n; ++l) {
+            int r = l-1, s = 0;
+            while (r+1 < n) {
+                s += a[++r];
+                map[s].insert(Seg{l+1,r+1});
+            }
+        }
+        std::set<Seg, LessByR> best;
+        for (auto &record : map) {
+            auto& set = record.second;
+            for (auto it = set.begin(); it != set.end(); ) {
+                auto next = std::next(it);
+                if (next != set.end()) {
+                    if (next->l <= it->r) {
+                        set.erase(next);
+                        continue;
+                    }
+                }
+                it = next;
+            }
+            if (best.size() < set.size()) { best = set; }
+        }
+        fout << best.size() << '\n';
+        for (auto &it : best) { fout << it.l << ' ' << it.r << '\n'; }
+    }
+    return 0;
 }
 
 namespace FastIO {

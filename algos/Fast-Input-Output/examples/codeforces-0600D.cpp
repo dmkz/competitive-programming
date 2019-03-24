@@ -1,4 +1,7 @@
-#pragma once
+/*
+    Problem: 600D. Area of Two Circles' Intersection
+    Solution: geometry, area of the circle segment, circles intersection, O(1)
+*/
 
 #include <bits/stdc++.h>
 
@@ -37,18 +40,11 @@ namespace FastIO {
     struct Writer {
         private:
             FILE* file; std::vector<char> buffer; int pos;
-            int defaultPrecision, defaultWidth; char defaultFill;
         public:
             Writer(FILE* file_ = stdout, const int size_ = 1 << 16) 
-                : file(file_), buffer(size_, '\0'), pos(0), defaultPrecision(6), defaultWidth(0), defaultFill(' ') { }
+                : file(file_), buffer(size_, '\0'), pos(0) { }
             ~Writer() { flush(); }
             void flush() { putChar(EOF); }
-            void setprecision(int precision) { defaultPrecision = precision; }
-            void setw(int width) { defaultWidth = width; }
-            void setfill(char fill) { defaultFill = fill; }
-            int getPrecision() const { return defaultPrecision; }
-            int getWidth() const { return defaultWidth; }
-            char getFill() const { return defaultFill; }
             void putChar(char c);
             void putStr(const std::string&);
             template<typename T> void putInt(T value, int width = 0, char fill = ' ');
@@ -60,16 +56,64 @@ namespace FastIO {
     Writer& operator<<(Writer& writer, const std::string& s) { return writer.putStr(s), writer; }
     
     template<class T> typename std::enable_if<std::is_floating_point<T>::value, Writer&>::type
-    operator<<(Writer& writer, const T& t) {
-        writer.putReal(t, writer.getPrecision(), writer.getWidth(), writer.getFill());
-        return writer; 
-    }
+    operator<<(Writer& writer, const T& t) { return writer.putReal(t), writer; }
     
     template<class T> typename std::enable_if<std::is_integral<T>::value, Writer&>::type
-    operator<<(Writer& writer, const T& t) { 
-        writer.putInt(t, writer.getWidth(), writer.getFill());
-        return writer;
+    operator<<(Writer& writer, const T& t) { return writer.putInt(t), writer; }    
+}
+
+
+typedef long double Real;
+
+const Real PI = std::acos(-1.0L);
+
+Real solve(Real x1, Real y1, Real r1, Real x2, Real y2, Real r2) {
+    assert(r1 >= r2);
+    
+    Real dist2 = (x1-x2)*(x1-x2)+(y1-y2)*(y1-y2);
+    
+    if (dist2 >= (r1+r2)*(r1+r2)) { // if no intersect - answer is 0
+        return 0;
     }
+    
+    // If the smaller circle lies inside the larger one: r1 >= dist + r2
+    if ((r1-r2)*(r1-r2) >= dist2) {
+        return PI * r2 * r2;
+    }
+    
+    std::function<Real(Real, Real, Real)> angle = [](Real a, Real b, Real c) {
+        // Compute the angle opposite by the cosine theorem
+        // a^2 = b^2+c^2-2*b*c*cos(alpha)
+        return std::acos((b*b+c*c-a*a) / b / c / 2);
+    };
+    
+    std::function<Real(Real, Real)> S = [](Real r, Real angle) {
+    	// Segment area
+    	// r - circle radius, angle - angle between sides
+    	return r * r * (angle / 2 - std::sin(angle) / 2);
+    };
+    
+    Real  dist = std::sqrt(dist2);        // distance between circles centers
+	Real alpha = 2 * angle(r2, r1, dist); // angle in larger circle
+    Real  beta = 2 * angle(r1, r2, dist); // angle in smaller circle
+    return S(r1, alpha) + S(r2, beta);
+}
+
+int main() {    
+    FastIO::Reader cin;
+    FastIO::Writer cout;
+    Real x1, y1, r1, x2, y2, r2; 
+    while (cin >> x1 >> y1 >> r1 >> x2 >> y2 >> r2) {
+    
+        if (r1 < r2) {
+            std::swap(x1, x2);
+            std::swap(y1, y2);
+            std::swap(r1, r2);
+        }
+        
+        cout << solve(x1, y1, r1, x2, y2, r2) << '\n';
+    }
+    return 0;
 }
 
 namespace FastIO {

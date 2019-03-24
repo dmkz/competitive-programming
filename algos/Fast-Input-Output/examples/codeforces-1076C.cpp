@@ -1,5 +1,3 @@
-#pragma once
-
 #include <bits/stdc++.h>
 
 namespace FastIO {
@@ -70,6 +68,26 @@ namespace FastIO {
         writer.putInt(t, writer.getWidth(), writer.getFill());
         return writer;
     }
+}
+typedef long double ld;
+int main() {    
+    FastIO::Reader cin;
+    FastIO::Writer cout;
+    cout.setprecision(12);
+    for (int t; cin >> t; cout << '\n') {
+        while (t--) {
+            int d; cin >> d;
+            if (d * d - 4 * d < 0) {
+                cout << "N\n";
+            } else {
+                ld b1 = ld(d - std::sqrt(d*d-4*d))/2;
+                ld a1 = d - b1;
+                assert(a1 >= 0 && b1 >= 0);
+                cout << "Y " << a1 << ' ' << b1 << '\n';
+            }
+        }
+    }
+    return 0;
 }
 
 namespace FastIO {

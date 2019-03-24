@@ -1,5 +1,3 @@
-#pragma once
-
 #include <bits/stdc++.h>
 
 namespace FastIO {
@@ -37,18 +35,11 @@ namespace FastIO {
     struct Writer {
         private:
             FILE* file; std::vector<char> buffer; int pos;
-            int defaultPrecision, defaultWidth; char defaultFill;
         public:
             Writer(FILE* file_ = stdout, const int size_ = 1 << 16) 
-                : file(file_), buffer(size_, '\0'), pos(0), defaultPrecision(6), defaultWidth(0), defaultFill(' ') { }
+                : file(file_), buffer(size_, '\0'), pos(0) { }
             ~Writer() { flush(); }
             void flush() { putChar(EOF); }
-            void setprecision(int precision) { defaultPrecision = precision; }
-            void setw(int width) { defaultWidth = width; }
-            void setfill(char fill) { defaultFill = fill; }
-            int getPrecision() const { return defaultPrecision; }
-            int getWidth() const { return defaultWidth; }
-            char getFill() const { return defaultFill; }
             void putChar(char c);
             void putStr(const std::string&);
             template<typename T> void putInt(T value, int width = 0, char fill = ' ');
@@ -60,16 +51,52 @@ namespace FastIO {
     Writer& operator<<(Writer& writer, const std::string& s) { return writer.putStr(s), writer; }
     
     template<class T> typename std::enable_if<std::is_floating_point<T>::value, Writer&>::type
-    operator<<(Writer& writer, const T& t) {
-        writer.putReal(t, writer.getPrecision(), writer.getWidth(), writer.getFill());
-        return writer; 
-    }
+    operator<<(Writer& writer, const T& t) { return writer.putReal(t), writer; }
     
     template<class T> typename std::enable_if<std::is_integral<T>::value, Writer&>::type
-    operator<<(Writer& writer, const T& t) { 
-        writer.putInt(t, writer.getWidth(), writer.getFill());
-        return writer;
+    operator<<(Writer& writer, const T& t) { return writer.putInt(t), writer; }    
+}
+
+int main() {
+    FastIO::Reader fin;
+    FastIO::Writer fout;
+    typedef std::vector<int> vi;
+    for (int n; fin >> n; ) {
+        vi q(n-1);
+        fin >> q;
+        int v = 0, min = 0, max = 0;
+        for (auto it : q) {
+            v += it;
+            min = std::min(min, v);
+            max = std::max(max, v);
+        }
+        v = 1-min;
+        vi p(n, v);
+        for (int i = 1; i < n; ++i) {
+            p[i] = p[i-1] + q[i-1];
+        }
+        vi tmp = p;
+        #define all(x) (x).begin(), (x).end()
+        std::sort(all(tmp));
+        tmp.erase(std::unique(all(tmp)), tmp.end());
+        if ((int)tmp.size() != n) {
+            fout << -1 << '\n';
+            continue;
+        }
+        bool ok = true;
+        for (int i = 0; ok && i < n; ++i) {
+            ok = ok && tmp[i] == i+1;
+        }
+        if (!ok) {
+            fout << -1 << '\n';
+        } else {
+            for (auto it : p) {
+                fout << it << ' ';
+            }
+            fout << '\n';
+        }
     }
+    return 0;
 }
 
 namespace FastIO {
