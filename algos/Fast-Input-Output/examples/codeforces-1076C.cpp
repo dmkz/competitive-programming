@@ -1,74 +1,5 @@
 #include <bits/stdc++.h>
 
-namespace FastIO {
-    struct Reader {
-        private:
-            FILE* file; std::vector<char> buffer; int pos;
-            void read();
-            bool was;
-        public:
-            Reader(FILE* file_ = stdin, const int size_ = 1 << 16)
-                : file(file_), buffer(size_, '\0'), pos(0), was(true) { read(); }
-            operator bool() const { return was; }
-            char getChar();
-            std::string getStr();
-            std::string getLine();
-            template<typename T> T getInt();
-            template<typename T> T getReal();
-    };
-    
-    Reader& operator>>(Reader& reader, char& c) { return c = reader.getChar(), reader; }
-    
-    Reader& operator>>(Reader& reader, std::string& s) { return s = reader.getStr(), reader; }
-    
-    template<class T> typename std::enable_if<std::is_floating_point<T>::value, Reader&>::type
-    operator>>(Reader& reader, T& t) { return t = reader.getReal<T>(), reader; }
-    
-    template<class T> typename std::enable_if<std::is_integral<T>::value, Reader&>::type
-    operator>>(Reader& reader, T& t) { return t = reader.getInt<T>(), reader; }
-    
-    template<class T> Reader& operator>>(Reader& reader, std::vector<T>& vec) {
-        for (auto &it : vec) { reader >> it; }
-        return reader;
-    }
-    
-    struct Writer {
-        private:
-            FILE* file; std::vector<char> buffer; int pos;
-            int defaultPrecision, defaultWidth; char defaultFill;
-        public:
-            Writer(FILE* file_ = stdout, const int size_ = 1 << 16) 
-                : file(file_), buffer(size_, '\0'), pos(0), defaultPrecision(6), defaultWidth(0), defaultFill(' ') { }
-            ~Writer() { flush(); }
-            void flush() { putChar(EOF); }
-            void setprecision(int precision) { defaultPrecision = precision; }
-            void setw(int width) { defaultWidth = width; }
-            void setfill(char fill) { defaultFill = fill; }
-            int getPrecision() const { return defaultPrecision; }
-            int getWidth() const { return defaultWidth; }
-            char getFill() const { return defaultFill; }
-            void putChar(char c);
-            void putStr(const std::string&);
-            template<typename T> void putInt(T value, int width = 0, char fill = ' ');
-            template<typename T> void putReal(T value, int precision = 6, int width = 0, char fill = ' ');
-    };
-    
-    Writer& operator<<(Writer& writer, const char c) { return writer.putChar(c), writer; }
-    
-    Writer& operator<<(Writer& writer, const std::string& s) { return writer.putStr(s), writer; }
-    
-    template<class T> typename std::enable_if<std::is_floating_point<T>::value, Writer&>::type
-    operator<<(Writer& writer, const T& t) {
-        writer.putReal(t, writer.getPrecision(), writer.getWidth(), writer.getFill());
-        return writer; 
-    }
-    
-    template<class T> typename std::enable_if<std::is_integral<T>::value, Writer&>::type
-    operator<<(Writer& writer, const T& t) { 
-        writer.putInt(t, writer.getWidth(), writer.getFill());
-        return writer;
-    }
-}
 typedef long double ld;
 int main() {    
     FastIO::Reader cin;
@@ -89,8 +20,6 @@ int main() {
     }
     return 0;
 }
-
-namespace FastIO {
        
     void Reader::read() {
         if (!buffer.empty()) {
