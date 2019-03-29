@@ -1,44 +1,63 @@
-#include <stdio.h>
-#include <vector>
-#include <string>
-#include <sstream>
+/*
+    Задача: 458. Шифровка - 2
+    
+    Решение: строки, реализация, O(n)
+    
+    Автор: Дмитрий Козырев, github: dmkz, e-mail: dmkozyrev@rambler.ru
+*/
+
+#include <bits/stdc++.h>
+
+bool isSpaceNeeded(int rowIndex, int height, int length);
+std::string insertSpaces(const int height, const std::vector<int>& order, const std::string& s);
 
 int main() {
-    // Чтение кол-ва строк в таблице и порядок их заполнения:
-    int n;
-    scanf("%d", &n);
-    std::vector<int> order(n);
-    for (auto& it : order) {
-        scanf("%d", &it); --it;
+    int height; std::cin >> height;
+    std::vector<int> order(height);
+    for (int i = 0; i < height; ++i) {
+        std::cin >> order[i];
+        order[i]--;
     }
-    // Чтение входной строки:
-    char buf[201];
-    scanf("%200s", buf);
-    std::string s(buf);
-    int len = s.size();
-    // Выделение памяти под таблицу:
-    std::vector<std::string> table(n, std::string(len / n, ' '));
-    for (int i = 0; i < len % n; ++i) {
-        table[i].push_back(' ');
+    std::string s; std::cin >> s;
+    s = insertSpaces(height, order, s);
+    std::vector<int> newOrder(height);
+    for (int idRow = 0; idRow < height; ++idRow) {
+        newOrder[order[idRow]] = idRow;
     }
-    // Заполнение таблицы:
-    int pos = 0;
-    for (auto it : order) {
-        const int size = table[it].size();
-        table[it] = s.substr(pos, size);
-        pos += size;
-    }
-    // Формирование и вывод ответа:
-    std::stringstream answer;
-    int row = 0, col = 0;
-    while (len--) {
-        answer << table[row][col];
-        ++row;
-        if (row == n) {
-            ++col;
-            row = 0;
+    const int rowLength = (int)s.size() / height;
+    for (int idCol = 0; idCol < rowLength; ++idCol) {
+        for (int idRow = 0; idRow < height; ++idRow) {
+            int x = newOrder[idRow] * rowLength + idCol;
+            if (s[x] != ' ') {
+                std::cout << s[x];
+            }
         }
     }
-    printf("%s", answer.str().c_str());
     return 0;
+}
+
+bool isSpaceNeeded(int rowIndex, int height, int length) {
+    if (length % height == 0) {
+        return false;
+    }
+    if (rowIndex >= length % height) {
+        return true;
+    }
+    return false;
+}
+
+std::string insertSpaces(const int height, const std::vector<int>& order, const std::string& s) {
+    std::string answer;
+    int begin = 0;
+    const int rowLength = ((int)s.size() + height - 1) / height;
+    for (int idRow : order) {
+        bool need = isSpaceNeeded(idRow, height, (int)s.size());
+        int newBegin = (need ? begin + rowLength - 1 : begin + rowLength);
+        answer += s.substr(begin, newBegin - begin);
+        if (need) {
+            answer += " ";
+        }
+        begin = newBegin;
+    }
+    return answer;
 }
