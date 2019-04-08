@@ -16,14 +16,21 @@ typedef std::pair<ll,int> pli;
 struct DSU {
     std::vector<int> parent, size;
     std::vector<ll> left, len, lastUpdatedAt;
-    int cnt; ll sum;
-    DSU(int n) : parent(n), size(n, 1), left(n), len(n,0), lastUpdatedAt(n,0), cnt(n), sum(0) {
+    int cnt; ll sum, lastLen;
+    DSU(int n) 
+        : parent(n), size(n, 1), left(n), len(n,0), lastUpdatedAt(n,0), cnt(n), sum(0), lastLen(0) {
         for (int i = 0; i < n; ++i) { parent[i] = i; }
     }
     int get_parent(int u) {
         return parent[u] == u ? u : parent[u] = get_parent(parent[u]);
     }
+    void update(const ll currLen) {
+        sum += cnt * (currLen - lastLen);
+        lastLen = currLen;
+    }
+    
     void union_sets(int u, int v, const ll currLen) {
+        update(currLen);
         u = get_parent(u); v = get_parent(v);
         if (u != v) {
             --cnt;
@@ -44,6 +51,10 @@ struct DSU {
             left[u] = ln; len[u] = rn - ln + 1;
             sum = sum - (ru - lu + 1) - (rv - lv + 1) + (rn - ln + 1);
         }
+    }
+    ll getAnsw(const ll currLen) {
+        update(currLen);
+        return sum;
     }
 };
 int main() {
@@ -72,13 +83,12 @@ int main() {
         for (const auto & record : queries) {
             const ll nextLen = record.first;
             const auto& ids = record.second;
-            dsu.sum += dsu.cnt * (nextLen - currLen);
             currLen = nextLen;
             while (isz(events) > 0 && events.begin()->first < currLen) {
                 auto front = *events.begin(); events.erase(events.begin());
                 dsu.union_sets(front.second, front.second+1, currLen);
             }
-            for (auto id : ids) { answ[id] = dsu.sum; }
+            for (auto id : ids) { answ[id] = dsu.getAnsw(currLen); }
         }
         for (auto it : answ) { std::cout << it << ' '; }
         std::cout << std::endl;
