@@ -11,11 +11,10 @@ for len in range(2, 1001):
 r, c = (int(x) for x in input().split())
 res = cnt[0][r] + cnt[1][r]
 for i in range(1, min(c,3)): res += 2;
-if (c > 3):
-    prev = 2; curr = 2;
-    for i in range(3,c):
-        next = curr + prev;
-        prev = curr;
-        curr = next;
-        res += curr;
+prev = 2; curr = 2;
+for i in range(3,c):
+    next = curr + prev;
+    prev = curr;
+    curr = next;
+    res += curr;
 print(res)
