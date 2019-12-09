@@ -1,7 +1,7 @@
 /*
     Problem: 91B. Queue
     
-    Solution: SegmentTree, sorting, binary search, O(n log(n))
+    Solution: Segment Tree, sorting, binary search, O(n log(n))
     
     Author: Dmitry Kozyrev, github: dmkz, e-mail: dmkozyrev@rambler.ru
 */
