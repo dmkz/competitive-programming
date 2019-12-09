@@ -1,7 +1,7 @@
 /*
     Problem: 675D. Tree Construction
     
-    Solution: SegmentTree, sorting, dfs, trees, constructive, O(n log(n))
+    Solution: Segment Tree, sorting, dfs, trees, constructive, O(n log(n))
     
     Author: Dmitry Kozyrev, github: dmkz, e-mail: dmkozyrev@rambler.ru
 */
