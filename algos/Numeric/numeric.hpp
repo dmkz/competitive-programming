@@ -8,6 +8,47 @@ typedef std::vector<vi> vvi;
 typedef std::pair<int,int> pii;
 
 namespace Numeric {
+    template<typename T, typename N> 
+    T pow(T a, N n) {
+        T r(1);
+        while (n > 0) {
+            if (n & 1) { r *= a; }
+            a *= a; n >>= 1;
+        }
+        return r;
+    }
+    template<int mod>
+    struct IntMod {
+        int value;
+        IntMod(int value_ = 0) : value(value_) {
+            if (value >= mod) value -= mod;
+            if (value < 0) value += mod;
+        }
+        IntMod& operator+=(IntMod num) {
+            value += num.value;
+            if (value >= mod) value -= mod;
+            return *this;
+        }
+        IntMod& operator-=(IntMod num) {
+            value -= num.value;
+            if (value < 0) value += mod;
+            return *this;
+        }
+        IntMod operator+(IntMod num) const { return IntMod(*this) += num; }
+        IntMod operator-(IntMod num) const { return IntMod(*this) -= num; }
+        IntMod operator*(IntMod num) const { return IntMod(int(value * 1LL * num.value % mod)); }
+        IntMod& operator*=(IntMod num) { return *this = *this * num; }
+        IntMod operator/(IntMod num) const { return *this * pow(num, mod-2); }
+        IntMod& operator/=(IntMod num) { return *this = *this / num; }
+    };
+    template<int mod> bool operator<(IntMod<mod> a,IntMod<mod> b) { return a.value < b.value; }
+    template<int mod>
+    std::ostream& operator<<(std::ostream& os, const IntMod<mod>& num) {
+        return os << num.value;
+    }
+}
+
+namespace Numeric {
     int addmod(int a, int b, int mod);
     int submod(int a, int b, int mod);
     int mulmod(int a, int b, int mod);
