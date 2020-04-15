@@ -3,12 +3,11 @@
 // ---- ---- ---- ---- ---- ---- DEBUG LIBRARY ---- ---- ---- ---- ---- ----
 const int debug = 1;
 #define watch(...) debug && std::cout << "{" << #__VA_ARGS__ << "} = " \
-	<< std::make_tuple(__VA_ARGS__) << std::endl
+    << std::make_tuple(__VA_ARGS__) << std::endl
 
 template<typename... X>
-std::ostream& operator<<(std::ostream& os, const std::pair<X...>& p) {
-    return os << std::make_tuple(std::get<0>(p), std::get<1>(p));
-}
+std::ostream& operator<<(std::ostream& os, const std::pair<X...>& p) 
+{ return os << std::make_tuple(std::get<0>(p), std::get<1>(p)); }
 
 template<std::size_t I = 0, typename FuncT, typename... Tp>
 inline typename std::enable_if<I == sizeof...(Tp), void>::type
@@ -16,10 +15,9 @@ for_each_const(const std::tuple<Tp...> &, FuncT) { }
 
 template<std::size_t I = 0, typename FuncT, typename... Tp>
 inline typename std::enable_if<I < sizeof...(Tp), void>::type
-for_each_const(const std::tuple<Tp...>& t, FuncT f) {
-	f(std::get<I>(t));
-	for_each_const<I + 1, FuncT, Tp...>(t, f);
-}
+for_each_const(const std::tuple<Tp...>& t, FuncT f)
+{ f(std::get<I>(t)),for_each_const<I + 1, FuncT, Tp...>(t, f); }
+
 
 template<std::size_t I = 0, typename FuncT, typename... Tp>
 inline typename std::enable_if<I == sizeof...(Tp), void>::type
@@ -27,28 +25,23 @@ for_each(std::tuple<Tp...> &, FuncT) { }
 
 template<std::size_t I = 0, typename FuncT, typename... Tp>
 inline typename std::enable_if<I < sizeof...(Tp), void>::type
-for_each(std::tuple<Tp...>& t, FuncT f) {
-	f(std::get<I>(t));
-	for_each<I + 1, FuncT, Tp...>(t, f);
-}
+for_each(std::tuple<Tp...>& t, FuncT f)
+{ f(std::get<I>(t)); for_each<I + 1, FuncT, Tp...>(t, f); }
 
 struct Printer {
     std::ostream& os; bool was{0};
     Printer(std::ostream& os_) : os(os_) { }
-    template<typename X> void operator()(X x) {
-        os << (was?", ":(was=1,"")) << x;
-    }
+    template<typename X> void operator()(X x) 
+    { os << (was?", ":(was=1,"")) << x; }
 };
 
 template<typename... X>
-std::ostream& operator<<(std::ostream& os, const std::tuple<X...>& t) {
-    return os << "{", for_each_const(t, Printer(os)), os << "}";
-}
+std::ostream& operator<<(std::ostream& os, const std::tuple<X...>& t)
+{ return os << "{", for_each_const(t, Printer(os)), os << "}"; }
 
 template<typename Iterator>
-std::ostream& print(std::ostream& os, Iterator begin, Iterator end) {
-	return os << "{", std::for_each(begin,end,Printer(os)), os << "}";
-}
+std::ostream& print(std::ostream& os, Iterator begin, Iterator end)
+{ return os << "{", std::for_each(begin,end,Printer(os)), os << "}"; }
 
 #define OUTPUT(container) template<typename X, typename... T>           \
 std::ostream& operator<<(std::ostream& os, const container<X,T...>& c)  \
