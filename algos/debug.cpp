@@ -47,18 +47,19 @@ std::ostream& print(std::ostream& os, Iterator begin, Iterator end)
 std::ostream& operator<<(std::ostream& os, const container<X,T...>& c)  \
 { return print(os, all(c)); }
 OUTPUT(std::vector) OUTPUT(std::list) OUTPUT(std::deque)
-OUTPUT(std::set) OUTPUT(std::multiset) OUTPUT(std::unordered_set)
+OUTPUT(std::set) OUTPUT(std::unordered_set)
+OUTPUT(std::multiset) OUTPUT(std::unordered_multiset)
 OUTPUT(std::map) OUTPUT(std::multimap) OUTPUT(std::unordered_map)
 #undef RANGE_OUTPUT
     
-#define OUTPUT(container, get, pop) template<typename X, typename... T> \
+#define OUTPUT2(container, get, pop) template<typename X, typename... T> \
 std::ostream& operator<<(std::ostream& os, container<X,T...> c) {       \
     std::vector<X> v(c.size());                                         \
     for (unsigned i = 0; i != v.size(); v[i++] = c.get(),c.pop());      \
     return os << v; }                                                   
-OUTPUT(std::queue,front,pop)
-OUTPUT(std::stack,top,pop)
-OUTPUT(std::priority_queue,top,pop)
+OUTPUT2(std::queue,front,pop)
+OUTPUT2(std::stack,top,pop)
+OUTPUT2(std::priority_queue,top,pop)
 #undef OUTPUT
 
 template<typename X> using set_gt = std::set<X, std::greater<X>>;
