@@ -1,10 +1,10 @@
 namespace Memory {
     char buf[150*1024*1024];
-    uint64_t ptr{0};
+    int64_t ptr{150*1024*1024};
     void* malloc(uint64_t cnt) {
-        ptr+=cnt;
-        assert(ptr<sizeof(buf));
-        return (void*)(buf+ptr-cnt);
+        ptr-=cnt;
+        assert(ptr>=0);
+        return (void*)(buf+ptr);
     }
 }
  
