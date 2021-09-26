@@ -1,3 +1,4 @@
+// сабмит на codeforces: https://codeforces.com/group/LB1sSRhotq/contest/346286/submission/129958213
 #include <bits/stdc++.h>
 
 // Структура для операций с точками и векторами:
