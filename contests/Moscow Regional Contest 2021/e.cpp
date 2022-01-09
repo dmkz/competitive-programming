@@ -10,7 +10,8 @@ std::ostream& operator<<(std::ostream& os, const std::vector<T>& vec) {
     os << "{";
     bool isFirst = true;
     for (auto it : vec) {
-        if (!isFirst) isFirst = false, os << ",";
+        if (isFirst) isFirst = false;
+        else os << ",";
         os << it;
     }
     return os << "}";
