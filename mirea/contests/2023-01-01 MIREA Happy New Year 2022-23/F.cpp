@@ -1,3 +1,4 @@
+// tags: recursion, math, O(q*log(n))
 #include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
