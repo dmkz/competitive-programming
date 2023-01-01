@@ -1,3 +1,4 @@
+// tags: dynamic programming, game theory, O(n)
 #include <bits/stdc++.h>
 using namespace std;
 // будем честно считать, кто выиграет
