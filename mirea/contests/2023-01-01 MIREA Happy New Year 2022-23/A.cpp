@@ -1,3 +1,4 @@
+// tags: sorting, lexicographical compare
 #include <bits/stdc++.h>
 using namespace std;
 void solve() {
