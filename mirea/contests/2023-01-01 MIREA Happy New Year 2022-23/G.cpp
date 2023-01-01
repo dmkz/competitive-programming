@@ -1,3 +1,4 @@
+// tags: math, combinatorics, permutations, O(n log(n))
 #include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
