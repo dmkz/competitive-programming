@@ -1,3 +1,4 @@
+// tags: dynamic programming, combinatorics, math, trees, O(d^3)
 #include <bits/stdc++.h>
 #define all(x) std::begin(x), std::end(x)
 #define isz(x) (int)std::size(x)
