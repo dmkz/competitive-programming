@@ -1,3 +1,4 @@
+// tags: math, physics, geometry, O(1)
 #include <bits/stdc++.h>
 using namespace std;
 using ld = long double;
