@@ -25,7 +25,6 @@ inline typename std::enable_if<I < sizeof...(Tp), void>::type
 for_each_const(const std::tuple<Tp...>& t, FuncT f)
 { f(std::get<I>(t)),for_each_const<I + 1, FuncT, Tp...>(t, f); }
 
-
 template<std::size_t I = 0, typename FuncT, typename... Tp>
 inline typename std::enable_if<I == sizeof...(Tp), void>::type
 for_each(std::tuple<Tp...> &, FuncT) { }
@@ -57,7 +56,7 @@ OUTPUT(std::vector) OUTPUT(std::list) OUTPUT(std::deque)
 OUTPUT(std::set) OUTPUT(std::unordered_set)
 OUTPUT(std::multiset) OUTPUT(std::unordered_multiset)
 OUTPUT(std::map) OUTPUT(std::multimap) OUTPUT(std::unordered_map)
-#undef RANGE_OUTPUT
+#undef OUTPUT
     
 #define OUTPUT2(container, get, pop) template<typename X, typename... T> \
 std::ostream& operator<<(std::ostream& os, container<X,T...> c) {       \
@@ -67,7 +66,7 @@ std::ostream& operator<<(std::ostream& os, container<X,T...> c) {       \
 OUTPUT2(std::queue,front,pop)
 OUTPUT2(std::stack,top,pop)
 OUTPUT2(std::priority_queue,top,pop)
-#undef OUTPUT
+#undef OUTPUT2
 // Defines:
 using ll = long long;
 using ull = unsigned long long;
@@ -82,12 +81,14 @@ using pli = std::pair<ll,int>;
 using pll = std::pair<ll,ll>;
 using vpii = std::vector<pii>;
 using vvpii = std::vector<vpii>;
+using vs = std::vector<std::string>;
 // Comparators:
-template<typename A, typename B> bool operator >(const A& a, const B& b) { return b < a; }
-template<typename A, typename B> bool operator<=(const A& a, const B& b) { return !(a > b); }
-template<typename A, typename B> bool operator>=(const A& a, const B& b) { return !(a < b); }
-template<typename A, typename B> bool operator!=(const A& a, const B& b) { return a < b || b < a; }
-template<typename A, typename B> bool operator==(const A& a, const B& b) { return !(a != b); }
+#define GEN_COMPARATORS(A) \
+    bool operator >(const A& a, const A& b) { return b < a; }    \
+    bool operator<=(const A& a, const A& b) { return !(a > b); } \
+    bool operator>=(const A& a, const A& b) { return !(a < b); } \
+    bool operator!=(const A& a, const A& b) { return a < b || b < a; } \
+    bool operator==(const A& a, const B& b) { return !(a != b); }
 namespace std {
 #if __cplusplus < 201703L
     // Containers:
@@ -180,6 +181,40 @@ std::vector<X,T...>& operator>>(std::vector<X,T...>& l, std::vector<X,T...>& r)
 template<typename X, typename... T>
 std::vector<X,T...>& operator<<(std::vector<X,T...>& l, std::vector<X,T...>& r)
 { return l.insert(l.end(),all(r)),r.clear(), l; }
+
+// Auto-revert:
+template<typename F1, typename F2>
+struct AutoRevert {
+    F1 f1;
+    F2 f2;
+    AutoRevert(const F1 &func1, const F2 &func2)
+        : f1(func1)
+        , f2(func2)
+    {
+        f1();
+    }
+    ~AutoRevert()
+    {
+        f2();
+    }
+};
+
+// Operations with bits:
+template<typename T>
+void setbit(T &mask, int bit, bool x) {
+    mask &= ~(T(1) << bit);
+    mask |= (T(x) << bit);
+}
+
+template<typename T>
+bool getbit(T &mask, int bit) {
+    return (mask >> bit & 1);
+}
+
+template<typename T>
+void flipbit(T &mask, int bit) {
+    mask ^= (T(1) << bit);
+}
 
 // Variables:
 const int debug = 0;
