@@ -2,7 +2,7 @@
 #include "../Brute.hpp"
 void testDistinct() {
     std::cout << std::string(40,'-') << std::endl;
-    const int len = 3, min = 1, max = 4;
+    const int len = 2, min = 1, max = 3;
     std::cout << "test distinct: arrays with len " << len
               << ", min = " << min << ", max = " << max << ":\n";
     BruteDistinct<int> a(len, min, max);
