@@ -43,14 +43,6 @@ struct BruteDistinct : public std::vector<T>
         assert(this->back() <= max);
     }
     
-    void set(int pos, int newValue) {
-        assert(min <= newValue);
-        assert(max >= newValue);
-        used[(*this)[pos]-min] = false;
-        (*this)[pos] = newValue;
-        used[(*this)[pos]-min] = true;
-    }
-    
     bool next() {
         // нужно найти самую правую позицию, которую можем увеличить
         for (int i = (int)(this->size())-1; i >= 0; i--) {
