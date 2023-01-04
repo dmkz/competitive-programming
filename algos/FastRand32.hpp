@@ -45,4 +45,4 @@ private:
 };
 
 } // namespace FastRand32
-#endif __FASTRAND32_HPP__
+#endif // __FASTRAND32_HPP__

@@ -1,6 +1,25 @@
 #ifndef __TEMPLATE_HPP__
 #define __TEMPLATE_HPP__
-
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <map>
+#include <queue>
+#include <deque>
+#include <stack>
+#include <functional>
+#include <bitset>
+#include <string>
+#include <sstream>
+#include <fstream>
+#include <iomanip>
+#include <cmath>
+#include <cassert>
+#include <list>
+#include <forward_list>
+#include <set>
+#include <unordered_set>
+#include <cstdint>
 #define all(x) std::begin(x), std::end(x)
 #define isz(x) (int)std::size(x)
 const auto ready = [](){
