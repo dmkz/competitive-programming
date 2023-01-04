@@ -1,3 +1,6 @@
+#ifndef __SEGMENT_TREE_HPP__
+#define __SEGMENT_TREE_HPP__
+
 /**
  *  Efficient template SegmentTree<ItemType, ItemTraits> bottom-to-top implementation.
  *  ItemTraits should contain static functions `update`, `merge` and `neutral` (see examples below).
@@ -5,12 +8,6 @@
  *      1) min-query on segment `[l, r]` (zero-indexed)
  *      2) set-query on position `p` with value `x`
  */
-#pragma once
-
-#include <iostream>
-#include <algorithm>
-#include <vector>
-#include <limits>
 
 namespace SegmentTree {
     /**
@@ -154,3 +151,5 @@ namespace SegmentTree {
     };
     
 } /** SegmentTree namespace end */
+
+#endif // __SEGMENT_TREE_HPP__

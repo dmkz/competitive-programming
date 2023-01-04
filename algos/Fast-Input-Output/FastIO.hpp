@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __FASTIO_HPP__
+#define __FASTIO_HPP__
 
 #include <bits/stdc++.h>
 
@@ -146,3 +147,4 @@ namespace FastIO {
         return writer;
     }
 }
+#endif // __FASTIO_HPP__

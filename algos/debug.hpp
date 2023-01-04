@@ -1,8 +1,7 @@
-#include <bits/stdc++.h>
-#define all(x) (x).begin(),(x).end()
+#ifndef __DEBUG_HPP__
+#define __DEBUG_HPP__
 // ---- ---- ---- ---- ---- ---- DEBUG LIBRARY ---- ---- ---- ---- ---- ----
-const int debug = 1;
-#define watch(...) debug && std::cout << "{" << #__VA_ARGS__ << "} = " \
+#define watch(...) debug && std::cerr << "{" << #__VA_ARGS__ << "} = " \
     << std::make_tuple(__VA_ARGS__) << std::endl
 
 template<typename... X>
@@ -62,22 +61,5 @@ OUTPUT2(std::stack,top,pop)
 OUTPUT2(std::priority_queue,top,pop)
 #undef OUTPUT
 
-template<typename X> using set_gt = std::set<X, std::greater<X>>;
-int main() {
-    // try to print simple variables:
-    int one = 1, two = 2, three = 3;
-    watch(one,two,three);
-    // try to print vector of queues:
-    using qi = std::queue<int>;
-    std::vector<qi> vector(3);
-    for (int i = 0; i < 12; i++) vector[i%3].push(i);
-    watch(vector);
-    // try to print set of priority_queues with comparator:
-    set_gt<qi> set(all(vector));
-    watch(set);
-    // try to print two containers at the same time:
-    std::unordered_set<int> unordered_set;
-    for (int i = 0; i < 6; i++) unordered_set.insert(i);
-    watch(unordered_set,one,two,three);
-    return 0; 
-}
+const int debug = 0;
+#endif // __DEBUG_HPP__

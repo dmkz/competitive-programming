@@ -1,3 +1,5 @@
+#ifndef __TIMER_HPP__
+#define __TIMER_HPP__
 class Timer {
     std::chrono::time_point<std::chrono::steady_clock> timePoint;
     size_t value;
@@ -10,3 +12,4 @@ public:
     }
     size_t operator()() const { return value; }
 };
+#endif // __TIMER_HPP__

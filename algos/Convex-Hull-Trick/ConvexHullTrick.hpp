@@ -1,4 +1,5 @@
-#include <bits/stdc++.h>
+#ifndef __CONVEXHULLTRICK_HPP__
+#define __CONVEXHULLTRICK_HPP__
 
 namespace ConvexHullTrick {
     
@@ -54,3 +55,4 @@ namespace ConvexHullTrick {
         return Point(x, lhs.a * x + lhs.b);
     }
 }
+#endif // __CONVEXHULLTRICK_HPP__

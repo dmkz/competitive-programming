@@ -1,4 +1,8 @@
-#include <bits/stdc++.h>
+#ifndef __FASTRAND32_HPP__
+#define __FASTRAND32_HPP__
+
+namespace FastRand32 {
+    
 struct FastRand32
 {
     // инициализация начальным значением. На codeforces лучше инициализировать
@@ -40,13 +44,5 @@ private:
     uint32_t x;
 };
 
-int32_t main() {
-    FastRand32 random;
-    const int n = 10, q = 10;
-    for (int i = 0; i < q; i++) {
-        int L = random(n);
-        int R = random(n);
-        if (L > R) std::swap(L, R);
-        std::cout << L << " " << R << std::endl;
-    }
-}
+} // namespace FastRand32
+#endif __FASTRAND32_HPP__

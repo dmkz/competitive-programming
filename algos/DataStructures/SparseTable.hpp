@@ -1,11 +1,11 @@
-// problem: 818E
-#pragma once
-#include <bits/stdc++.h>
+#ifndef __SPARSETABLE_HPP__
+#define __SPARSETABLE_HPP__
 
 #ifndef isz
 #define isz(x) (int)std::size(x)
 #endif
-
+namespace SparseTable {
+    
 template<typename T, typename Func, bool useFunctor = false>
 struct SparseTable {
 
@@ -108,3 +108,5 @@ struct Max {
         return std::max(a, b);
     }
 };
+} // namespace SparseTable
+#endif // __SPARSETABLE_HPP__

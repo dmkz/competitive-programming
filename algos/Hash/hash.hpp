@@ -1,10 +1,13 @@
+#ifndef __HASH_HPP__
+#define __HASH_HPP__
 // Hash:
 namespace Hash {
     const ull mod = (ull(1) << 61) - 1; // prime mod of hashing
     std::vector<ull> pow{1};
     const int base = [](){
         std::uniform_int_distribution<int> dist((int)1.9e9, (int)2e9);
-        int tmp = dist(Rand::gen);
+        static std::mt19937 gen(std::chrono::high_resolution_clock::now().time_since_epoch().count());
+        int tmp = dist(gen);
         return tmp % 2 == 0 ? tmp - 1 : tmp;
     }();
     
@@ -67,3 +70,4 @@ namespace Hash {
         }
     };
 }
+#endif // __HASH_HPP__

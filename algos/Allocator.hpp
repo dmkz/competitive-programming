@@ -1,3 +1,7 @@
+#ifndef __ALLOCATOR_HPP__
+#define __ALLOCATOR_HPP__
+
+namespace Allocator {
 namespace Memory {
     char buf[150*1024*1024];
     int64_t ptr{150*1024*1024};
@@ -28,3 +32,5 @@ template<class T, class C = std::less<T>>
 using Set = std::set<T,C,Allocator<T>>;
 template<class K, class V, class C = std::less<K>>
 using Map = std::map<K,V,C,Allocator<std::pair<const K, V>>>;
+}
+#endif // __ALLOCATOR_HPP__

@@ -1,6 +1,6 @@
-//#pragma GCC optimize("Ofast")
-//#pragma GCC target("avx,avx2,fma")
-#include <bits/stdc++.h>
+#ifndef __TEMPLATE_HPP__
+#define __TEMPLATE_HPP__
+
 #define all(x) std::begin(x), std::end(x)
 #define isz(x) (int)std::size(x)
 const auto ready = [](){
@@ -8,65 +8,6 @@ const auto ready = [](){
     std::cout << std::fixed << std::setprecision(12);
     return 1;
 }();
-// ---- ---- ---- ---- ---- ---- DEBUG LIBRARY ---- ---- ---- ---- ---- ----
-#define watch(...) debug && std::cout << "{" << #__VA_ARGS__ << "} = " \
-    << std::make_tuple(__VA_ARGS__) << std::endl
-
-template<typename... X>
-std::ostream& operator<<(std::ostream& os, const std::pair<X...>& p) 
-{ return os << std::make_tuple(std::get<0>(p), std::get<1>(p)); }
-
-template<std::size_t I = 0, typename FuncT, typename... Tp>
-inline typename std::enable_if<I == sizeof...(Tp), void>::type
-for_each_const(const std::tuple<Tp...> &, FuncT) { }
-
-template<std::size_t I = 0, typename FuncT, typename... Tp>
-inline typename std::enable_if<I < sizeof...(Tp), void>::type
-for_each_const(const std::tuple<Tp...>& t, FuncT f)
-{ f(std::get<I>(t)),for_each_const<I + 1, FuncT, Tp...>(t, f); }
-
-template<std::size_t I = 0, typename FuncT, typename... Tp>
-inline typename std::enable_if<I == sizeof...(Tp), void>::type
-for_each(std::tuple<Tp...> &, FuncT) { }
-
-template<std::size_t I = 0, typename FuncT, typename... Tp>
-inline typename std::enable_if<I < sizeof...(Tp), void>::type
-for_each(std::tuple<Tp...>& t, FuncT f)
-{ f(std::get<I>(t)); for_each<I + 1, FuncT, Tp...>(t, f); }
-
-struct Printer {
-    std::ostream& os; bool was{0};
-    Printer(std::ostream& os_) : os(os_) { }
-    template<typename X> void operator()(X x) 
-    { os << (was?", ":(was=1,"")) << x; }
-};
-
-template<typename... X>
-std::ostream& operator<<(std::ostream& os, const std::tuple<X...>& t)
-{ return os << "{", for_each_const(t, Printer(os)), os << "}"; }
-
-template<typename Iterator>
-std::ostream& print(std::ostream& os, Iterator begin, Iterator end)
-{ return os << "{", std::for_each(begin,end,Printer(os)), os << "}"; }
-
-#define OUTPUT(container) template<typename X, typename... T>           \
-std::ostream& operator<<(std::ostream& os, const container<X,T...>& c)  \
-{ return print(os, all(c)); }
-OUTPUT(std::vector) OUTPUT(std::list) OUTPUT(std::deque)
-OUTPUT(std::set) OUTPUT(std::unordered_set)
-OUTPUT(std::multiset) OUTPUT(std::unordered_multiset)
-OUTPUT(std::map) OUTPUT(std::multimap) OUTPUT(std::unordered_map)
-#undef OUTPUT
-    
-#define OUTPUT2(container, get, pop) template<typename X, typename... T> \
-std::ostream& operator<<(std::ostream& os, container<X,T...> c) {       \
-    std::vector<X> v(c.size());                                         \
-    for (unsigned i = 0; i != v.size(); v[i++] = c.get(),c.pop());      \
-    return os << v; }                                                   
-OUTPUT2(std::queue,front,pop)
-OUTPUT2(std::stack,top,pop)
-OUTPUT2(std::priority_queue,top,pop)
-#undef OUTPUT2
 // Defines:
 using ll = long long;
 using ull = unsigned long long;
@@ -216,6 +157,5 @@ void flipbit(T &mask, int bit) {
     mask ^= (T(1) << bit);
 }
 
-// Variables:
-const int debug = 0;
 // -----------------------------------------------------------------------------
+#endif // __TEMPLATE_HPP__

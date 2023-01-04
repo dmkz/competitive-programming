@@ -1,6 +1,5 @@
-#pragma once
-
-#include <bits/stdc++.h>
+#ifndef __SEGMENTTREELAZY_HPP__
+#define __SEGMENTTREELAZY_HPP__
 
 namespace SegmentTreeLazy {
     
@@ -270,3 +269,4 @@ namespace SegmentTreeLazy {
         }
     };   
 }
+#endif // __SEGMENTTREELAZY_HPP__
