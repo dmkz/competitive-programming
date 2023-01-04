@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-const std::string libpath = "/cygdrive/c/Users/dkozyrev/Documents/GitHub/competitive-programming/algos";
+const std::string libpath = "C:\\Users\\dkozyrev\\Documents\\GitHub\\competitive-programming\\algos";
 namespace fs = std::filesystem;
 bool isSuffix(std::string where, std::string what) {
     if (what.size() > where.size())return false;
@@ -22,24 +22,24 @@ std::string tolower(std::string s) {
 }
 void scanFiles() {
     // Iterate over the `std::filesystem::directory_entry` elements explicitly
-    std::cerr << "List of hpp files: {";
+    std::cout << "List of hpp files: {";
     bool isFirst = true;
     for (const fs::directory_entry& dir_entry : 
         fs::recursive_directory_iterator(libpath))
     {
-        auto path = dir_entry.path();
-        auto filename = path.filename();
+        auto path = dir_entry.path().string();
+        auto filename = dir_entry.path().filename().string();
         if (isSuffix(filename, "hpp"))
         {
-            auto key = tolower(std::string(filename));
-            headers[key] = path.string();
+            auto key = tolower(filename);
+            headers[key] = path;
             if (!isFirst) {
-                std::cerr << ", ";
+                std::cout << ", ";
             } else isFirst = false;
-            std::cerr << filename;
+            std::cout << filename;
         }
     }
-    std::cerr << "}\n";
+    std::cout << "}\\n";
 }
 std::string trim(std::string s) {
     //while (s.size() && std::isspace(s.back())) s.pop_back();
@@ -71,9 +71,9 @@ auto fileToStrings(std::string path) {
 void writeFile(std::string path, const std::vector<std::string>& content) {
     std::ofstream fout(path);
     for (auto &it : content) {
-        fout << it << '\n';
+        fout << it << '\\n';
     }
-    std::cerr << content.size() << " lines have been written." << std::endl;
+    std::cout << content.size() << " lines have been written." << std::endl;
 }
 
 auto expandFile(std::string path) {
@@ -82,8 +82,8 @@ auto expandFile(std::string path) {
     std::vector<std::string> result;
     while(std::getline(fin, s)) {
         auto t = trim(s);
-        if (remPrefix(t, "#include \"")) {
-            while (t.size() && t.back() == '\"') t.pop_back();
+        if (remPrefix(t, "#include \\"")) {
+            while (t.size() && t.back() == '\\"') t.pop_back();
             int p = (int)t.size()-1;
             while (p >= 0 && t[p] != '/') p--;
             if (p >= 0) {
@@ -92,7 +92,7 @@ auto expandFile(std::string path) {
             t = tolower(t);
             if (auto it = headers.find(t); it != headers.end())
             {
-                std::cerr << "Header '" << t << "' " << "have been found." << std::endl;
+                std::cout << "Header '" << t << "' " << "have been found." << std::endl;
                 for (const auto &line : fileToStrings(it->second))
                 {
                     result.emplace_back(line);
@@ -128,30 +128,30 @@ auto collapseFile(std::string path, const std::vector<std::string> &content) {
                             content[j] != what; j++){};
                 assert(j < (int)content.size());
                 i = j;
-                fout << "#include \"" << header->first << "\"" << "\n";
+                fout << "#include \\"" << header->first << "\\"" << "\\n";
                 nLines++;
-                std::cerr << "Header '" << header->first << "' have been collapsed." << std::endl; 
+                std::cout << "Header '" << header->first << "' have been collapsed." << std::endl; 
                 continue;
             }
         }
-        fout << content[i] << '\n';
+        fout << content[i] << '\\n';
         nLines++;
     }
-    std::cerr << "OK, " << nLines << " lines have been written!" << std::endl;
+    std::cout << "OK, " << nLines << " lines have been written!" << std::endl;
 }
 int main(int argc, char *argv[]) {
     scanFiles();
     assert(argc == 3);
     if (std::string(argv[1]) == "-e") {
     	// expand
-        std::cerr << "Trying to expand file '" << argv[2] << "'" << std::endl;
+        std::cout << "Trying to expand file '" << argv[2] << "'" << std::endl;
         auto content = expandFile(argv[2]);
-        std::cerr << "After expand: " << content.size() << " lines" << std::endl;
+        std::cout << "After expand: " << content.size() << " lines" << std::endl;
         writeFile(argv[2], content);
     } else {
         assert(std::string(argv[1]) == "-c");
     	// collapse
-        std::cerr << "Trying to collapse file '" << argv[2] << "'" << std::endl;
+        std::cout << "Trying to collapse file '" << argv[2] << "'" << std::endl;
         auto content = fileToStrings(argv[2]);
         collapseFile(argv[2], content);
     }
