@@ -1,19 +1,19 @@
 # algos.bash_aliases
 
-libexpandpath="/cygdrive/c/Users/dkozyrev/Documents/GitHub/competitive-programming/algos/libexpand";
+libexpandpath="$(readlink -f libexpand.exe)";
 
 function libexpand() {
 	if [ -z "$1" ]; then
 		echo "ERROR: You have to specify filename!";
 	else
-		$libexpandpath "-e" "$(readlink -f $1)";	
+		"$libexpandpath" "-e" "$(readlink -f $1)";	
 	fi
 }
 function libcollapse() {
 	if [ -z "$1" ]; then
 		echo "ERROR: You have to specify filename!";
 	else
-		$libexpandpath "-c" "$(readlink -f $1)";	
+		"$libexpandpath" "-c" "$(readlink -f $1)";	
 	fi
 }
 
