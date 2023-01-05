@@ -35,6 +35,23 @@ std::string tolower(std::string s) {
     return s;
 }
 
+std::string trim(std::string s) {
+    //while (s.size() && std::isspace(s.back())) s.pop_back();
+    int p = 0;
+    char prev = ' ';
+    for (int i = 0; i < (int)s.size(); i++) {
+        if (std::isspace(s[i]) && std::isspace(prev))
+            continue;
+        prev = s[p++] = s[i];
+    }
+    s.resize(p);
+    while (p - 1 >= 0 && std::isspace(s[p-1])) {
+        p--;
+        s.pop_back();
+    }
+    return s;
+}
+
 void scanFiles() {
 #ifdef __USE_CPP_FILESYSTEM__
     std::cout << "List of hpp files: {";
@@ -67,6 +84,7 @@ void scanFiles() {
     bool isFirst = true;
     std::string path;
     while(std::getline(fin, path)) {
+        path = trim(path);
         int i;
         for (i = (int)path.size()-1;
              i >= 0 && !(path[i] == '\\' || path[i] == '/');
@@ -80,23 +98,6 @@ void scanFiles() {
     }
 #endif // __USE_CPP_FILESYSTEM__
     std::cout << "}\n";
-}
-
-std::string trim(std::string s) {
-    //while (s.size() && std::isspace(s.back())) s.pop_back();
-    int p = 0;
-    char prev = ' ';
-    for (int i = 0; i < (int)s.size(); i++) {
-        if (std::isspace(s[i]) && std::isspace(prev))
-            continue;
-        prev = s[p++] = s[i];
-    }
-    s.resize(p);
-    while (p - 1 >= 0 && std::isspace(s[p-1])) {
-        p--;
-        s.pop_back();
-    }
-    return s;
 }
 
 auto fileToStrings(std::string path) {
@@ -187,10 +188,10 @@ auto collapseFile(std::string path, const std::vector<std::string> &content)
             }
             if (auto header = headers.find(s); header != headers.end())
             {
-                auto what = "#endif // " + variable;
+                auto what = trim("#endif // " + variable);
                 int j;
                 for (j = i; j < (int)content.size() &&
-                            content[j] != what; j++){};
+                            trim(content[j]) != what; j++){};
                 if (j >= (int)content.size()) {
                     std::cout << "Can't find where '" << variable << "' is closed" << std::endl;
                     system("pause");

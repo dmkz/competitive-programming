@@ -1,0 +1,45 @@
+# algos.bash_aliases
+
+libexpandpath="/cygdrive/c/Users/dkozyrev/Documents/GitHub/competitive-programming/algos/libexpand";
+
+function libexpand() {
+	if [ -z "$1" ]; then
+		echo "ERROR: You have to specify filename!";
+	else
+		$libexpandpath "-e" "$(readlink -f $1)";	
+	fi
+}
+function libcollapse() {
+	if [ -z "$1" ]; then
+		echo "ERROR: You have to specify filename!";
+	else
+		$libexpandpath "-c" "$(readlink -f $1)";	
+	fi
+}
+
+cpp_flags="-fconcepts -Wall -Wextra -pedantic -std=c++17 -Ofast -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wl,--stack=256000000 -Wcast-align"
+
+cpp_debug_flags="-D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2"
+
+function cpp_compile() {
+	if [ -z "$1" ]; then
+		echo "ERROR: You have to specify filename!";
+	else
+		libexpand $(readlink -f $1);
+		echo -e "\n\nStart the compilation process...";
+		g++ $2 $3 $1;
+	fi
+}
+
+function cpp_debug() {
+	cpp_compile $1 "$cpp_flags" "$cpp_debug_flags";
+}
+
+function cpp_fast() {
+	cpp_compile $1 "$cpp_flags";
+}
+
+alias c++debug="g++ $cpp_flags $cpp_debug_flags";
+alias c++fast="g++ $cpp_flags";
+alias cppf="cpp_fast"
+alias cppd="cpp_debug"

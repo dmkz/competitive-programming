@@ -39,10 +39,17 @@ void scanFiles() {
             std::cout << filename;
         }
     }
-    std::cout << "}\\n";
+    std::cout << "}\n";
 }
-std::string trim(std::string s) {
-    //while (s.size() && std::isspace(s.back())) s.pop_back();
+std::string trim(std::string s, bool onlyEnds = false) {
+    if (onlyEnds) {
+        for (int rot = 0; rot < 2; rot++) {
+            while (s.size() && std::isspace(s.back()))
+                s.pop_back();
+            std::reverse(s.begin(), s.end());
+        }
+        return s;
+    }
     int p = 0;
     char prev = ' ';
     for (int i = 0; i < (int)s.size(); i++) {
@@ -71,7 +78,7 @@ auto fileToStrings(std::string path) {
 void writeFile(std::string path, const std::vector<std::string>& content) {
     std::ofstream fout(path);
     for (auto &it : content) {
-        fout << it << '\\n';
+        fout << it << '\n';
     }
     std::cout << content.size() << " lines have been written." << std::endl;
 }
@@ -82,8 +89,8 @@ auto expandFile(std::string path) {
     std::vector<std::string> result;
     while(std::getline(fin, s)) {
         auto t = trim(s);
-        if (remPrefix(t, "#include \\"")) {
-            while (t.size() && t.back() == '\\"') t.pop_back();
+        if (remPrefix(t, "#include \"")) {
+            while (t.size() && t.back() == '\"') t.pop_back();
             int p = (int)t.size()-1;
             while (p >= 0 && t[p] != '/') p--;
             if (p >= 0) {
@@ -105,6 +112,9 @@ auto expandFile(std::string path) {
     return result;
 }
 auto collapseFile(std::string path, const std::vector<std::string> &content) {
+    std::string dir = path;
+    while (dir.size() && !(dir.back() == '/' || dir.back() == '\\'))
+        dir.pop_back();
     std::ofstream fout(path);
     int nLines{};
     for (int i = 0; i < (int)content.size(); i++) {
@@ -122,19 +132,26 @@ auto collapseFile(std::string path, const std::vector<std::string> &content) {
             }
             if (auto header = headers.find(s); header != headers.end())
             {
-                auto what = "#endif // " + variable;
+                auto what = trim("#endif // " + variable);
                 int j;
                 for (j = i; j < (int)content.size() &&
-                            content[j] != what; j++){};
-                assert(j < (int)content.size());
-                i = j;
-                fout << "#include \\"" << header->first << "\\"" << "\\n";
-                nLines++;
-                std::cout << "Header '" << header->first << "' have been collapsed." << std::endl; 
-                continue;
+                            trim(content[j]) != what; j++)
+                { };
+                if (j >= (int)content.size()) {
+                    std::cout << "Can't find where '" << variable << "' is closed" << std::endl;
+                    std::cout << "What = '" << what << "'" << std::endl;
+                } else {
+                    assert(j < (int)content.size());
+                    i = j;
+                    fout << "#include \"" << header->first << "\"" << "\n";
+                    nLines++;
+                    writeFile(dir+s, fileToStrings(header->second));
+                    std::cout << "Header '" << header->first << "' have been collapsed." << std::endl;
+                    continue;
+                }
             }
         }
-        fout << content[i] << '\\n';
+        fout << content[i] << '\n';
         nLines++;
     }
     std::cout << "OK, " << nLines << " lines have been written!" << std::endl;
