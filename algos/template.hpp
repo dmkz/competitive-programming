@@ -1,5 +1,8 @@
 #ifndef __TEMPLATE_HPP__
 #define __TEMPLATE_HPP__
+#include <random>
+#include <chrono>
+#include <numeric>
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -48,7 +51,7 @@ using vs = std::vector<std::string>;
     bool operator<=(const A& a, const A& b) { return !(a > b); } \
     bool operator>=(const A& a, const A& b) { return !(a < b); } \
     bool operator!=(const A& a, const A& b) { return a < b || b < a; } \
-    bool operator==(const A& a, const B& b) { return !(a != b); }
+    bool operator==(const A& a, const A& b) { return !(a != b); }
 namespace std {
 #if __cplusplus < 201703L
     // Containers:

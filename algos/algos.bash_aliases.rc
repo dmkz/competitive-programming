@@ -1,6 +1,6 @@
 # algos.bash_aliases
 
-libexpandpath="$(readlink -f libexpand.exe)";
+libexpandpath="$(readlink -f C:\\Users\\dkozyrev\\Documents\\GitHub\\competitive-programming\\algos\\libexpand.exe)";
 
 function libexpand() {
 	if [ -z "$1" ]; then
