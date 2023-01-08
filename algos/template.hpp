@@ -44,6 +44,8 @@ using pli = std::pair<ll,int>;
 using pll = std::pair<ll,ll>;
 using vpii = std::vector<pii>;
 using vvpii = std::vector<vpii>;
+using vpll = std::vector<pll>;
+using vvpll = std::vector<vpll>;
 using vs = std::vector<std::string>;
 // Comparators:
 #define GEN_COMPARATORS(A) \
@@ -86,8 +88,8 @@ template<typename T> std::istream& operator>>(std::istream& is, std::vector<T>& 
 
 // ---- ---- ---- ---- ---- ---- OPERATORS FOR STL CONTAINERS ---- ---- ---- ---- ---- ----
 #define INSERT(cont, to_front, to_back)  \
-template<typename X, typename... T> cont<X,T...>& operator<<(cont<X,T...>& c, const X& x) { return to_back, c; } \
-template<typename X, typename... T> cont<X,T...>& operator>>(const X& x, cont<X,T...>& c) { return to_front, c; }
+template<typename X, typename Y, typename... T> cont<X,T...>& operator<<(cont<X,T...>& c, const Y& x) { return to_back, c; } \
+template<typename X, typename Y, typename... T> cont<X,T...>& operator>>(const Y& x, cont<X,T...>& c) { return to_front, c; }
  
 INSERT(std::vector, (c.insert(c.begin(), x)), (c.push_back(x)))
 INSERT(std::queue, (c.push(x)), (c.push(x)))

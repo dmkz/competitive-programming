@@ -25,6 +25,36 @@ struct BruteVector : public std::vector<T>
 };
 
 template<typename T>
+struct BruteVectorFixedSum
+{
+    const int n;
+    const T min, max, sum;
+    
+    std::vector<T> data;
+    
+    BruteVectorFixedSum(int n_, T min_, T max_, T sum_)
+        : n(n_), min(min_), max(max_), sum(sum_), data(n, min)
+    { }
+    
+    template<typename Func>
+    void for_each(const Func & f, int p = 0, T s = 0)
+    {
+        if (p == n) {
+            if (s == sum) {
+                // обработать вектор
+                f(data);
+            }
+            return;
+        }
+        for (T x = min; x <= max; x++) {
+            data[p] = x;
+            for_each(f, p+1, s + x);
+        }
+    }
+    
+};
+
+template<typename T>
 struct BruteDistinct : public std::vector<T>
 {
     
