@@ -4,6 +4,7 @@
 #ifndef isz
 #define isz(x) (int)std::size(x)
 #endif
+namespace algos {
 namespace SparseTable {
     
 template<typename T, typename Func, bool useFunctor = false>
@@ -40,6 +41,10 @@ struct SparseTable {
         assert(L <= R); // отрезок [L, R] - корректный
         const int p = std::__lg(R-L+1);
         return getFunc()(data[p][L], data[p][R+1-(1<<p)]);
+    }
+    
+    T operator()(int L, int R) const {
+        return calcFunc(L, R);
     }
     
     T calcFuncInLog(int L, int R) const {
@@ -109,4 +114,5 @@ struct Max {
     }
 };
 } // namespace SparseTable
+} // namespace algos
 #endif // __SPARSETABLE_HPP__
