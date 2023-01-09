@@ -7,6 +7,9 @@ struct MapOff {
     std::vector<Key> keys;
     std::vector<Val> vals;
     
+    bool built{true}; // empty map is built
+    bool isBuilt() const { return built; }
+    
     int size() const { return (int)keys.size(); }
     
     struct Iterator {
@@ -24,9 +27,21 @@ struct MapOff {
         Iterator &operator--() { return (--pos, *this); }
         Iterator operator--(int) { Iterator ret(*this); --(*this); return ret; }
         std::pair<const Key&, const Val&> operator*() const {
+            #ifdef _GLIBCXX_DEBUG
+                assert(keys != nullptr && "Vector with Keys must to be passed!");
+                assert(vals != nullptr && "Vector with Vals must to be passed!");
+                assert(0 <= pos && pos < (int)keys->size() &&
+                       "The Iterator must to be valid!");
+            #endif
             return std::pair<const Key&, const Val&>( (*keys)[pos], (*vals)[pos]);
         }
         RefWrap &operator*() {
+            #ifdef _GLIBCXX_DEBUG
+                assert(keys != nullptr && "Vector with Keys must to be passed!");
+                assert(vals != nullptr && "Vector with Vals must to be passed!");
+                assert(0 <= pos && pos < (int)keys->size() &&
+                       "The Iterator must to be valid!");
+            #endif
             return pr = {std::ref((*keys)[pos]), std::ref((*vals)[pos])};
         }
         RefWrap *operator->() { return &(this->operator*()); }
@@ -36,7 +51,6 @@ struct MapOff {
         }
         GEN_COMPARATORS_MEMBERS(Iterator)
     };
-    
     
     struct ReverseIterator {
         int pos{};
@@ -53,9 +67,21 @@ struct MapOff {
         ReverseIterator &operator--() { return (++pos, *this); }
         ReverseIterator operator--(int) { ReverseIterator ret(*this); --(*this); return ret; }
         std::pair<const Key&, const Val&> operator*() const {
+            #ifdef _GLIBCXX_DEBUG
+                assert(keys != nullptr && "Vector with Keys have to be passed!");
+                assert(vals != nullptr && "Vector with Vals have to be passed!");
+                assert(0 <= pos && pos < (int)keys->size() &&
+                       "The ReverseIterator must to be valid!");
+            #endif
             return std::pair<const Key&, const Val&>( (*keys)[pos], (*vals)[pos]);
         }
         RefWrap &operator*() {
+            #ifdef _GLIBCXX_DEBUG
+                assert(keys != nullptr && "Vector with Keys must to be passed!");
+                assert(vals != nullptr && "Vector with Vals must to be passed!");
+                assert(0 <= pos && pos < (int)keys->size() &&
+                       "The ReverseIterator must to be valid!");
+            #endif
             return pr = {std::ref((*keys)[pos]), std::ref((*vals)[pos])};
         }
         RefWrap *operator->() { return &(this->operator*()); }
@@ -70,6 +96,7 @@ struct MapOff {
     ReverseIterator rend() { return ReverseIterator{-1,&keys,&vals}; }
     
     void add_key(const auto & ... key) {
+        built = false;
         (keys.push_back(key),...);
     }
 
@@ -77,19 +104,31 @@ struct MapOff {
         std::sort(keys.begin(), keys.end());
         keys.erase(std::unique(keys.begin(),keys.end()),keys.end());
         vals.assign(keys.size(), Val{});
+        built = true;
     }
 
     int findIndex(const Key &key) {
+        #ifdef _GLIBCXX_DEBUG
+            assert( built && "The MapOff must be built when you use findIndex!" );
+        #endif
         auto it = std::lower_bound(keys.begin(), keys.end(), key);
         return int(it - keys.begin());
     }
 
     Val &operator[](const Key &key) {
-        return vals[findIndex(key)];
+        int index = findIndex(key);
+        #ifdef _GLIBCXX_DEBUG
+            assert( index < size() && keys[index] == key && "Key must to exist!" );
+        #endif
+        return vals[index];
     }
     
     const Val &operator[](const Key &key) const {
-        return vals[findIndex(key)];
+        int index = findIndex(key);
+        #ifdef _GLIBCXX_DEBUG
+            assert( index < size() && keys[index] == key && "Key must to exist!" );
+        #endif
+        return vals[index];
     }
     
 };
