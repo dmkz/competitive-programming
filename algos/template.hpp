@@ -1,5 +1,6 @@
 #ifndef __TEMPLATE_HPP__
 #define __TEMPLATE_HPP__
+#include <unordered_map>
 #include <random>
 #include <chrono>
 #include <numeric>
@@ -48,12 +49,18 @@ using vpll = std::vector<pll>;
 using vvpll = std::vector<vpll>;
 using vs = std::vector<std::string>;
 // Comparators:
-#define GEN_COMPARATORS(A) \
-    bool operator >(const A& a, const A& b) { return b < a; }    \
-    bool operator<=(const A& a, const A& b) { return !(a > b); } \
-    bool operator>=(const A& a, const A& b) { return !(a < b); } \
-    bool operator!=(const A& a, const A& b) { return a < b || b < a; } \
-    bool operator==(const A& a, const A& b) { return !(a != b); }
+#define GEN_COMPARATORS(CLASS) \
+    inline bool operator >(const CLASS& a, const CLASS& b) { return b < a; }    \
+    inline bool operator<=(const CLASS& a, const CLASS& b) { return !(a > b); } \
+    inline bool operator>=(const CLASS& a, const CLASS& b) { return !(a < b); } \
+    inline bool operator!=(const CLASS& a, const CLASS& b) { return a < b || b < a; } \
+    inline bool operator==(const CLASS& a, const CLASS& b) { return !(a != b); }
+#define GEN_COMPARATORS_MEMBERS(CLASS) \
+    bool operator >(const CLASS &other) const { return other < (*this); }    \
+    bool operator<=(const CLASS &other) const { return !((*this) > other); } \
+    bool operator>=(const CLASS &other) const { return !((*this) < other); } \
+    bool operator!=(const CLASS &other) const { return (*this) < other || other < (*this); } \
+    bool operator==(const CLASS &other) const { return !((*this) != other); }
 namespace std {
 #if __cplusplus < 201703L
     // Containers:
