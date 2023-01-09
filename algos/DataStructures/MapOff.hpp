@@ -7,30 +7,30 @@ struct MapOff {
     std::vector<Key> keys;
     std::vector<Val> vals;
     
+    int size() const { return (int)keys.size(); }
+    
     struct Iterator {
-        typedef std::random_access_iterator_tag iterator_category;
         int pos{};
         std::vector<Key> *keys{};
         std::vector<Val> *vals{};
+        Key default_key{};
+        Val default_val{};
+        using KeyRefWrap = std::reference_wrapper<Key>;
+        using ValRefWrap = std::reference_wrapper<Val>;
+        using RefWrap = std::pair<KeyRefWrap, ValRefWrap>;
+        RefWrap pr = std::make_pair(std::ref(default_key), std::ref(default_val));
         Iterator &operator++() { return (++pos, *this); }
         Iterator operator++(int) { Iterator ret(*this); ++(*this); return ret; }
         Iterator &operator--() { return (--pos, *this); }
         Iterator operator--(int) { Iterator ret(*this); --(*this); return ret; }
-        const Key & first() const { return (*keys)[pos]; }
-        const Val & second() const { return (*keys)[pos]; }
-        Val & second() { return (*vals)[pos]; }
-        auto operator*() {
-            return std::pair<const Key &, Val &>((*keys)[pos], (*vals)[pos]);
+        std::pair<const Key&, const Val&> operator*() const {
+            return std::pair<const Key&, const Val&>( (*keys)[pos], (*vals)[pos]);
         }
-        auto operator*() const {
-            return std::pair<const Key &, const Val &>((*keys)[pos], (*vals)[pos]);
+        RefWrap &operator*() {
+            return pr = {std::ref((*keys)[pos]), std::ref((*vals)[pos])};
         }
-        auto operator->() {
-            return std::make_unique<std::pair<const Key &, Val &>>
-                ((*keys)[pos], (*vals)[pos]); }
-        auto operator->() const {
-            return std::make_unique<std::pair<const Key &, const Val &>>
-                ((*keys)[pos], (*vals)[pos]); }
+        RefWrap *operator->() { return &(this->operator*()); }
+        std::pair<const Key&, const Val&>* operator->() const { return &(this->operator*()); }
         bool operator<(const Iterator & other) const {
             return pos < other.pos;
         }
@@ -39,29 +39,27 @@ struct MapOff {
     
     
     struct ReverseIterator {
-        typedef std::random_access_iterator_tag iterator_category;
         int pos{};
         std::vector<Key> *keys{};
         std::vector<Val> *vals{};
+        Key default_key{};
+        Val default_val{};
+        using KeyRefWrap = std::reference_wrapper<Key>;
+        using ValRefWrap = std::reference_wrapper<Val>;
+        using RefWrap = std::pair<KeyRefWrap, ValRefWrap>;
+        RefWrap pr = std::make_pair(std::ref(default_key), std::ref(default_val));
         ReverseIterator &operator++() { return (--pos, *this); }
         ReverseIterator operator++(int) { ReverseIterator ret(*this); ++(*this); return ret; }
         ReverseIterator &operator--() { return (++pos, *this); }
         ReverseIterator operator--(int) { ReverseIterator ret(*this); --(*this); return ret; }
-        const Key & first() const { return (*keys)[pos]; }
-        const Val & second() const { return (*keys)[pos]; }
-        Val & second() { return (*vals)[pos]; }
-        auto operator*() {
-            return std::pair<const Key &, Val &>((*keys)[pos], (*vals)[pos]);
+        std::pair<const Key&, const Val&> operator*() const {
+            return std::pair<const Key&, const Val&>( (*keys)[pos], (*vals)[pos]);
         }
-        auto operator*() const {
-            return std::pair<const Key &, const Val &>((*keys)[pos], (*vals)[pos]);
+        RefWrap &operator*() {
+            return pr = {std::ref((*keys)[pos]), std::ref((*vals)[pos])};
         }
-        auto operator->() {
-            return std::make_unique<std::pair<const Key &, Val &>>
-                ((*keys)[pos], (*vals)[pos]); }
-        auto operator->() const {
-            return std::make_unique<std::pair<const Key &, const Val &>>
-                ((*keys)[pos], (*vals)[pos]); }
+        RefWrap *operator->() { return &(this->operator*()); }
+        std::pair<const Key&, const Val&>* operator->() const { return &(this->operator*()); }
         bool operator<(const ReverseIterator & other) const { return pos > other.pos; }
         GEN_COMPARATORS_MEMBERS(ReverseIterator)
     };
