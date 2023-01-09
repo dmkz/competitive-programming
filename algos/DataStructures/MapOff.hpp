@@ -16,12 +16,12 @@ struct MapOff {
         int pos{};
         std::vector<Key> *keys{};
         std::vector<Val> *vals{};
-        Key default_key{};
-        Val default_val{};
+        Key& default_key() const { static Key def{}; return def; }
+        Val& default_val() const { static Val def{}; return def; }
         using KeyRefWrap = std::reference_wrapper<Key>;
         using ValRefWrap = std::reference_wrapper<Val>;
         using RefWrap = std::pair<KeyRefWrap, ValRefWrap>;
-        RefWrap pr = std::make_pair(std::ref(default_key), std::ref(default_val));
+        RefWrap pr = std::make_pair(std::ref(default_key()), std::ref(default_val()));
         Iterator &operator++() { return (++pos, *this); }
         Iterator operator++(int) { Iterator ret(*this); ++(*this); return ret; }
         Iterator &operator--() { return (--pos, *this); }
@@ -56,12 +56,12 @@ struct MapOff {
         int pos{};
         std::vector<Key> *keys{};
         std::vector<Val> *vals{};
-        Key default_key{};
-        Val default_val{};
+        Key& default_key() const { static Key def{}; return def; }
+        Val& default_val() const { static Val def{}; return def; }
         using KeyRefWrap = std::reference_wrapper<Key>;
         using ValRefWrap = std::reference_wrapper<Val>;
         using RefWrap = std::pair<KeyRefWrap, ValRefWrap>;
-        RefWrap pr = std::make_pair(std::ref(default_key), std::ref(default_val));
+        RefWrap pr = std::make_pair(std::ref(default_key()), std::ref(default_val()));
         ReverseIterator &operator++() { return (--pos, *this); }
         ReverseIterator operator++(int) { ReverseIterator ret(*this); ++(*this); return ret; }
         ReverseIterator &operator--() { return (++pos, *this); }
