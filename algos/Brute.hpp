@@ -5,7 +5,7 @@ template<typename T>
 struct BruteVector : public std::vector<T>
 {
     
-    const T min, max;
+    T min, max;
     
     BruteVector(int nItems, T min_, T max_)
         : std::vector<T>(nItems, min_), min(min_), max(max_)
@@ -27,8 +27,8 @@ struct BruteVector : public std::vector<T>
 template<typename T>
 struct BruteVectorFixedSum
 {
-    const int n;
-    const T min, max, sum;
+    int n;
+    T min, max, sum;
     
     std::vector<T> data;
     
@@ -58,7 +58,7 @@ template<typename T>
 struct BruteDistinct : public std::vector<T>
 {
     
-    const T min, max;
+    T min, max;
     
     std::vector<bool> used;
     
