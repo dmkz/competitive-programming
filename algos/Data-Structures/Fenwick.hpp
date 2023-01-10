@@ -23,7 +23,7 @@ struct Fenwick {
             result += data[r];
         return result;
     }
-
+    T operator()(int r) const { return sum(r); }
     // Increase value on position `p` by delta:
     void inc(int p, T delta) {
         assert(p >= 0);
@@ -33,7 +33,7 @@ struct Fenwick {
 
     // Sum on segment [l, r]:
     T sum (int l, int r) const { return sum(r) - sum(l-1); }
-    
+    T operator()(int l, int r) const { return sum(l, r); }
     // Lower bound for sum `s`: sum[0]+...+sum[p-1] < s >= sum[0]+...+sum[p]
     int binary_lifting(T s) const {
         int pos = 0;
@@ -48,7 +48,8 @@ struct Fenwick {
     }
     
     // Works as same as find_by_order in OrderedSet
-    int find_by_order(int order) const { return binary_lifting(order+1); }
+    int find_by_order(T order) const { return binary_lifting(order+1); }
+    int operator[](T order) const { return find_by_order(order); }
     // Works as same as order_of_key in OrderedSet
     T order_of_key(int key) const { return sum(key-1); }
     T count_less(int key) const { return sum(key-1); }
