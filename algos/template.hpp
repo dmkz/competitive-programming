@@ -1,5 +1,6 @@
 #ifndef __TEMPLATE_HPP__
 #define __TEMPLATE_HPP__
+#include <climits>
 #include <unordered_map>
 #include <random>
 #include <chrono>

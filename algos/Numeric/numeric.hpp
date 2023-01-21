@@ -42,16 +42,19 @@ namespace numeric {
         IntMod operator/(IntMod num) const { return *this * binpow(num, mod-2); }
         IntMod& operator/=(IntMod num) { return *this = *this / num; }
         
-        friend template<int mod> bool operator<(IntMod<mod> a,IntMod<mod> b) { return a.value < b.value; }
-        friend template<int mod>
-        std::ostream& operator<<(std::ostream& os, const IntMod<mod>& num) {
+        friend bool operator<(const IntMod<mod> &a, const IntMod<mod> &b){
+            return a.value < b.value;
+        }
+        friend std::ostream& operator<<(std::ostream& os, const IntMod<mod>& num) {
             return os << num.value;
         }
+        GEN_COMPARATORS_MEMBERS(IntMod<mod>)
     };
 
     template<int mod>
     struct Combinatorics {
         
+        int n;
         std::vector<IntMod<mod>> fact, ifact;
         
         Combinatorics(int n_)
@@ -61,7 +64,7 @@ namespace numeric {
                 fact[i] = fact[i-1] * i;
             ifact[n] = fact[0] / fact[n];
             for (int i = n-1; i >= 0; i--)
-                res[i] = res[i+1] * (i+1);
+                ifact[i] = ifact[i+1] * (i+1);
         }
         
         auto operator()(int n, int k) const {
