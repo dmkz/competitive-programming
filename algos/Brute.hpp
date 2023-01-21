@@ -102,5 +102,45 @@ struct BruteDistinct : public std::vector<T>
     }
 };
 
+struct BruteTreePar {
+    
+    int nVert;
+    
+    std::vector<int> parent;
+    
+    BruteTreePar(int n) : nVert(n), parent(1+nVert, 0)
+    { }
+
+    template<typename Function>
+    void for_each(Function function, int i = 2) {
+        if (i > nVert) {
+            function(parent);
+            return;
+        }
+        for (int p = 1; p < i; p++) {
+            parent[i] = p;
+            for_each(function, i+1);
+        }
+    }
+};
+
+struct BruteTreeAdj : public BruteTreePar {
+    
+    BruteTreeAdj(int n) : BruteTreePar(n) { }
+    
+    template<typename Function>
+    void for_each(Function function) {
+        auto lambda = [&](const std::vector<int> &par)
+        {
+            std::vector<std::vector<int>> adj(1+nVert);
+            for (int i = 2; i <= nVert; i++) {
+                adj[i].push_back(par[i]);
+                adj[par[i]].push_back(i);
+            }
+            function(parent, adj);
+        };
+        BruteTreePar::for_each(lambda);
+    }    
+};
 
 #endif // __BRUTE_HPP__
