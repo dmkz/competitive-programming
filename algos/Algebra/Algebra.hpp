@@ -3,6 +3,52 @@
 
 namespace algos {
 namespace algebra {
+
+template<typename T>
+struct Tridiag {
+
+    int n;
+    
+    std::vector<T> lower, mainDiag, upper, rhs, x;
+    
+    Tridiag(int n_)
+        : n(n_), lower(n,T{}), mainDiag(n,T{})
+        , upper(n,T{}), rhs(n,T{}), x(n,T{})
+    { }
+    
+    T& A(int i, int j) {
+        if (i == j) return mainDiag[i];
+        if (i < j) return upper[i];
+        return lower[i];
+    }
+    
+    T& b(int i) { return rhs[i]; }
+    
+    auto getView() {
+        return std::make_pair([&](int i, int j) -> T& { return A(i,j); },
+                              [&](int i) -> T& { return b(i); });
+    }
+    
+    const auto &solve() {
+        for (int i = 1; i < n; i++)
+        {
+            auto temp = lower[i]/mainDiag[i-1];
+            mainDiag[i] = mainDiag[i] - temp*upper[i-1];
+            rhs[i] = rhs[i] - temp*rhs[i-1];
+        }
+        x[n-1] = rhs[n-1]/mainDiag[n-1];
+        for (int i = n - 2; i >= 0; i--)
+            x[i]=(rhs[i]-upper[i]*x[i+1])/mainDiag[i];
+        return x;
+    }
+    
+};
+} // namespace algos
+} // namespace algebra
+
+
+namespace algos {
+namespace algebra {
 template<typename T>
 struct XorBasis {
     

@@ -35,6 +35,7 @@ namespace numeric {
             if (value < 0) value += mod;
             return *this;
         }
+        IntMod operator-() const { return IntMod(0) - *this; }
         IntMod operator+(IntMod num) const { return IntMod(*this) += num; }
         IntMod operator-(IntMod num) const { return IntMod(*this) -= num; }
         IntMod operator*(IntMod num) const { return IntMod(int(value * 1LL * num.value % mod)); }
