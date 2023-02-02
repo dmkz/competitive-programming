@@ -1,6 +1,6 @@
-#ifndef __SEGMENT_TREE_HPP__
-#define __SEGMENT_TREE_HPP__
-
+#ifndef __SEGMENTTREE_HPP__
+#define __SEGMENTTREE_HPP__
+namespace algos {
 /**
  *  Efficient template SegmentTree<ItemType, ItemTraits> bottom-to-top implementation.
  *  ItemTraits should contain static functions `update`, `merge` and `neutral` (see examples below).
@@ -95,7 +95,7 @@ namespace SegmentTree {
      */
     template<typename T>
     struct TraitsSumSet {
-        static T neutral() { return T(0); }
+        static T neutral() { return T{}; }
         static void update(T& dst, T src) { dst = src; }
         static void merge(T& dst, const T& lhs, const T& rhs) { dst = lhs + rhs; }
     };
@@ -151,5 +151,5 @@ namespace SegmentTree {
     };
     
 } /** SegmentTree namespace end */
-
-#endif // __SEGMENT_TREE_HPP__
+} // namespace algos
+#endif // __SEGMENTTREE_HPP__

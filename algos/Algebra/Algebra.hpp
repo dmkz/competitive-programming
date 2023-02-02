@@ -9,8 +9,21 @@ struct XorBasis {
     T vec[sizeof(T) * 8]{};
     int sz{};
     
+    T *begin() { return vec; }
+    T *end() { return vec+sz; }
+    
+    const T *begin() const { return vec; }
+    const T *end() const { return vec+sz; }
+    int size() const { return sz; }
+    
+    XorBasis(T x = T{}) { (*this) += x; }
+    
     bool add(T x) { return ({auto was = sz; (*this)+=x; sz > was;}); }
-
+    
+    XorBasis &operator+=(const XorBasis &other) {
+        std::for_each(all(other), [&](auto x){*this+=x;});
+        return *this;
+    }
     XorBasis &operator+=(T x)
     {
         // subtract all vectors from x:
@@ -32,10 +45,23 @@ struct XorBasis {
         }
         return *this;
     }
-    
+    XorBasis operator+(const XorBasis &other) const {
+        return XorBasis(*this) += other;
+    }
     T max() const { return std::accumulate(vec,vec+sz,T(0),std::bit_xor<T>()); }
 };
-
 } // namespace algebra
 } // namespace algos
+namespace std {
+    template<typename T>
+    auto begin(const algos::algebra::XorBasis<T>& basis) { return basis.begin(); }
+    template<typename T>
+    auto begin(algos::algebra::XorBasis<T>& basis) { return basis.begin(); }
+    template<typename T>
+    auto end(const algos::algebra::XorBasis<T>& basis) { return basis.begin(); }
+    template<typename T>
+    auto end(algos::algebra::XorBasis<T>& basis) { return basis.begin(); }
+    template<typename T>
+    auto size(const algos::algebra::XorBasis<T>& basis) { return basis.size(); }
+}
 #endif // __ALGEBRA_HPP__
