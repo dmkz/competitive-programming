@@ -35,16 +35,31 @@ struct Fenwick {
     T sum (int l, int r) const { return sum(r) - sum(l-1); }
     T operator()(int l, int r) const { return sum(l, r); }
     // Lower bound for sum `s`: sum[0]+...+sum[p-1] < s >= sum[0]+...+sum[p]
+    template<typename cmp = std::less<T>>
     int binary_lifting(T s) const {
         int pos = 0;
         for (int p = std::__lg((int)data.size()); p >= 0; p--) {
             int next = pos + (1 << p) - 1;
-            if (next < (int)data.size() && data[next] < s) {
+            if (next < (int)data.size() && cmp()(data[next],s)) {
                 s -= data[next];
                 pos = next + 1;
             }
         }
         return pos;
+    }
+    
+    int last_less_equal(T s) const {
+        // returns index in a range [-1, n-1]
+        // the result is equivalent to next binary search:
+        // int low = -1, high = n;
+        // while (high - low > 1) {
+        //     int mid = (low + high) / 2;
+        //     if (sum(0, mid) <= c) low = mid;
+        //     else high = mid;
+        // }
+        // return low;
+        //
+        return binary_lifting<std::less_equal<T>>(s) - 1;
     }
     
     // Works as same as find_by_order in OrderedSet
