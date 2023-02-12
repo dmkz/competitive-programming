@@ -25,6 +25,7 @@ namespace SegmentTree {
      */
     template<typename T> struct TraitsMaxSet; // max on segment, set single element
     template<typename T> struct TraitsSumSet; // sum on segment, set single element
+    template<typename T> struct TraitsMulSet; // mul on segment, set single element
     template<typename T> struct TraitsGCDSet; // gcd on segment, set single element
     template<typename T> struct TraitsMinAdd; // min on segment, add to single element
     template<typename T> struct TraitsMaxAdd; // max on segment, add to single element
@@ -80,6 +81,75 @@ namespace SegmentTree {
         }
     }; /** SegmentTree class end */
     
+    template<typename ItemType = int64_t, typename ItemTraits = TraitsMinSet<ItemType>>
+    struct SegmentTreeRecursive {
+        
+        int n; std::vector<ItemType> data;
+
+        /**
+         * Main methods: resize(nItems), build(array), get(left, right), where 0 <= left <= right < nItems
+         */ 
+        void resize(const int n_){
+            n = n_;
+            int pow = 1;
+            while (pow < n) { pow *= 2; }
+            data.assign(2 * pow, ItemTraits::neutral());
+        }
+        
+        template<typename T>
+        void build(int v, int l, int r, const std::vector<T>& arr)
+        {
+            if (l+1==r) {
+                data[v] = arr[l];
+                return;
+            }          
+            int m = (l+r)/2;
+            build(2*v+1,l,m,arr);
+            build(2*v+2,m,r,arr);
+            ItemTraits::merge(data[v], data[2*v+1], data[2*v+2]);
+        }
+        
+        template<typename T>
+        void build(const std::vector<T>& arr) {
+            resize((int)arr.size());
+            build(0,0,n,arr);
+        }
+        
+        ItemType get(int v, int l, int r, int ql, int qr) const
+        {
+            if (qr <= l || r <= ql) return ItemTraits::neutral();
+            if (ql <= l && r <= qr) return data[v];
+            int m = (l+r)/2;
+            auto left = get(2*v+1,l,m,ql,qr);
+            auto right = get(2*v+2,m,r,ql,qr);
+            auto res = ItemTraits::neutral();
+            ItemTraits::merge(res, left, right);
+            return res;
+        }
+        
+        ItemType get(int ql, int qr) const
+        {
+            return get(0,0,n,ql,qr+1);
+        }
+        
+        void update(int v, int l, int r, int pos, ItemType val) {
+            if (pos < l || pos >= r) return;
+            if (l+1==r) {
+                data[v] = val;
+                return;
+            }
+            int m = (l+r)/2;
+            update(2*v+1,l,m,pos,val);
+            update(2*v+2,m,r,pos,val);
+            ItemTraits::merge(data[v],data[2*v+1],data[2*v+2]);
+        }
+        
+        void update(int pos, ItemType val) {
+            update(0,0,n,pos,val);
+            
+        }
+    };
+    
     /**
      * Traits for max on segment and set single element queries
      */
@@ -98,6 +168,16 @@ namespace SegmentTree {
         static T neutral() { return T{}; }
         static void update(T& dst, T src) { dst = src; }
         static void merge(T& dst, const T& lhs, const T& rhs) { dst = lhs + rhs; }
+    };
+    
+    /**
+     * Traits for mul on segment and set single element queries
+     */
+    template<typename T>
+    struct TraitsMulSet {
+        static T neutral() { return T{1}; }
+        static void update(T& dst, T src) { dst = src; }
+        static void merge(T& dst, const T& lhs, const T& rhs) { dst = lhs * rhs; }
     };
     
     /**
