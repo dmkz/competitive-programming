@@ -267,6 +267,34 @@ namespace SegmentTreeLazy {
         static void push(NodeDst dst, const NodeSrc& src) {
             dst.extra() = src.extra();
         }
-    };   
+    };
+	
+	/*******************************************************************************
+     *  Traits for sum on segment. 
+     *  Get-query:    sum of values on segment [l, r]
+     *  Update-query: add const to each value on segment [l, r]
+     ******************************************************************************/
+    template<typename Value, typename Extra>
+    struct TraitsSumAdd {
+        // Definition of neutral element for `Value`:
+        static Value valueNeutral() { return Value(0); }
+        // Definition of neutral element for `Extra`:
+        static Extra extraNeutral() { return Extra(0); }
+        // Definition of how should combine `Extra` with `Value`:
+        template<typename Node>
+        static Value getValue(const Node& src) {
+            return src.value() + src.extra() * src.len();
+        }
+        // Definition of how should combine `Value` with `Value` (children to root):
+        template<typename NodeRoot, typename NodeLt, typename NodeRt>
+        static void pull(NodeRoot root, const NodeLt& lt, const NodeRt& rt) {
+            root.value() = getValue(lt) + getValue(rt);
+        }
+        // Definition of how should combine `Extra` with `Extra`:
+        template<typename NodeDst, typename NodeSrc>
+        static void push(NodeDst dst, const NodeSrc& src) {
+            dst.extra() += src.extra();
+        }
+    };
 }
 #endif // __SEGMENTTREELAZY_HPP__
