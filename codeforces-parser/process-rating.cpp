@@ -42,11 +42,14 @@ int main(int argc, char **argv) {
         best.emplace_back(isz(set), nick);
     std::sort(all(best), std::greater<>());
     best.resize(std::min(isz(best),limit));
+    int place = 1;
     for (auto &[cnt, nick] : best) {
         if (only_users) {
             std::cout << nick << '\n';
         } else {
-            std::cout << cnt << ' ' << nick << std::endl;
+            std::cout << std::setw(4) << place++;
+            std::cout << std::setw(6) << cnt;
+            std::cout << " " << nick << std::endl;
         }
     }
     return 0;
