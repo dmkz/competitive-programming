@@ -46,12 +46,36 @@ parseGroup() {
     echo -e "Parsing of group $groupId is done"
 }
 
+parseUser() {
+    userName="$1"
+    echo -e "\nStart parsing the user $userName"
+    echo "" > out.txt;
+    # https://codeforces.com/submissions/Harek/page/1
+    var="1"
+    i="/submissions/$userName"
+    while [ $var != "done" ]
+    do
+        link="$domain$i/page/$var";
+        echo $link;
+        if ! downloadLink "$link"
+        then
+            return 1;
+        fi
+        var="$(./user-status temp.txt $link)"
+        echo "var = $var"
+    done
+    echo -e "Parsing of user $userName is done"
+}
+
 # может парсить только те группы, где в администрировании в параметрах
 # политика регистрации зрителей выставлена в режи "автоматически"
 
-parseGroup "PZJYXH0KrS" # Курс начинающего олимпиадника
-parseGroup "uQw4LhzOcG" # Новое олимпиадное программирование в МИРЭА
+#parseGroup "PZJYXH0KrS" # Курс начинающего олимпиадника
+#parseGroup "uQw4LhzOcG" # Новое олимпиадное программирование в МИРЭА
 #parseGroup "bcNLtajskz" # Курс по олимпиадному программированию
-parseGroup "LB1sSRhotq" # Олимпиадное программирование в МИРЭА
-cat group_PZJYXH0KrS_* group_uQw4LhzOcG_* group_LB1sSRhotq_* > temp.txt
-./process-rating.exe temp.txt
+#parseGroup "LB1sSRhotq" # Олимпиадное программирование в МИРЭА
+#cat group_PZJYXH0KrS_* group_uQw4LhzOcG_* group_LB1sSRhotq_* > temp.txt
+#./process-rating.exe temp.txt
+for i in $(cat users.txt); do
+    parseUser "$i";
+done

@@ -1,5 +1,7 @@
 #pragma once
+
 const std::string delimiter = "my_stupid_delimiter";
+
 struct Submission {
     int subId{};  // id of submission
     std::string when; // time of submission
@@ -146,22 +148,41 @@ bool operator>(const Submission &a, const Submission &b) {
     return b < a;
 }
 
+std::string link2filename(std::string link) {
+    // сначала проверим, что это группа
+{
+    std::string group;
+    bool groupOK = extractBetween(link, "group/", "/", group);
+    if (groupOK) {
+        std::string contest;
+        bool contestOK = extractBetween(link, "contest/", "/", contest);
+        assert(contestOK);
+        std::string filename = "group_";
+        filename += group;
+        filename += "_contest_";
+        filename += contest;
+        filename += ".txt";
+        return filename;
+    }
+}
+{
+    // теперь то, что это посылки участника
+    std::string nickname;
+    bool submissionsOK = extractBetween(link, "submissions/", "/", nickname);
+    assert(submissionsOK);
+    std::string filename = "submissions_";
+    filename += nickname;
+    filename += ".txt";
+    return filename;
+}
+}
+
 struct Cache {
     std::string filename;
     std::vector<Submission> cache;
     Cache(std::string link)
     {
-        std::string group;
-        bool groupOK = extractBetween(link, "group/", "/", group);
-        assert(groupOK);
-        std::string contest;
-        bool contestOK = extractBetween(link, "contest/", "/", contest);
-        assert(contestOK);
-        filename = "group_";
-        filename += group;
-        filename += "_contest_";
-        filename += contest;
-        filename += ".txt";
+        filename = link2filename(link);
         std::ifstream fin(filename);
         std::string s;
         while (std::getline(fin, s))

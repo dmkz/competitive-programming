@@ -10,8 +10,13 @@ const bool debug = false;
 
 int main(int argc, char **argv) {
     setlocale(LC_ALL, "Ru-ru");
-    assert(argc == 2);
+    //assert(argc == 3);
     std::ifstream fs(argv[1]);
+    const int limit = std::atoi(argv[2]);
+    bool only_users = false;
+    if (argc >= 4 && argv[3] == std::string("only_users")) {
+        only_users = true;
+    }
     std::string s;
     std::vector<Submission> stat;
     while(std::getline(fs, s)) {
@@ -27,9 +32,13 @@ int main(int argc, char **argv) {
     for (auto &[nick,set] : solved)
         best.emplace_back(isz(set), nick);
     std::sort(all(best), std::greater<>());
-    best.resize(10);
+    best.resize(limit);
     for (auto &[cnt, nick] : best) {
-        std::cout << cnt << ' ' << nick << std::endl;
+        if (only_users) {
+            std::cout << nick << '\n';
+        } else {
+            std::cout << cnt << ' ' << nick << std::endl;
+        }
     }
     return 0;
 }

@@ -1,4 +1,4 @@
-// g++ -O3 -Wall -Wextra -pedantic contest-status.cpp -o contest-status.exe
+// g++ -O3 -Wall -Wextra -pedantic user-status.cpp -o user-status.exe
 #include <bits/stdc++.h>
 #include "cf-common.hpp"
 
@@ -33,14 +33,22 @@ int main(int argc, char **argv) {
     assert(std::is_sorted(all(cache),std::greater<>()));
     assert(std::is_sorted(all(currPage),std::greater<>()));
     int last = isz(cache);
+    //int added = 0;
+    //int ignored = 0;
+    //std::cerr << "cache size = " << isz(cache) << std::endl;
     for (const auto &s : currPage) {
         if(!std::binary_search(cache.begin(),
                                cache.begin()+last,
                                s, std::greater<>()))
         {
             cache.push_back(s);
+            //added++;
+        } else {
+            //ignored++;
         }
     }
+    //std::cerr << "added = " << added << std::endl;
+    //std::cerr << "ignored = " << ignored << std::endl;
     int nAdded = isz(cache) - last;
     std::inplace_merge(cache.begin(), cache.begin()+last,cache.end(),std::greater<>());
     //std::sort(all(cache),std::greater<>());
