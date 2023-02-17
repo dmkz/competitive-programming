@@ -148,6 +148,10 @@ bool operator>(const Submission &a, const Submission &b) {
     return b < a;
 }
 
+bool operator==(const Submission &a, const Submission &b) {
+    return a.subId == b.subId;
+}
+
 std::string link2filename(std::string link) {
     // сначала проверим, что это группа
 {
@@ -190,6 +194,8 @@ struct Cache {
         }
     ~Cache() {
         std::ofstream fout(filename);
+        std::sort(all(cache),std::greater<>());
+        cache.erase(std::unique(all(cache)), cache.end());
         for (const auto &s : cache) {
             fout << s.to_string() << '\n';
         }

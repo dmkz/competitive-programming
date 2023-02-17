@@ -70,12 +70,15 @@ parseUser() {
 # может парсить только те группы, где в администрировании в параметрах
 # политика регистрации зрителей выставлена в режи "автоматически"
 
-#parseGroup "PZJYXH0KrS" # Курс начинающего олимпиадника
-#parseGroup "uQw4LhzOcG" # Новое олимпиадное программирование в МИРЭА
+parseGroup "PZJYXH0KrS" # Курс начинающего олимпиадника
+parseGroup "uQw4LhzOcG" # Новое олимпиадное программирование в МИРЭА
 #parseGroup "bcNLtajskz" # Курс по олимпиадному программированию
-#parseGroup "LB1sSRhotq" # Олимпиадное программирование в МИРЭА
-#cat group_PZJYXH0KrS_* group_uQw4LhzOcG_* group_LB1sSRhotq_* > temp.txt
-#./process-rating.exe temp.txt
+parseGroup "LB1sSRhotq" # Олимпиадное программирование в МИРЭА
+cat group_* > temp.txt
+./process-rating.exe temp.txt 100 "only_users" > users.txt
 for i in $(cat users.txt); do
     parseUser "$i";
 done
+#./process-rating.exe temp.txt
+cat group_* submissions_* > temp.txt
+./process-rating.exe temp.txt 100 "all_info" > rating.txt

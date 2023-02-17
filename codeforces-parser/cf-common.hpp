@@ -2,6 +2,34 @@
 #define isz(x) (int)(x).size()
 #define all(x) (x).begin(),(x).end()
 
+uint64_t date2number(std::string s)
+{
+    static std::map<std::string, uint64_t> month =
+    {
+        {"Jan", 1},
+        {"Feb", 2},
+        {"Mar", 3},
+        {"Apr", 4},
+        {"May", 5},
+        {"Jun", 6},
+        {"Jul", 7},
+        {"Aug", 8},
+        {"Sep", 9},
+        {"Oct",10},
+        {"Nov",11},
+        {"Dec",12}
+    };
+    // "Feb/15/2023 19:19"
+    char buf[101];
+    int d,y,h,m;
+    sscanf(s.c_str(), "%3s/%d/%d %d:%d", buf, &d, &y, &h, &m);
+    //std::cerr << "s = '" << s << "'" << std::endl;
+    //std::cerr << buf << "/" << d << "/" << y << " " << h << ":" << m << std::endl;
+    auto it = month.find(buf);
+    assert(it != month.end());
+    return m + 64ULL * (h + 64ULL * (d + 64ULL * (it->second + 64ULL * y)));
+}
+
 void replaceSubstrRef(std::string& s,
                       const std::string &from,
                       const std::string &to)
