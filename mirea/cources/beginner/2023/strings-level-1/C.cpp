@@ -12,18 +12,16 @@ int main() {
     string a = "\"", b = "\""; // изначально a и b состоят только из кавычек
     for (int i = 0; i < (int)s.size(); i++) {
         if (s[i] == ',') {
-            // обработать блок. Является ли целым числом? Можно попытаться сконвертить
-            bool success;
-            try {
-                int64_t x = stoll(currBlock); // конвертим строку в число
-                string t = to_string(x); // конвертим обратно число в строку
-                success = (t == currBlock); // получилось или нет: выясним сравнением
-            } catch(...) {
-                // не получилось, так как stoll сломалась при попытке сконвертить
-                success = 0;
-            }
+            // обработать блок. Является ли целым числом без лидирующих нулей?
+            bool isNumber = !currBlock.empty();
+            // все символы должны быть цифры
+            for (auto c : currBlock)
+                isNumber &= (isdigit(c) != 0);
+            // первый символ у двузначных и больше не должен быть нулём:
+            if (currBlock.size() > 1u) 
+                isNumber &= (currBlock[0] != '0');
             // добавить подстроку в a или b
-            if (success) (a += currBlock) += ',';
+            if (isNumber) (a += currBlock) += ',';
             else (b += currBlock) += ',';
             // подготовиться к обработке следующего блока
             currBlock = "";
