@@ -80,5 +80,6 @@ for i in $(cat users.txt); do
     parseUser "$i";
 done
 #./process-rating.exe temp.txt
-cat group_* submissions_* > temp.txt
-./process-rating.exe temp.txt 100 "all_info" > rating.txt
+#cat group_* submissions_* > temp.txt
+#./process-rating.exe temp.txt 100 "all_info" > rating.txt
+#parseUser "Richard_Try";
