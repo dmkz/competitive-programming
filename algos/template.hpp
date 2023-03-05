@@ -27,6 +27,10 @@
 #include <cstdint>
 #define all(x) std::begin(x), std::end(x)
 #define isz(x) (int)std::size(x)
+// marco for random variable name:
+#define CONCAT(a, b) CONCAT_INNER(a, b)
+#define CONCAT_INNER(a, b) a ## b
+#define SomeVar CONCAT(var, CONCAT(_, CONCAT(__LINE__, CONCAT(_, __COUNTER__))))
 const auto ready = [](){
     std::ios_base::sync_with_stdio(0); std::cin.tie(0);
     std::cout << std::fixed << std::setprecision(12);
@@ -158,18 +162,9 @@ std::vector<X,T...>& operator<<(std::vector<X,T...>& l, std::vector<X,T...>& r)
 // Auto-revert:
 template<typename F1, typename F2>
 struct AutoRevert {
-    F1 f1;
-    F2 f2;
-    AutoRevert(const F1 &func1, const F2 &func2)
-        : f1(func1)
-        , f2(func2)
-    {
-        f1();
-    }
-    ~AutoRevert()
-    {
-        f2();
-    }
+    F1 f1; F2 f2;
+    AutoRevert(const F1 &f1_, const F2 &f2_) : f1(f1_), f2(f2_) { f1(); }
+    ~AutoRevert() { f2(); }
 };
 
 template<typename T>
