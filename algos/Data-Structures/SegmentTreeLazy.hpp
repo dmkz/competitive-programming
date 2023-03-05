@@ -1,6 +1,6 @@
 #ifndef __SEGMENTTREELAZY_HPP__
 #define __SEGMENTTREELAZY_HPP__
-
+namespace algos {
 namespace SegmentTreeLazy {
     
     /*******************************************************************************
@@ -21,7 +21,7 @@ namespace SegmentTreeLazy {
     template<typename Value, typename Extra> struct TraitsMinAdd;
     template<typename Value, typename Extra> struct TraitsMaxAdd;
     template<typename Value, typename Extra> struct TraitsSumSet;
-    
+    template<typename Value, typename Extra> struct TraitsSumMul;
     /*******************************************************************************
      *  Traits for minimal value on segment. 
      *  Get-query:    get minimal value in segment [l, r]
@@ -296,5 +296,32 @@ namespace SegmentTreeLazy {
             dst.extra() += src.extra();
         }
     };
-}
+	
+	template<typename Value, typename Extra>
+    struct TraitsSumMul {
+        // Definition of neutral element for `Value`:
+        static Value valueNeutral() { return Value(0); }
+        // Definition of neutral element for `Extra`:
+        static Extra extraNeutral() { return Extra(1); }
+        // Definition of how should combine `Extra` with `Value`:
+        template<typename Node>
+        static Value getValue(const Node& src) {
+			//auto kek = algos::numeric::binpow(src.extra(), src.len());
+			//auto kok = (src.extra() ^ src.len());
+			//assert(kek == kok);
+            return src.value() * src.extra();
+        }
+        // Definition of how should combine `Value` with `Value` (children to root):
+        template<typename NodeRoot, typename NodeLt, typename NodeRt>
+        static void pull(NodeRoot root, const NodeLt& lt, const NodeRt& rt) {
+            root.value() = getValue(lt) + getValue(rt);
+        }
+        // Definition of how should combine `Extra` with `Extra`:
+        template<typename NodeDst, typename NodeSrc>
+        static void push(NodeDst dst, const NodeSrc& src) {
+            dst.extra() *= src.extra();
+        }
+    };
+} // namespace SegmentTreeLazy
+} // namespace algos
 #endif // __SEGMENTTREELAZY_HPP__
