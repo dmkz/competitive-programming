@@ -3,18 +3,31 @@
 
 namespace algos {
 namespace tree {
+inline vvi edges2adj(int n, const vpii & edges) {
+    vvi adj(n+1);
+    for (const auto &[u, v] : edges) {
+        assert(0 <= u && u <= n);
+        assert(0 <= v && v <= n);
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+    return adj;
+}
 inline vpii readEdges(int n, std::istream &is = std::cin) {
-	vpii edges(n-1);
-	for (auto &[u,v] : edges)
-		is >> u >> v;
-	return edges;
+    vpii edges(n-1);
+    for (auto &[u,v] : edges)
+        is >> u >> v;
+    return edges;
+}
+inline vvi readAdj(int n, std::istream &is = std::cin) {
+    return edges2adj(n,readEdges(n,is));
 }
 struct EulerTour {
 
     vvi adj;
     vi tin, tout;
     int timer{};
-	
+    
     void dfs(int u, int p) {
         tin[u] = ++timer;
         for (int v : adj[u])

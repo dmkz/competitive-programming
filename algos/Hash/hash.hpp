@@ -59,6 +59,12 @@ namespace hash {
         Hash &operator^=(ll n) {
             return *this = *this ^ n;
         }
+        Hash operator/(const Hash &b) const {
+            return *this * (b^(-1));
+        }
+        Hash &operator/=(const Hash &b) {
+            return *this = *this / b;
+        }
         bool operator<(const Hash &a) const {
             return data < a.data;
         }
@@ -74,7 +80,7 @@ namespace hash {
     };
     GEN_COMPARATORS(Hash)
     std::vector<Hash> basepow{1};
-    const Hash base = [](){
+    Hash base = [](){
         std::uniform_int_distribution<int> dist((int)1.9e9, (int)2e9);
         static std::mt19937 gen(std::chrono::high_resolution_clock::now().time_since_epoch().count());
         int tmp = dist(gen);

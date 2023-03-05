@@ -172,6 +172,13 @@ struct AutoRevert {
     }
 };
 
+template<typename T>
+struct AutoRecover {
+    T &ref, val;
+    AutoRecover(T &x) : ref(x), val(x) { }
+    ~AutoRecover() { ref = val; }
+};
+
 // Operations with bits:
 template<typename T>
 void setbit(T &mask, int bit, bool x) {
