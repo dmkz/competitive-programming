@@ -43,22 +43,22 @@ namespace hash {
         Hash operator*(const Hash &a) const {
             return Hash(*this) *= a;
         }
-		Hash operator^(ll n) const {
-			while (n < 0) n += hash_mod - 1;
-			if (n == 0) return 1;
-			if (n == 1 || this->data == 1) return *this;
-			Hash r = 1, a = *this;
-			while (n > 0) {
-				if (n % 2 == 1)
-					r *= a;
-				a *= a;
-				n /= 2;
-			}
-			return r;
-		}
-		Hash &operator^=(ll n) {
-			return *this = *this ^ n;
-		}
+        Hash operator^(ll n) const {
+            while (n < 0) n += hash_mod - 1;
+            if (n == 0) return 1;
+            if (n == 1 || this->data == 1) return *this;
+            Hash r = 1, a = *this;
+            while (n > 0) {
+                if (n % 2 == 1)
+                    r *= a;
+                a *= a;
+                n /= 2;
+            }
+            return r;
+        }
+        Hash &operator^=(ll n) {
+            return *this = *this ^ n;
+        }
         bool operator<(const Hash &a) const {
             return data < a.data;
         }
