@@ -39,14 +39,6 @@ int main() {
     // находим ответ переподвершиванием:
     Hash rootHash = hash[1];
     vi answer;
-    std::function<Hash(int,int,int)> hashNaive = [&](int u, int p, int d) {
-        Hash res = powers[d];
-        for (int v : adj[u]) {
-            if (v == p) continue;
-            res += hashNaive(v, u, d+1);
-        }
-        return res;
-    };
     auto getHashForRoot = [&](int u) {
         Hash in = hash[u] * ipowers[depth[u]];
         Hash out = (rootHash - in * base) * base;
