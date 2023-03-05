@@ -3,12 +3,18 @@
 
 namespace algos {
 namespace tree {
+inline vpii readEdges(int n, std::istream &is = std::cin) {
+	vpii edges(n-1);
+	for (auto &[u,v] : edges)
+		is >> u >> v;
+	return edges;
+}
 struct EulerTour {
 
     vvi adj;
     vi tin, tout;
     int timer{};
-    
+	
     void dfs(int u, int p) {
         tin[u] = ++timer;
         for (int v : adj[u])
