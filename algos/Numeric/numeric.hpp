@@ -55,24 +55,24 @@ namespace numeric {
     template<int mod>
     struct Combinatorics {
         
-        int n;
+        int N;
         std::vector<IntMod<mod>> fact, ifact;
         
         Combinatorics(int n_)
-            : n(n_), fact(n+1,1), ifact(n+1,1)
+            : N(n_), fact(N+1,1), ifact(N+1,1)
         {
-            for (int i = 2; i <= n; i++)
+            for (int i = 2; i <= N; i++)
                 fact[i] = fact[i-1] * i;
-            ifact[n] = fact[0] / fact[n];
-            for (int i = n-1; i >= 0; i--)
+            ifact[N] = fact[0] / fact[N];
+            for (int i = N-1; i >= 0; i--)
                 ifact[i] = ifact[i+1] * (i+1);
         }
         
-        auto operator()(int n, int k) const {
+        IntMod<mod> operator()(int n, int k) const {
             return C(n, k);
         }
         
-        auto C(int n, int k) const {
+        IntMod<mod> C(int n, int k) const {
             if (k < 0 || k > n || n < 0) return 0;
             return fact[n] * ifact[k] * ifact[n-k];
         }
