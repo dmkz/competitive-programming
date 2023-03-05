@@ -22,6 +22,10 @@ struct BruteVector : public std::vector<T>
         }
         return false;
     }
+    
+    std::vector<T> to_vector() const {
+        return std::vector<T>(this->begin(), this->end());
+    }
 };
 
 template<typename T>
@@ -51,7 +55,6 @@ struct BruteVectorFixedSum
             for_each(f, p+1, s + x);
         }
     }
-    
 };
 
 template<typename T>
@@ -99,6 +102,10 @@ struct BruteDistinct : public std::vector<T>
             return true;
         }
         return false;
+    }
+    
+    std::vector<T> to_vector() const {
+        return std::vector<T>(this->begin(), this->end());
     }
 };
 
