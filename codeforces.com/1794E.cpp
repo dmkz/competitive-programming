@@ -51,7 +51,7 @@ int main() {
             if (v == p) continue;
             // как меняется хеш?
             // поддерево приближается, всё остальное отдаляется
-            auto rec = AutoRecover(rootHash);
+            auto SomeVar = AutoRecover(rootHash);
             rootHash = getHashForRoot(v);
             dfs(v,u);
         }
