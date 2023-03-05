@@ -268,8 +268,8 @@ namespace SegmentTreeLazy {
             dst.extra() = src.extra();
         }
     };
-	
-	/*******************************************************************************
+    
+    /*******************************************************************************
      *  Traits for sum on segment. 
      *  Get-query:    sum of values on segment [l, r]
      *  Update-query: add const to each value on segment [l, r]
@@ -296,8 +296,8 @@ namespace SegmentTreeLazy {
             dst.extra() += src.extra();
         }
     };
-	
-	template<typename Value, typename Extra>
+    
+    template<typename Value, typename Extra>
     struct TraitsSumMul {
         // Definition of neutral element for `Value`:
         static Value valueNeutral() { return Value(0); }
@@ -306,9 +306,6 @@ namespace SegmentTreeLazy {
         // Definition of how should combine `Extra` with `Value`:
         template<typename Node>
         static Value getValue(const Node& src) {
-			//auto kek = algos::numeric::binpow(src.extra(), src.len());
-			//auto kok = (src.extra() ^ src.len());
-			//assert(kek == kok);
             return src.value() * src.extra();
         }
         // Definition of how should combine `Value` with `Value` (children to root):
