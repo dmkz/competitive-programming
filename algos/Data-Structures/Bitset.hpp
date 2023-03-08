@@ -239,6 +239,35 @@ struct Bitset {
         return *this;
     }
     
+    Bitset &shiftRight(int delta) {
+        if (delta <= 0) return *this;
+        if (n <= delta) {
+            n = 0;
+            data.clear();
+            return *this;
+        }
+        const int step = delta / 64;
+        const int p = delta % 64;
+        if (p == 0) {
+            data.erase(data.begin(), data.begin()+step);
+            n -= delta;
+            return *this;
+        }
+        if (const int g = 0; g + step < (int)data.size()) {
+            const uint64_t x = data[g+step];
+            data[g] = (x >> p);
+        }
+        for (int g = 1; g + step < (int)data.size(); g++) {
+            const uint64_t x = data[g+step];
+            data[g-1] |= (x << (64-p));
+            data[g] = (x >> p);
+        }
+        n -= delta;
+        data.resize((n+63)/64);
+        updateLastGroup();
+        return *this;
+    }
+    
     Bitset &shiftLeftByOne() {
         n++;
         data.resize((n+63)/64);
@@ -252,7 +281,35 @@ struct Bitset {
         return *this;
     }
     
+    Bitset &shiftLeft(int delta) {
+        if (delta <= 0) {
+            return *this;
+        }
+        n += delta;
+        data.resize((n+63)/64);
+        const int p = delta % 64;
+        const int step = delta / 64;
+        if (p == 0) {
+            data.insert(data.begin(), step, 0);
+            return *this;
+        }
+        if (const int g = (int)data.size()-1; g >= step) {
+            const uint64_t x = data[g-step];
+            data[g] = (x << p);
+        }
+        for (int g = (int)data.size()-2; g >= step; g--) {
+            const uint64_t x = data[g-step];
+            data[g+1] |= (x >> (64-p));
+            data[g] = (x << p);
+        }
+        resetN(delta);
+        updateLastGroup();
+        return *this;
+    }
+    
     Bitset &operator>>=(const int delta) {
+        return shiftRight(delta);
+        /*
         if (delta <= 0)
             return *this;
         const int newN = std::max(0, n - delta);
@@ -270,6 +327,7 @@ struct Bitset {
         data.resize((n+63)/64);
         updateLastGroup();
         return *this;
+        */
     }
     
     void writeGroup(int i, uint64_t mask) {
@@ -297,6 +355,8 @@ struct Bitset {
     }
     
     Bitset &operator<<=(const int delta) {
+        return shiftLeft(delta);
+        /* The old implementation
         if (delta <= 0)
             return *this;
         const int newN = n + delta;
@@ -320,6 +380,7 @@ struct Bitset {
         //std::cout << "*this = " << *this << std::endl;
         updateLastGroup();
         return *this;
+        */
     }
     
 };
