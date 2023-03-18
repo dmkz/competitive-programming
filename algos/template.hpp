@@ -175,21 +175,19 @@ struct AutoRecover {
 };
 
 // Operations with bits:
-template<typename T>
-void setbit(T &mask, int bit, bool x) {
-    mask &= ~(T(1) << bit);
-    mask |= (T(x) << bit);
-}
+template<typename T> void setbit(T &mask, int bit, bool x) { (mask &= ~(T(1) << bit)) |= (T(x) << bit); }
+template<typename T> bool getbit(T &mask, int bit) { return (mask >> bit & 1); }
+template<typename T> void flipbit(T &mask, int bit) { mask ^= (T(1) << bit); }
 
-template<typename T>
-bool getbit(T &mask, int bit) {
-    return (mask >> bit & 1);
-}
-
-template<typename T>
-void flipbit(T &mask, int bit) {
-    mask ^= (T(1) << bit);
-}
-
+// Convert vector to tuple: auto [x,y,z] = to_tuple<3>(vec);
+template <typename F, size_t... Is>
+auto gen_tuple_impl(F func, std::index_sequence<Is...> ) { return std::make_tuple(func(Is)...); }
+template <size_t N, typename F>
+auto gen_tuple(F func) { return gen_tuple_impl(func, std::make_index_sequence<N>{} ); }
+template<size_t N, typename ... A>
+auto to_tuple(const std::vector<A...> &v) { return gen_tuple<N>([&v](size_t i){return v[i];});}
+// pack / unpack vector: unpack(vec, x, y, z)
+void unpack(const auto &vec, auto &...b) { int i = -1; ((b = vec[++i]),...); }
+void pack(auto &vec, const auto &...b) { int i = -1; ((vec[++index] = b),...); }
 // -----------------------------------------------------------------------------
 #endif // __TEMPLATE_HPP__
