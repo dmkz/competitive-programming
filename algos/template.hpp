@@ -188,6 +188,6 @@ template<size_t N, typename ... A>
 auto to_tuple(const std::vector<A...> &v) { return gen_tuple<N>([&v](size_t i){return v[i];});}
 // pack / unpack vector: unpack(vec, x, y, z)
 void unpack(const auto &vec, auto &...b) { int i = -1; ((b = vec[++i]),...); }
-void pack(auto &vec, const auto &...b) { int i = -1; ((vec[++index] = b),...); }
+void pack(auto &vec, const auto &...b) { int i = -1; ((vec[++i] = b),...); }
 // -----------------------------------------------------------------------------
 #endif // __TEMPLATE_HPP__
