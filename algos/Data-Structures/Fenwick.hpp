@@ -89,7 +89,7 @@ struct FenwickSet : public Fenwick<T>
     T order_of_key(int key) const { return this->sum(key-1); }
     T count_less(int key) const { return this->sum(key-1); }
     T count_less_equal(int key) const { return this->sum(key); }
-    T count_greater(int key) const { return this->sum(key+1, size()-1); }
+    T count_greater(int key) const { return this->sum(key+1, npos()-1); }
     T count_equal(int key) const { return this->sum(key, key); }
     // Works as same as size in OrderedSet
     T size() const { return this->sum((int)this->data.size()-1); }
