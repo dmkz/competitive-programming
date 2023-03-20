@@ -6,12 +6,16 @@ struct Fenwick {
     
     std::vector<T> data;
     
-    Fenwick(int n = 0) : data(n, T{}) { }
+    Fenwick(int n = 0) { build(n); }
     
-    Fenwick(const auto &a) : Fenwick((int)std::size(a)) { build(a); }
+    Fenwick(const auto &a) { build(a); }
+    
+    void build(int n) { data.assign(n, T{}); }
     
     void build(const auto &a) {
-        for (int i = 0; i < (int)std::size(a); i++)
+        const int n = (int)std::size(a);
+        build(n);
+        for (int i = 0; i < n; i++)
             inc(i, a[i]);
     }
 
@@ -62,21 +66,37 @@ struct Fenwick {
         return binary_lifting<std::less_equal<T>>(s) - 1;
     }
     
+    struct Reference
+    {
+        int index;
+        Fenwick<T> &fenw;
+        Reference &operator+=(T x) { return (fenw.inc(index, x),*this); }
+        Reference &operator-=(T x) { return *this += (-x); }
+        Reference &operator=(T x) { return *this += x-T(*this); }
+        operator T() { return fenw(index,index); }
+    };
+    Reference operator[](int index) { return Reference{index, *this}; }
+};
+template<typename T>
+struct FenwickSet : public Fenwick<T>
+{
+    FenwickSet(int n = 0) : Fenwick<T>(n) { }
+    FenwickSet(const auto &a) : Fenwick<T>(a) { }
     // Works as same as find_by_order in OrderedSet
-    int find_by_order(T order) const { return binary_lifting(order+1); }
-    int operator[](T order) const { return find_by_order(order); }
+    int find_by_order(T order) const { return this->binary_lifting(order+1); }
+    //int operator[](T order) const { return find_by_order(order); }
     // Works as same as order_of_key in OrderedSet
-    T order_of_key(int key) const { return sum(key-1); }
-    T count_less(int key) const { return sum(key-1); }
-    T count_less_equal(int key) const { return sum(key); }
-    T count_greater(int key) const { return sum(key+1, size()-1); }
-    T count_equal(int key) const { return sum(key, key); }
+    T order_of_key(int key) const { return this->sum(key-1); }
+    T count_less(int key) const { return this->sum(key-1); }
+    T count_less_equal(int key) const { return this->sum(key); }
+    T count_greater(int key) const { return this->sum(key+1, size()-1); }
+    T count_equal(int key) const { return this->sum(key, key); }
     // Works as same as size in OrderedSet
-    T size() const { return sum((int)data.size()-1); }
+    T size() const { return this->sum((int)this->data.size()-1); }
     // Works as same as insert/erase in OrderedSet
-    void insert(int key, T delta = +1) { inc(key, delta); }
-    void erase(int key, T delta = -1) { inc(key, delta); }
-    // Worsk as same as npos in string
-    int npos() const { return (int)data.size(); }
+    void insert(int key, T delta = +1) { this->inc(key, delta); }
+    void erase(int key, T delta = -1) { this->inc(key, delta); }
+    // Works as same as npos in string
+    int npos() const { return (int)this->data.size(); }
 };
 #endif // __FENWICK_HPP__

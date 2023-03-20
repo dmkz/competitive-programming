@@ -26,8 +26,9 @@ struct HLD {
     int calcSize(int u, int p, const vvi &adj) {
         par[u] = p;
         for (int v : adj[u])
-            if (v != p)
+            if (v != p) {
                 sz[u] += calcSize(v, u, adj);
+            }
         return ++sz[u];
     }
     void dfs(int u, int p, const vvi &adj) {
@@ -67,6 +68,20 @@ struct HLD {
             }
         }
         return u;
+    }
+    template<bool includeLCA = true>
+    void forEachSeg(int u, int v, auto f) const {
+        while (id[u] != id[v]) {
+            if (id[u] > id[v])
+                std::swap(u, v);
+            f(id[v], 0, pos[v]);
+            v = par[vert[id[v]][0]];
+        }
+        int L = std::min(pos[u], pos[v]);
+        int R = pos[u] + pos[v] - L;
+        L += !includeLCA;
+        if (L <= R)
+            f(id[u], L, R);
     }
 };
 } // namespace hld
