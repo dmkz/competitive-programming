@@ -53,6 +53,10 @@ using vvpii = std::vector<vpii>;
 using vpll = std::vector<pll>;
 using vvpll = std::vector<vpll>;
 using vs = std::vector<std::string>;
+using tiii = std::tuple<int,int,int>;
+using tiil = std::tuple<int,int,ll>;
+using vtiii = std::vector<tiii>;
+using vtiil = std::vector<tiil>;
 // Comparators:
 #define GEN_COMPARATORS(CLASS) \
     inline bool operator >(const CLASS& a, const CLASS& b) { return b < a; }    \
