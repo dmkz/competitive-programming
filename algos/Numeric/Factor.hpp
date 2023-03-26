@@ -96,6 +96,28 @@ namespace factor {
         return res;
     }
     
+    template<typename T>
+    inline
+    void generateAllDivisors(const std::vector<std::pair<T,int>> &res,
+                             auto &divs, int initial = 1)
+    {
+        divs.clear();
+        divs.push_back(initial);
+        for (const auto &[p,cnt] : res) {
+            T pp = 1;
+            const int saved = isz(divs);
+            for (int x = 1; x <= cnt; x++) {
+                pp *= p;
+                for (int i = 0; i < saved; i++)
+                    divs << divs[i] * 1LL * pp;
+            }
+            for (int x = 1; x <= cnt; x++) {
+                std::inplace_merge(divs.begin(), divs.begin()+x*saved, 
+                                   divs.begin()+(x+1)*saved);
+            }
+        }
+    }
+    
 } // namespace factor
 } // namespace algos
 #endif // __FACTOR_HPP__
