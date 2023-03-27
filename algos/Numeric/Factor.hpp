@@ -111,11 +111,34 @@ namespace factor {
                 for (int i = 0; i < saved; i++)
                     divs << divs[i] * 1LL * pp;
             }
+            /*
+            // faster way:
+            for (int block = saved; block < isz(divs); block *= 2) {
+                for (int left = 0; left < isz(divs); left += 2 * block) {
+                    auto M = divs.begin()+std::min(left+block,isz(divs));
+                    auto R = divs.begin()+std::min(left+2*block,isz(divs));
+                    std::inplace_merge(divs.begin()+left, M, R);
+                }
+            }*/
+            ///*
+            // slower way:
             for (int x = 1; x <= cnt; x++) {
                 std::inplace_merge(divs.begin(), divs.begin()+x*saved, 
                                    divs.begin()+(x+1)*saved);
             }
+            //*/
         }
+    }
+    
+    template<typename T>
+    inline
+    void generateAllDivisors(T res, auto &divs,
+                             const std::vector<int>& pr,
+                             int initial = 1)
+    {
+        static std::vector<std::pair<T,int>> expansion;
+        factor(res,expansion,pr);
+        generateAllDivisors(expansion,divs,initial);
     }
     
 } // namespace factor
