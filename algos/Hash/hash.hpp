@@ -124,6 +124,14 @@ namespace hash {
         inline Hash operator()(const int pos, const int len) const {
             return pref[pos+len] - pref[pos] * basepow[len];
         }
+        
+        inline Hash hashAfterSwap(const int i, const int j) const {
+            auto a = (*this)(i,1);
+            auto b = (*this)(j,1);
+            auto res = pref.back();
+            const int n = (int)pref.size()-1;
+            return res + (b-a) * basepow[n-i-1] + (a-b) * basepow[n-j-1];
+        }
     };
     
     struct custom_hash
