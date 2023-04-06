@@ -22,6 +22,9 @@ namespace dsu
             sz[u] += sz[v];
             par[v] = u;
         }
+        bool isConnected(int u, int v) {
+            return getPar(u) == getPar(v);
+        }
     }; // class DSU
 } // namespace dsu
 } // namespace algos
