@@ -64,7 +64,7 @@ struct Residue {
     // возведение в степень:
     Residue operator^(int n) const {
         // степень - периодична с периодом phi(p) = p-1:
-        if (n >= std::abs(mod-1))
+        if (std::abs(n) >= mod-1)
             n %= mod-1;
         if (n < 0)
             n += mod-1;
