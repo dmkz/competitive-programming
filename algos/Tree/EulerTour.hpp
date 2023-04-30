@@ -38,4 +38,4 @@ struct EulerTour {
 };
 } // namespace euler
 } // namespace algos
-#endif __EULERTOUR_HPP__
+#endif // __EULERTOUR_HPP__
