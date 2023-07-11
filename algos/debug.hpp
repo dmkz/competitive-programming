@@ -30,13 +30,9 @@ for_each(std::tuple<Tp...>& t, FuncT f)
 struct Printer {
     std::ostream& os; bool was{0};
     Printer(std::ostream& os_) : os(os_) { }
-    template<typename X> void operator()(X x) 
-    { os << (was?", ":(was=1,"")) << x; }
+    template<typename X> void operator()(X x);
+    
 };
-
-template<typename... X>
-std::ostream& operator<<(std::ostream& os, const std::tuple<X...>& t)
-{ return os << "{", for_each_const(t, Printer(os)), os << "}"; }
 
 template<typename Iterator>
 std::ostream& print(std::ostream& os, Iterator begin, Iterator end)
@@ -49,7 +45,7 @@ OUTPUT(std::vector) OUTPUT(std::list) OUTPUT(std::deque)
 OUTPUT(std::set) OUTPUT(std::unordered_set)
 OUTPUT(std::multiset) OUTPUT(std::unordered_multiset)
 OUTPUT(std::map) OUTPUT(std::multimap) OUTPUT(std::unordered_map)
-#undef RANGE_OUTPUT
+#undef OUTPUT
     
 #define OUTPUT2(container, get, pop) template<typename X, typename... T> \
 std::ostream& operator<<(std::ostream& os, container<X,T...> c) {       \
@@ -59,7 +55,15 @@ std::ostream& operator<<(std::ostream& os, container<X,T...> c) {       \
 OUTPUT2(std::queue,front,pop)
 OUTPUT2(std::stack,top,pop)
 OUTPUT2(std::priority_queue,top,pop)
-#undef OUTPUT
+#undef OUTPUT2
+
+template<typename... X>
+std::ostream& operator<<(std::ostream& os, const std::tuple<X...>& t)
+{ return os << "{", for_each_const(t, Printer(os)), os << "}"; }
+
+template<typename X>
+void Printer::operator()(X x)
+{ os << (was?", ":(was=1,"")) << x; }
 
 const int debug = 0;
 #endif // __DEBUG_HPP__

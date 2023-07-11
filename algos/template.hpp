@@ -85,17 +85,17 @@ namespace std {
     template<typename T, int N, int M, int K> auto size(const T (&)[N][M][K]) { return N * M * K; }
     template<typename T, int N, int M, int K> auto begin(T (&a)[N][M][K]) { return &a[0][0][0]; }
     template<typename T, int N, int M, int K> auto end(T (&a)[N][M][K]) { return &a[0][0][0] + N * M * K; }
-    // Algorithms:
-    template<typename C> void reuniq(C& c) { c.erase(unique(all(c)), end(c)); }
-    template<typename C, typename X> int lowpos(const C& c, X x) {
-        return int(lower_bound(all(c), x) - begin(c));
-    }
-    template<typename C, typename X> int uppos(const C& c, X x) {
-        return int(upper_bound(all(c), x) - begin(c));
-    }
-    template<typename X, typename Y> X& remin(X& x, const Y& y) { return x = (y < x) ? y : x; }
-    template<typename X, typename Y> X& remax(X& x, const Y& y) { return x = (x < y) ? y : x; }
 }
+// Algorithms:
+template<typename C> void reuniq(C& c) { c.erase(unique(all(c)), end(c)); }
+template<typename C, typename X> int lowpos(const C& c, X x) {
+    return int(lower_bound(all(c), x) - begin(c));
+}
+template<typename C, typename X> int uppos(const C& c, X x) {
+    return int(upper_bound(all(c), x) - begin(c));
+}
+template<typename X, typename Y> X& remin(X& x, const Y& y) { return x = (y < x) ? y : x; }
+template<typename X, typename Y> X& remax(X& x, const Y& y) { return x = (x < y) ? y : x; }
 // Input:
 template<typename T> std::istream& operator>>(std::istream& is, std::vector<T>& vec) {
     for (auto &it : vec) is >> it;
