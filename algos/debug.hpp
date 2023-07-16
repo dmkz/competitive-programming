@@ -4,10 +4,6 @@
 #define watch(...) debug && std::cerr << "{" << #__VA_ARGS__ << "} = " \
     << std::make_tuple(__VA_ARGS__) << std::endl
 
-template<typename... X>
-std::ostream& operator<<(std::ostream& os, const std::pair<X...>& p) 
-{ return os << std::make_tuple(std::get<0>(p), std::get<1>(p)); }
-
 template<std::size_t I = 0, typename FuncT, typename... Tp>
 inline typename std::enable_if<I == sizeof...(Tp), void>::type
 for_each_const(const std::tuple<Tp...> &, FuncT) { }
@@ -64,6 +60,10 @@ std::ostream& operator<<(std::ostream& os, const std::tuple<X...>& t)
 template<typename X>
 void Printer::operator()(X x)
 { os << (was?", ":(was=1,"")) << x; }
+
+template<typename... X>
+std::ostream& operator<<(std::ostream& os, const std::pair<X...>& p) 
+{ return os << std::make_tuple(std::get<0>(p), std::get<1>(p)); }
 
 const int debug = 0;
 #endif // __DEBUG_HPP__
