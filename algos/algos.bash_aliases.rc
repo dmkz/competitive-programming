@@ -6,14 +6,16 @@ function libexpand() {
 	if [ -z "$1" ]; then
 		echo "ERROR: You have to specify filename!";
 	else
-		"$libexpandpath" "-e" "$(readlink -f $1)";	
+        filePath=$(readlink -f "$1");
+		"$libexpandpath" "-e" "$filePath";
 	fi
 }
 function libcollapse() {
 	if [ -z "$1" ]; then
 		echo "ERROR: You have to specify filename!";
 	else
-		"$libexpandpath" "-c" "$(readlink -f $1)";	
+        filePath=$(readlink -f "$1");
+		"$libexpandpath" "-c" "$filePath";
 	fi
 }
 
@@ -25,18 +27,19 @@ function cpp_compile() {
 	if [ -z "$1" ]; then
 		echo "ERROR: You have to specify filename!";
 	else
-		libexpand $(readlink -f $1);
+        filePath=$(readlink -f "$1");
+		libexpand "$filePath";
 		echo -e "\n\nStart the compilation process...";
-		g++ $2 $3 $1;
+		g++ $2 $3 "$1";
 	fi
 }
 
 function cpp_debug() {
-	cpp_compile $1 "$cpp_flags" "$cpp_debug_flags";
+	cpp_compile "$1" "$cpp_flags" "$cpp_debug_flags";
 }
 
 function cpp_fast() {
-	cpp_compile $1 "$cpp_flags";
+	cpp_compile "$1" "$cpp_flags";
 }
 
 alias c++debug="g++ $cpp_flags $cpp_debug_flags";
