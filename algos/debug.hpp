@@ -4,6 +4,9 @@
 #define watch(...) debug && std::cerr << "{" << #__VA_ARGS__ << "} = " \
     << std::make_tuple(__VA_ARGS__) << std::endl
 
+template<typename... X>
+std::ostream& operator<<(std::ostream& os, const std::pair<X...>& p);
+
 template<std::size_t I = 0, typename FuncT, typename... Tp>
 inline typename std::enable_if<I == sizeof...(Tp), void>::type
 for_each_const(const std::tuple<Tp...> &, FuncT) { }
