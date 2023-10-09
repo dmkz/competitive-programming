@@ -132,6 +132,10 @@ namespace hash {
             const int n = (int)pref.size()-1;
             return res + (b-a) * basepow[n-i-1] + (a-b) * basepow[n-j-1];
         }
+        inline Hash hashAfterRemove(const int i) const {
+            const int n = (int)pref.size()-1;
+            return (*this)(0, i) * basepow[n-i-1] + (*this)(i+1, n - i - 1);
+        }
     };
     
     struct custom_hash
