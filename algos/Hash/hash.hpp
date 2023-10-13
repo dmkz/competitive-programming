@@ -82,7 +82,7 @@ namespace hash {
     std::vector<Hash> basepow{1};
     Hash base = [](){
         std::uniform_int_distribution<int> dist((int)1.9e9, (int)2e9);
-        static std::mt19937 gen(std::chrono::high_resolution_clock::now().time_since_epoch().count());
+        static std::mt19937 gen((int)std::chrono::high_resolution_clock::now().time_since_epoch().count());
         int tmp = dist(gen);
         return tmp % 2 == 0 ? tmp - 1 : tmp;
     }();    
@@ -92,10 +92,18 @@ namespace hash {
         // -------- Variables of class --------
         std::vector<Hash> pref; // polynomial hash on prefix
         
+        int size() const { return (int)pref.size()-1; }
+        
+        PolyHash() : pref(1, 0) {}
+        
         // Constructor from string:
-        PolyHash(const std::string& s) 
-            : pref(s.size()+1u, 0) 
-        {
+        PolyHash(const std::string& s) { build(s); }
+        
+        // Constructor from vector:
+        template<typename T> PolyHash(const std::vector<T>& v) { build(v); }
+        
+        void build(const auto& s) {
+            pref.assign(s.size()+1u, 0);
             // Pre-calculate powers of base:
             while (basepow.size() <= s.size()) {
                 basepow.push_back(basepow.back() * base);
@@ -103,20 +111,6 @@ namespace hash {
             // Calculate polinomial hash on prefix:
             for (int i = 0; i < (int)s.size(); ++i) {
                 pref[i+1] = pref[i] * base + s[i];
-            }
-        }
-        
-        // Constructor from vector:
-        template<typename T> PolyHash(const std::vector<T>& v) 
-            : pref(v.size()+1u, 0)
-        {
-            // Pre-calculate powers of base:
-            while (basepow.size() <= v.size()) {
-                basepow.push_back(basepow.back() *  base);
-            }
-            // Calculate polinomial hash on prefix:
-            for (int i = 0; i < (int)v.size(); ++i) {
-                pref[i+1] = pref[i] * base + v[i];
             }
         }
         
