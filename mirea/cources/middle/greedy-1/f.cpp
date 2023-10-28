@@ -28,11 +28,8 @@ int main() {
     // либо множества не пересекаются вообще
     // тогда k-й ответ это k-е по возрастанию число в массиве кол-ва листьев
     // сортируем и выводим ответы
-    vi a;
+    sort(all(countLeafs));
     for (int i = 1; i <= n; ++i)
-        a.push_back(countLeafs[i]);
-    sort(all(a));
-    for (int i = 0; i < n; ++i)
-        cout << a[i] << ' ';
+        cout << countLeafs[i] << ' ';
     cout << endl;
 }
