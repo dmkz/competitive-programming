@@ -12,7 +12,7 @@ main() {
         if (balance < 0) {
             // ищем самую правую открывающую с того момента, на котором остановились
             // при последнем поиске:
-            while (s[rightOpen] == '(')
+            while (s[rightOpen] != '(')
                 rightOpen--;
             // меняем местами:
             swap(s[i], s[rightOpen]);
