@@ -18,58 +18,69 @@ struct Submission {
     
     bool readFromPage(std::string &fs, bool &lastRowDetected)
     {
+        //bool debug = 1;
+        //std::cerr << __LINE__ << std::endl;
         // read full submission info from input stream
         // submission id on codeforces:
         std::string subIdS;
-        bool subIdOK = extractBetween(fs,"<tr data-submission-id=\"","\"", subIdS);
-        if (!subIdOK) {
-            subIdOK = extractBetween(fs,"<tr class=\"last-row\" data-submission-id=\"","\"", subIdS);
+        std::string temp;
+        bool fullSubmissionExtracted = extractBetween(fs,
+            "<tr data-submission-id=\"", "</tr>", temp);
+        if (!fullSubmissionExtracted) {
+            fullSubmissionExtracted = extractBetween(fs,
+            "<tr class=\"last-row\" data-submission-id=\"", "</tr>", temp);
             lastRowDetected = true;
         }
+        if (!fullSubmissionExtracted)
+            return false;
+        bool subIdOK = removeBefore(temp,"\"", &subIdS);
+        //std::cerr << __LINE__ << std::endl;
         if (!subIdOK)
             return false;
+        //std::cerr << __LINE__ << std::endl;
         assert(subIdOK);
         trimRef(subIdS);
         subId = std::stoi(subIdS);
         watch(subId);
         // when submission is done:
-        bool whenOK = removeBefore(fs,"format-time");
-        whenOK = whenOK && extractBetween(fs,">", "<",when);
+        bool whenOK = removeBefore(temp,"format-time");
+        whenOK = whenOK && extractBetween(temp,">", "<",when);
         assert(whenOK);
         trimRef(when);
         watch(when);
         // user id on codeforces:
         std::string partIdS;
-        bool partIdOK = extractBetween(fs,"data-participantId=\"","\"",partIdS);
+        bool partIdOK = extractBetween(temp,"data-participantId=\"","\"",partIdS);
         assert(partIdOK);
         partId = std::stoi(partIdS);
         watch(partId);
         // href to user profile:
-        bool hrefUserOK = extractBetween(fs,"href=\"", "\"",hrefUser);
+        bool hrefUserOK = extractBetween(temp,"href=\"", "\"",hrefUser);
         assert(hrefUserOK);
         watch(hrefUser);
+        //std::cerr << "hrefUser ='" << hrefUser << "'" << std::endl;
         // nickname of user:
-        bool nicknameOK = extractBetween(fs,">", "<",nickname);
+        bool nicknameOK = extractBetween(temp,">", "<",nickname);
         assert(nicknameOK);
         watch(nickname);
         // id of problem:
         std::string problemIdS;
-        bool problemIdOK = extractBetween(fs,"data-problemId=\"","\"", problemIdS);
+        bool problemIdOK = extractBetween(temp,"data-problemId=\"","\"", problemIdS);
         assert(problemIdOK);
         problemId = std::stoi(problemIdS);
         watch(problemId);
         // href to problem:
-        bool hrefProblemOK = extractBetween(fs,"href=\"", "\"",hrefProblem);
+        bool hrefProblemOK = extractBetween(temp,"href=\"", "\"",hrefProblem);
         assert(hrefProblemOK);
         watch(hrefProblem);
         // the title of problem
-        bool problemNameOK = extractBetween(fs,">", "<",problemName);
+        bool problemNameOK = extractBetween(temp,">", "<",problemName);
         assert(problemNameOK);
         trimRef(problemName);
         replaceSubstrRef(problemName, "&rsquo;", "'");
         watch(problemName);
         // language of submission (C++, Java, etc)
-        bool langOK = extractBetween(fs,"<td>", "<",lang);
+        bool langOK = extractBetween(temp,"<td>", "<",lang);
         assert(langOK);
         trimRef(lang);
         watch(lang);
@@ -78,19 +89,38 @@ struct Submission {
         assert(hrefOK);
         watch(href);*/
         // submission verdict
-        bool verdictOK = extractBetween(fs,"submissionVerdict=\"","\"",verdict);
+        bool verdictOK = extractBetween(temp,"submissionVerdict=\"","\"",verdict);
         assert(verdictOK);
         watch(verdict);
         // runtime of submission
-        bool runtimeOK = removeBefore(fs,"time-consumed-cell");
-        runtimeOK = runtimeOK && extractBetween(fs,">", "<",runtime);
+        
+        bool runtimeOK = removeBefore(temp,"time-consumed-cell");
+        runtimeOK = runtimeOK && extractBetween(temp,">", "<",runtime);
+        if (!runtimeOK) {
+            watch(temp);
+            bool isPoints = removeBefore(temp, "class=\"verdict-format-points\"");
+            if (!isPoints) {
+                isPoints = removeBefore(temp, "class=verdict-format-points");
+            }
+            watch(temp);
+            assert(isPoints);
+            runtimeOK = extractBetween(temp, ">", "<", runtime);
+            watch(temp);
+            watch(runtime);
+            assert(runtimeOK);
+            trimRef(runtime);
+            replaceSubstrRef(runtime, "&nbsp;", " ");
+            watch(runtime);
+            memory = "-1";
+            return true;
+        }
         assert(runtimeOK);
         trimRef(runtime);
         replaceSubstrRef(runtime, "&nbsp;", " ");
         watch(runtime);
         // used memory in submission
-        bool memoryOK = removeBefore(fs,"memory-consumed-cell");
-        memoryOK = memoryOK && extractBetween(fs,">", "<",memory);
+        bool memoryOK = removeBefore(temp,"memory-consumed-cell");
+        memoryOK = memoryOK && extractBetween(temp,">", "<",memory);
         assert(memoryOK);
         trimRef(memory);
         replaceSubstrRef(memory, "&nbsp;", " ");
@@ -184,8 +214,10 @@ std::string link2filename(std::string link) {
 struct Cache {
     std::string filename;
     std::vector<Submission> cache;
-    Cache(std::string link)
+    bool isSave{false};
+    Cache(std::string link, bool isSave_ = false)
     {
+        isSave = isSave_;
         filename = link2filename(link);
         std::ifstream fin(filename);
         std::string s;
@@ -193,11 +225,14 @@ struct Cache {
             cache.push_back(Submission().from_string(s));
         }
     ~Cache() {
-        std::ofstream fout(filename);
-        std::sort(all(cache),std::greater<>());
-        cache.erase(std::unique(all(cache)), cache.end());
-        for (const auto &s : cache) {
-            fout << s.to_string() << '\n';
+        if (isSave) {
+            std::ofstream fout(filename);
+            std::sort(all(cache),std::greater<>());
+            cache.erase(std::unique(all(cache)), cache.end());
+            for (const auto &s : cache) {
+                fout << s.to_string() << '\n';
+            }
+            //std::cerr << "file has been saved!" << std::endl;
         }
     }
 };

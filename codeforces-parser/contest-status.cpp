@@ -2,18 +2,17 @@
 #include <bits/stdc++.h>
 #include "cf-common.hpp"
 
-#define watch(x) debug && std::cerr << #x << " = '" << x << "'" << std::endl;
-
 const bool debug = false;
 
 #include "submission.hpp"
 
-int main(int argc, char **argv) {
+int main(int argc_, char **argv_) {
     setlocale(LC_ALL, "Ru-ru");
-    assert(argc == 3);
+    assert(argc_ == 3);
+    auto argv = getArguments(argc_, argv_);
     std::string fs = fileToString(argv[1]);
     std::string link = argv[2];
-    Cache cacheObject(link);
+    Cache cacheObject(link, true);
     auto &cache = cacheObject.cache;
     int count = 0;
     std::vector<Submission> currPage;
@@ -45,13 +44,13 @@ int main(int argc, char **argv) {
     std::inplace_merge(cache.begin(), cache.begin()+last,cache.end(),std::greater<>());
     //std::sort(all(cache),std::greater<>());
     if (nAdded < isz(currPage)) {
-        std::cout << "done";
+        std::cout << "0" << std::endl;
         return 0;
     }
     bool paginationOK = removeBefore(fs,"<div class=\"pagination\">");
     if (!paginationOK) {
         std::cerr << "There is no additional pages...";
-        std::cout << "done";
+        std::cout << "0" << std::endl;
         return 0;
     }
     assert(paginationOK);
@@ -61,7 +60,7 @@ int main(int argc, char **argv) {
     std::string page;
     nextPage = nextPage && extractBetween(fs, "pageIndex=\"", "\"", page);
     if(!nextPage) {
-        std::cout << "done";
+        std::cout << "0" << std::endl;
         return 0;
     }
     //assert(nextPage);

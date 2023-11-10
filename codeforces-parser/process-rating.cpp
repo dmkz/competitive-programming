@@ -8,11 +8,12 @@ const bool debug = false;
 
 #include "submission.hpp"
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv_) {
     setlocale(LC_ALL, "Ru-ru");
     //assert(argc == 3);
+    auto argv = getArguments(argc, argv_);
     std::ifstream fs(argv[1]);
-    const int limit = std::atoi(argv[2]);
+    const int limit = std::stoi(argv[2]);
     bool only_users = false;
     std::string from = "Jan/01/1970 00:00";
     std::string to = "Jan/01/3000 00:00";

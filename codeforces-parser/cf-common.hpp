@@ -1,7 +1,9 @@
 #pragma once
 #define isz(x) (int)(x).size()
 #define all(x) (x).begin(),(x).end()
-
+#ifndef watch
+#define watch(x) debug && std::cerr << #x << " = '" << x << "'" << std::endl;
+#endif
 uint64_t date2number(std::string s)
 {
     static std::map<std::string, uint64_t> month =
@@ -49,23 +51,32 @@ std::string replaceSubstr(std::string s,
     replaceSubstrRef(s,from,to);
     return s;
 }
+template<bool debug = 0>
 bool removeBefore(std::string &s,
                   const std::string what,
                   std::string *dst = nullptr) {
+    watch("removeBefore");
+    watch(s);
+    watch(what);
     auto p = s.find(what);
+    watch(p);
     if (p == s.npos)
         return false;
-    if (dst) *dst = s.substr(0, p);
+    if (dst) {
+        *dst = s.substr(0, p);
+        watch(*dst);
+    }
     s.erase(0,p+isz(what));
+    watch(s);
     return true;
 }
-
+template<bool debug = 0>
 bool extractBetween(std::string &s,
                     std::string fi,
                     std::string se,
                     std::string &dst)
 {
-    return removeBefore(s, fi) && removeBefore(s, se, &dst);
+    return removeBefore<debug>(s, fi) && removeBefore<debug>(s, se, &dst);
 }
 
 std::vector<std::string> split(std::string s,
@@ -89,6 +100,12 @@ std::string fileToString(std::string filename) {
     return result;
 }
 
+void stringToFile(std::string filename, const std::string &s) {
+    std::ofstream fout(filename);
+    fout << s;
+    std::cerr << "saved the content into file '" << filename << "'" << std::endl;
+}
+
 void trimRef(std::string &s) {
     for (int rotate = 0; rotate < 2; rotate++) {
         while (isz(s) && std::isspace(s.back())) s.pop_back();
@@ -98,4 +115,30 @@ void trimRef(std::string &s) {
 std::string trim(std::string s) {
     trimRef(s);
     return s;
+}
+
+std::vector<std::string> getArguments(int argc, char * argv[]) {
+    std::vector<std::string> res;
+    for (int i = 0; i < argc; i++)
+        res.push_back(argv[i]);
+    for (int i = 1; i < argc; i++) {
+        replaceSubstrRef(res[i], "C:/msys64", "");
+    }
+    return res;
+}
+
+int getMaxPage(std::string s) {
+    std::string t = "<span class=\"page-index\" pageIndex=\"";
+    int p = 0, res = -1;
+    while (true) {
+        p = s.find(t, p);
+        if (p == (int)s.npos) {
+            break;
+        }
+        p += isz(t);
+        int index;
+        sscanf(s.c_str()+p, "%d", &index);
+        res = std::max(res, index);
+    }
+    return res;
 }
