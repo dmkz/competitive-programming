@@ -78,7 +78,42 @@ namespace numeric {
         }
         
     };
-
+    
+    template<typename T>
+    void gauss(std::vector<std::vector<T>> &a) {
+        const int n = (int)a.size();
+        assert((int)a[0].size()+1 == n);
+        // решаем СЛАУ
+        for (int i = 0; i < n; i++) {
+            for (int j = i+1; j < n; j++) {
+                T coeff = (a[j][i] / a[i][i]);
+                for (int k = i; k <= n; k++)
+                    a[j][k] -= a[i][k] * coeff;
+            }
+        }
+        for (int i = 0; i < n; i++)
+            a[i].back() /= a[i][i];
+    }
+    
+    template<typename T>
+    void gauss(std::vector<std::vector<T>> &a, std::vector<T> &b) {
+        const int n = (int)a.size();
+        assert((int)a[0].size() == n);
+        assert((int)b.size() == n);
+        // решаем СЛАУ
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < n; j++) 
+                if (i != j) {
+                    T coeff = (a[j][i] / a[i][i]);
+                    for (int k = i; k < n; k++)
+                        a[j][k] -= a[i][k] * coeff;
+                    b[j] -= coeff * b[i];
+                }
+        // находим ответ:
+        for (int i = 0; i < n; i++)
+            b[i] /= a[i][i];
+    }
+    
     template<typename T>
     struct Poly : public std::vector<T>
     {    
@@ -105,23 +140,11 @@ namespace numeric {
                 a[i][n] = f;
             }
             // решаем СЛАУ
-            for (int i = 0; i < n; i++) {
-                for (int j = i+1; j < n; j++) {
-                    T coeff = (a[j][i] / a[i][i]);
-                    for (int k = i; k <= n; k++) {
-                        a[j][k] -= a[i][k] * coeff;
-                    }
-                }
-            }
+            gauss(a);
             // находим ответ
             this->resize(n);
-            for (int i = n-1; i >= 0; i--) {
-                auto tmp = a[i].back();
-                for (int j = i+1; j < n; j++) {
-                    tmp -= (*this)[j] * a[i][j];
-                }
-                (*this)[i] = tmp / a[i][i];
-            }
+            for (int i = n-1; i >= 0; i--)
+                (*this)[i] = a[i].back();
         }
         
         T operator()(T x) const {
