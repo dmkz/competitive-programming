@@ -2,7 +2,7 @@
 #define __SEGMENTTREELAZY_HPP__
 namespace algos {
 namespace SegmentTreeLazy {
-    
+using namespace algos::SegmentTreeLazyTraits;
     /*******************************************************************************
      *  SegmentTree<Value, Extra, Traits> - segment tree class with lazy propagation, 0-indexed
      *  Default operations: minimal value on segment and addition on segment for int64_t type
@@ -18,37 +18,10 @@ namespace SegmentTreeLazy {
     /*******************************************************************************
      *  Available traits, implemented below 
      ******************************************************************************/
-    template<typename Value, typename Extra> struct TraitsMinAdd;
-    template<typename Value, typename Extra> struct TraitsMaxAdd;
-    template<typename Value, typename Extra> struct TraitsSumSet;
-    template<typename Value, typename Extra> struct TraitsSumMul;
-    /*******************************************************************************
-     *  Traits for minimal value on segment. 
-     *  Get-query:    get minimal value in segment [l, r]
-     *  Update-query: add const to each value in segment [l, r]
-     ******************************************************************************/
-    template<typename Value, typename Extra>
-    struct TraitsMinAdd {
-        // Definition of neutral element for `Value`:
-        static Value valueNeutral() { return std::numeric_limits<Value>::max(); }
-        // Definition of neutral element for `Extra`:
-        static Extra extraNeutral() { return Extra(0); }
-        // Definition of how should combine `Extra` with `Value`:
-        template<typename Node>
-        static Value getValue(const Node& src) {
-            return src.value() + src.extra();
-        }
-        // Definition of how should combine `Value` with `Value` (children to root):
-        template<typename NodeRoot, typename NodeLt, typename NodeRt>
-        static void pull(NodeRoot root, const NodeLt& lt, const NodeRt& rt) {
-            root.value() = std::min(getValue(lt), getValue(rt));
-        }
-        // Definition of how should combine `Extra` with `Extra`:
-        template<typename NodeDst, typename NodeSrc>
-        static void push(NodeDst dst, const NodeSrc& src) {
-            dst.extra() += src.extra();
-        }
-    };
+    template<typename Value, typename Extra> using TraitsMinAdd = LazyMinAdd<Value,Extra>;
+    template<typename Value, typename Extra> using TraitsMaxAdd = LazyMaxAdd<Value,Extra>;
+    template<typename Value, typename Extra> using TraitsSumSet = LazySumSet<Value,Extra>;
+    template<typename Value, typename Extra> using TraitsSumMul = LazySumMul<Value,Extra>;
     
     /*******************************************************************************
      *  SegmentTree, see description above
@@ -213,112 +186,6 @@ namespace SegmentTreeLazy {
 
     };
     
-    /*******************************************************************************
-     *  Traits for maximal value on segment. 
-     *  Get-query:    get maximal value in segment [l, r]
-     *  Update-query: add const to each value in segment [l, r]
-     ******************************************************************************/
-    template<typename Value, typename Extra>
-    struct TraitsMaxAdd {
-        // Definition of neutral element for `Value`:
-        static Value valueNeutral() { return std::numeric_limits<Value>::min(); }
-        // Definition of neutral element for `Extra`:
-        static Extra extraNeutral() { return Extra(0); }
-        // Definition of how should combine `Extra` with `Value`:
-        template<typename Node>
-        static Value getValue(const Node& src) {
-            return src.value() + src.extra();
-        }
-        // Definition of how should combine `Value` with `Value` (children to root):
-        template<typename NodeRoot, typename NodeLt, typename NodeRt>
-        static void pull(NodeRoot root, const NodeLt& lt, const NodeRt& rt) {
-            root.value() = std::max(getValue(lt), getValue(rt));
-        }
-        // Definition of how should combine `Extra` with `Extra`:
-        template<typename NodeDst, typename NodeSrc>
-        static void push(NodeDst dst, const NodeSrc& src) {
-            dst.extra() += src.extra();
-        }
-    };   
-    
-    /*******************************************************************************
-     *  Traits for maximal value on segment. 
-     *  Get-query:    sum of values on segment [l, r]
-     *  Update-query: set const to each value in segment [l, r]
-     ******************************************************************************/
-    template<typename Value, typename Extra>
-    struct TraitsSumSet {
-        // Definition of neutral element for `Value`:
-        static Value valueNeutral() { return Value(0); }
-        // Definition of neutral element for `Extra`:
-        static Extra extraNeutral() { return Extra(-1); }
-        // Definition of how should combine `Extra` with `Value`:
-        template<typename Node>
-        static Value getValue(const Node& src) {
-            return src.extra() == extraNeutral() ? src.value() : src.len() * src.extra();
-        }
-        // Definition of how should combine `Value` with `Value` (children to root):
-        template<typename NodeRoot, typename NodeLt, typename NodeRt>
-        static void pull(NodeRoot root, const NodeLt& lt, const NodeRt& rt) {
-            root.value() = getValue(lt) + getValue(rt);
-        }
-        // Definition of how should combine `Extra` with `Extra`:
-        template<typename NodeDst, typename NodeSrc>
-        static void push(NodeDst dst, const NodeSrc& src) {
-            dst.extra() = src.extra();
-        }
-    };
-    
-    /*******************************************************************************
-     *  Traits for sum on segment. 
-     *  Get-query:    sum of values on segment [l, r]
-     *  Update-query: add const to each value on segment [l, r]
-     ******************************************************************************/
-    template<typename Value, typename Extra>
-    struct TraitsSumAdd {
-        // Definition of neutral element for `Value`:
-        static Value valueNeutral() { return Value(0); }
-        // Definition of neutral element for `Extra`:
-        static Extra extraNeutral() { return Extra(0); }
-        // Definition of how should combine `Extra` with `Value`:
-        template<typename Node>
-        static Value getValue(const Node& src) {
-            return src.value() + src.extra() * src.len();
-        }
-        // Definition of how should combine `Value` with `Value` (children to root):
-        template<typename NodeRoot, typename NodeLt, typename NodeRt>
-        static void pull(NodeRoot root, const NodeLt& lt, const NodeRt& rt) {
-            root.value() = getValue(lt) + getValue(rt);
-        }
-        // Definition of how should combine `Extra` with `Extra`:
-        template<typename NodeDst, typename NodeSrc>
-        static void push(NodeDst dst, const NodeSrc& src) {
-            dst.extra() += src.extra();
-        }
-    };
-    
-    template<typename Value, typename Extra>
-    struct TraitsSumMul {
-        // Definition of neutral element for `Value`:
-        static Value valueNeutral() { return Value(0); }
-        // Definition of neutral element for `Extra`:
-        static Extra extraNeutral() { return Extra(1); }
-        // Definition of how should combine `Extra` with `Value`:
-        template<typename Node>
-        static Value getValue(const Node& src) {
-            return src.value() * src.extra();
-        }
-        // Definition of how should combine `Value` with `Value` (children to root):
-        template<typename NodeRoot, typename NodeLt, typename NodeRt>
-        static void pull(NodeRoot root, const NodeLt& lt, const NodeRt& rt) {
-            root.value() = getValue(lt) + getValue(rt);
-        }
-        // Definition of how should combine `Extra` with `Extra`:
-        template<typename NodeDst, typename NodeSrc>
-        static void push(NodeDst dst, const NodeSrc& src) {
-            dst.extra() *= src.extra();
-        }
-    };
 } // namespace SegmentTreeLazy
 } // namespace algos
 #endif // __SEGMENTTREELAZY_HPP__
