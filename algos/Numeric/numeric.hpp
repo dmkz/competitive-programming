@@ -12,7 +12,16 @@ namespace numeric {
         }
         return r;
     }
-
+    
+    template<typename T, typename N>
+    inline T geometricSum(T q, N n) {
+        if (n == 0) return 0;
+        if (n == 1) return 1;
+        if (n % 2 == 0)
+            return (q+1)*geometricSum(q*q,n/2);
+        return q*geometricSum(q, n-1)+1;
+    }
+    
     template<int mod>
     struct IntMod {
         int value;
