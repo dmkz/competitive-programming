@@ -201,8 +201,8 @@ auto collapseFile(std::string path, const std::vector<std::string> &content)
                     i = j;
                     fout << "#include \"" << header->first << "\"" << "\n";
                     nLines++;
-                    writeFile(dir+s, fileToStrings(header->second));
-                    std::cout << "Header '" << header->first << "' have been collapsed." << std::endl;
+                    //writeFile(dir+s, fileToStrings(header->second));
+                    //std::cout << "Header '" << header->first << "' have been collapsed." << std::endl;
                     continue;
                 }
             }
