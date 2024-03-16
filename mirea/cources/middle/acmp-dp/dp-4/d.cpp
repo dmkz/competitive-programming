@@ -1,0 +1,40 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define all(x) (x).begin(),(x).end()
+// 0 ... 2^m-1
+int getbit(int mask, int index) {
+    return (mask >> index) & 1;
+}
+int main() {
+    int n, m; cin >> n >> m;
+    if (n < m)
+        swap(n, m);
+    // надо хранить вариант заполнения последней строки,
+    // это один из 2^m комбинаций
+    // dp[строка][способ заполнения последней строки] => кол-во вариантов
+    vector dp(n, vector(1 << m, 0));
+    // заполняем единицами все варианты для первой строки
+    dp[0] = vector(1 << m, 1);
+    // осуществяем переходы
+    for (int row = 1; row < n; row++)
+        for (int currRow = 0; currRow < (1 << m); currRow++)
+            for (int prevRow = 0; prevRow < (1 << m); prevRow++) {
+                bool ok = true;
+                for (int col = 0; col + 1 < m; col++) {
+                    // проверяем элементы в квадрате 2х2, что они не равны
+                    // одному и тому же числу x
+                    const int x = getbit(prevRow, col);
+                    if (x == getbit(currRow, col) &&
+                        x == getbit(currRow, col+1) &&
+                        x == getbit(prevRow, col+1))
+                    {
+                        ok = false;
+                        break;
+                    }
+                }
+                if (ok) {
+                    dp[row][currRow] += dp[row-1][prevRow];
+                }
+            }
+    cout << accumulate(all(dp[n-1]), 0LL) << endl;
+}
