@@ -2,6 +2,7 @@
 #define __SEGMENTTREELAZYTRAITS_HPP__
 namespace algos {
 namespace SegmentTreeLazyTraits {
+    inline int getBase() { return 0; }
     /*******************************************************************************
      *  Use Traits<Value,Extra> for definition of:
      *      1)  neutral element for `Value`;
@@ -87,7 +88,7 @@ namespace SegmentTreeLazyTraits {
         // Definition of neutral element for `Value`:
         static Value valueNeutral() { return Value(0); }
         // Definition of neutral element for `Extra`:
-        static Extra extraNeutral() { return Extra(-1); }
+        static Extra extraNeutral() { return std::numeric_limits<Extra>::min(); }
         // Definition of how should combine `Extra` with `Value`:
         template<typename Node>
         static Value getValue(const Node& src) {
