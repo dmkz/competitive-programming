@@ -13,7 +13,7 @@ main() {
     cin.tie(0);
     // предподсчёт суммы квадратов
     vector<long long> sum2(1e6+100);
-    for (int i = 1; i < isz(sum2); i++)
+    for (int i = 1; i < (int)(sum2.size()); i++)
         sum2[i] = sum2[i-1] + (long long)(i) * i;
     // решение задачи:
     int tt; cin >> tt;
