@@ -13,9 +13,9 @@ main() {
         // надо проверить, что префикс длины a[i] имеет высоту >= i
         int n; cin >> n;
         vector<int> a(n);
-        vector<int> mn(n);
         for (auto &it : a)
             cin >> it, --it;
+        vector<int> mn(n);
         mn[0] = a[0];
         for (int i = 1; i < n; i++)
             mn[i] = min(mn[i-1], a[i]);
