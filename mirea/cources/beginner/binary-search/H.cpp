@@ -10,13 +10,11 @@ pii ask(int x, int y) {
     cout << "? " << x << " " << y << endl;
     long double x1, y1;
     cin >> x1 >> y1;
-    if (x1 * x1 + y1 * y1 < 1e-9)
-        return {0, 0};
     return {sign(x1), sign(y1)};
 }
 pii solve(int xmin, int xmax, int ymin, int ymax) {
     if (xmin == xmax && ymin == ymax)
-        return {xmin, xmax};
+        return {xmin, ymin};
     int xmid = (xmin + xmax) / 2;
     int ymid = (ymin + ymax) / 2;
     auto [x1, y1] = ask(xmid, ymid);
