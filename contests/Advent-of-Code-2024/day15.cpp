@@ -11,14 +11,17 @@ int findDir(char c) {
     return res;
 }
 void part1() {
+    // читаем поле:
     string s;
     vector<string> a;
     while (getline(cin, s)) {
         if (s.empty()) break;
         a.push_back(s);
     }
+    // читаем команды:
     s = "";
     for (string ss; getline(cin, ss); s += ss);
+    // ищем позицию робота:
     int r = -1, c = -1;
     for (int i = 0; i < isz(a); i++)
         for (int j = 0; j < isz(a[i]); j++)
@@ -27,6 +30,7 @@ void part1() {
                 a[i][j] = '.';
             }
     assert(r != -1 && c != -1);
+    // выполняем команды:
     for (int i = 0; i < isz(s); i++) {
         int dir = findDir(s[i]);
         int nr = r + dr[dir], nc = c + dc[dir];
