@@ -1,6 +1,8 @@
 #ifndef __BITSET_HPP__
 #define __BITSET_HPP__
 
+#include <immintrin.h>
+
 inline void setBitAND(uint64_t * __restrict a,
                       const uint64_t * __restrict b,
                       const int sz)
@@ -59,13 +61,13 @@ __attribute__((target("avx")))
 inline int firstNonZero(const uint64_t * __restrict a, const int sz)
 {
     const int alignment = 32 / sizeof(uint64_t);
-    int begin = (size_t(a)+alignment-1)/alignment*alignment-size_t(a);
-    for (int i = 0; i < begin; i++)
+    const int begin = int((size_t(a)+alignment-1)/alignment*alignment-size_t(a));
+    int i = 0;
+    for (; i < begin; i++)
         if (a[i] != 0)
             return i;
-    int i = begin;
     for (; i + 3 < sz; i += 4) {
-        auto reg = _mm256_load_si256(a+i);
+        auto reg = _mm256_load_si256((const __m256i*)(a+i));
         auto tmp = _mm256_cmpeq_epi64(reg, _mm256_setzero_si256());
         if (int mask = _mm256_movemask_pd(__m256d(tmp)); mask != 15)
             return i + __builtin_ctz(~mask);
