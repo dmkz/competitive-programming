@@ -55,6 +55,27 @@ inline int cntXOR(const uint64_t * __restrict a,
     return res;
 }
 
+__attribute__((target("avx")))
+inline int firstNonZero(const uint64_t * __restrict a, const int sz)
+{
+    const int alignment = 32 / sizeof(uint64_t);
+    int begin = (size_t(a)+alignment-1)/alignment*alignment-size_t(a);
+    for (int i = 0; i < begin; i++)
+        if (a[i] != 0)
+            return i;
+    int i = begin;
+    for (; i + 3 < sz; i += 4) {
+        auto reg = _mm256_load_si256(a+i);
+        auto tmp = _mm256_cmpeq_epi64(reg, _mm256_setzero_si256());
+        if (int mask = _mm256_movemask_pd(__m256d(tmp)); mask != 15)
+            return i + __builtin_ctz(~mask);
+    }
+    for (; i < sz; i++)
+        if (a[i] != 0)
+            return i;
+    return sz;
+}
+
 struct Bitset {
 
     struct Reference {
@@ -146,9 +167,11 @@ struct Bitset {
     int _Find_first_full(const int startG) const {
         // full groups
         const int nG = isz(data);
-        for (int g = startG; g < nG; g++)
-            if (data[g])
+        if (startG < nG) {
+            int g = startG + firstNonZero(&data[startG], nG - startG);
+            if (g < nG)
                 return g * 64 + __builtin_ctzll(data[g]);
+        }
         return n;
     }
     
