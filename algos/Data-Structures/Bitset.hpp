@@ -155,13 +155,15 @@ struct Bitset {
     int _Find_first() const { return _Find_first_full(0); }
     
     int _Find_next(int i) const {
+        if (i+1 >= n)
+            return n;
         // full groups
         const int g = (i+1) / 64;
         const int p = (i+1) % 64;
         if (p == 0) return _Find_first_full(g);
         // watch the current group
         if (const auto x = (data[g] >> p); x)
-            return __builtin_ctzll(x) + p;
+            return __builtin_ctzll(x) + p + g * 64;
         return _Find_first_full(g+1);
     }
     
@@ -309,78 +311,10 @@ struct Bitset {
     
     Bitset &operator>>=(const int delta) {
         return shiftRight(delta);
-        /*
-        if (delta <= 0)
-            return *this;
-        const int newN = std::max(0, n - delta);
-        if (newN == 0) {
-            data.clear();
-            n = 0;
-            return *this;
-        }
-        const int newG = newN / 64;
-        for (int g = 0; g < newG; g++)
-            data[g] = getBlock(g * 64 + delta);
-        if (newG * 64 < newN)
-            data[newG] = getBlock(newG * 64 + delta);
-        n = newN;
-        data.resize((n+63)/64);
-        updateLastGroup();
-        return *this;
-        */
-    }
-    
-    void writeGroup(int i, uint64_t mask) {
-        const int g = i / 64;
-        const int p = i % 64;
-        if (p == 0) {
-            data[g] = mask;
-            return;
-        }
-        std::cout << "writeGroup " << g << std::endl;
-        std::cout << std::bitset<64>(data[g]) << std::endl;
-        data[g] &= ((1ULL << p) - 1);
-        std::cout << std::bitset<64>(data[g]) << std::endl;
-        data[g] |= (mask << p);
-        std::cout << std::bitset<64>(data[g]) << std::endl;
-        const int sz = (int)data.size();
-        if (g + 1 < sz) {
-            std::cout << "writeGroup " << g+1 << std::endl;
-            std::cout << std::bitset<64>(data[g+1]) << std::endl;
-            data[g+1] &= (~0ULL << (64-p));
-            std::cout << std::bitset<64>(data[g+1]) << std::endl;
-            data[g+1] |= mask >> (64-p);
-            std::cout << std::bitset<64>(data[g+1]) << std::endl;
-        }
     }
     
     Bitset &operator<<=(const int delta) {
         return shiftLeft(delta);
-        /* The old implementation
-        if (delta <= 0)
-            return *this;
-        const int newN = n + delta;
-        data.resize((newN+63)/64);
-        n = newN;
-        // full groups
-        //std::cout << "*this = " << *this << std::endl;
-        int g = (int)data.size()-1;
-        for (; g*64-delta >= 0; g--) {
-            uint64_t mask = getBlock(g*64-delta);
-            //std::cout << "write group " << g;
-            data[g] = mask;
-            //writeGroup(g*64+delta, data[g]);
-            //std::cout << ": OK" << std::endl;
-        }
-        //std::cout << "*this = " << *this << std::endl;
-        // partial group
-        if (g >= 0 && g*64 + 63 - delta >= 0) {
-            data[g] = data[0] << (delta % 64);
-        }
-        //std::cout << "*this = " << *this << std::endl;
-        updateLastGroup();
-        return *this;
-        */
     }
     
 };
