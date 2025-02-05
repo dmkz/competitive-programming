@@ -342,5 +342,12 @@ struct Bitset {
         return shiftLeft(delta);
     }
     
+    friend Bitset operator<<(Bitset bs, const int delta) {
+        return bs <<= delta;
+    }
+    
+    friend Bitset operator>>(Bitset bs, const int delta) {
+        return bs >>= delta;
+    }
 };
 #endif // __BITSET_HPP__
