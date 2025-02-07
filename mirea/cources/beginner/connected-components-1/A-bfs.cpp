@@ -1,4 +1,4 @@
-// сомнительное изменение
+// A - Слух через поиск в ширину
 #include <bits/stdc++.h>
 using namespace std;
 void setmin(auto &x, const auto &y) { if (y < x) x = y; }
