@@ -38,20 +38,6 @@ public:
     }
 };
 
-// Оставить только уникальные элементы в сортированном списке
-void unique(vector<int>& s) {
-    int p = 0;
-    for (int i = 0; i < s.size(); ) {
-        int j = i;
-        while (j < s.size() && s[i] == s[j]) {
-            j++;
-        }
-        s[p++] = s[i];
-        i = j;
-    }
-    s.resize(p);
-}
-
 int main() {
     const int mod = 1e9 + 7;
     int n, k;
@@ -72,7 +58,7 @@ int main() {
         parents.push_back(dsu.getPar(i));
     }
     sort(parents.begin(), parents.end());
-    unique(parents);
+    parents.erase(unique(parents.begin(), parents.end()), parents.end());
 
     // Теперь считаем ответ: n^k минус сумма sz[p]^k по каждой компоненте
     long long answ = 1;
