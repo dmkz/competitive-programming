@@ -189,10 +189,7 @@ if (base >= 16 && 14 * base + 15 == x) minBase = min(minBase, base);
 Алгоритм :
 - Рассчитать дуги AB и BA как направленные расстояния на круге, для каждой дуги посчитать два варианта: «сразу сближаться» и «шаг назад, затем сближаться», взять минимум из четырёх сценариев.
 - Подсчёт стоимости по фиксированному $dist$: 
-$
-cost(dist) = \left\lfloor \frac{dist}{2} \right\rfloor \cdot \min\big(timeAB,\ 2 \cdot \min(timeA, timeB)\big) + \big(dist \bmod 2\big) \cdot \min(timeA, timeB)
-$
-.
+$cost(dist) = \left\lfloor \frac{dist}{2} \right\rfloor \cdot \min\big(timeAB,\ 2 \cdot \min(timeA, timeB)\big) + \big(dist \bmod 2\big) \cdot \min(timeA, timeB)$.
 
 Корректность :
 - Полный перебор двух дуг и двух режимов (прямо/с бэкстепом) покрывает все оптимальные стратегии благодаря аддитивности стоимости укорочения дистанции и независимости выбора «где сделать бэкстеп» по структуре дуги.
