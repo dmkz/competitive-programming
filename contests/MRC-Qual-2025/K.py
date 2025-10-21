@@ -85,8 +85,6 @@ def main():
 
     ans = [10**9 + 1] * len(queries);
 
-    sys.setrecursionlimit(1 << 25);
-
     def solve(L, R, updList, queryList):
         if not queryList:
             return;
