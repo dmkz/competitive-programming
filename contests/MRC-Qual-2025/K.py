@@ -14,7 +14,7 @@ def main():
 
     currTime = 0;
     for _ in range(q):
-        tp = int(next(it))
+        tp = int(next(it));
         if tp == 1:
             # вставка
             a = int(next(it)) - 1;
