@@ -11,18 +11,13 @@ ll solveFast(ll numOps, ll y, ll answ) {
         return answ;
     // бинарный поиск не нужен, будем сразу считать ответ, попутно выполняя
     // операции за O(sqrt(n))
-    if (y - 1 <= XSQRT) {
-        while (numOps --> 0 && answ >= y && answ <= XMAX)
-            answ += (answ - 1) / (y - 1);
-    } else {
-        while (numOps > 0 && answ >= y && answ <= XMAX) {
-            ll k = (answ - 1) / (y - 1);
-            // k * (y-1) + 1 <= answ <= (k+1) * (y-1)
-            ll right = std::max(answ, std::min(XMAX, (k + 1LL) * (y - 1LL)));
-            ll steps = std::min(numOps, (right - answ) / k + 1LL);
-            answ += k * steps;
-            numOps -= steps;
-        }
+    while (numOps > 0 && answ >= y && answ <= XMAX) {
+        ll k = (answ - 1) / (y - 1);
+        // k * (y-1) + 1 <= answ <= (k+1) * (y-1)
+        ll right = std::max(answ, std::min(XMAX, (k + 1LL) * (y - 1LL)));
+        ll steps = std::min(numOps, (right - answ) / k + 1LL);
+        answ += k * steps;
+        numOps -= steps;
     }
     return (answ > XMAX) ? -1 : answ;
 }
