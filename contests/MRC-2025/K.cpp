@@ -34,13 +34,15 @@ main() {
             values[rem].push_back(a[i]);
         }
         // values[i] отсортированы по возрастанию для каждого i (по построению)
+        ll totalSum = 0;
         for (int rem : rems) {
             if (visited[rem]) continue;
             visited[rem] = true;
             int other = (d - rem);
             if (other >= d)
                 other -= d;
-            //assert((rem + other) % d == 0);
+            // брать остаток долго - TL:
+            // assert((rem + other) % d == 0);
             if (rem == other) {
                 // этот же вектор
                 const auto &vec = values[rem];
@@ -62,7 +64,9 @@ main() {
                     if (!cnt) continue;
                     ll s = s2 + cnt * 1LL * vec[i];
                     answ += cnt * 1LL * d;
-                    answ += s / d;
+                    // делить долго:
+                    // answ += s / d;
+                    totalSum += s;
                 }
             } else if (rem < other) {
                 const auto &vec1 = values[rem];
@@ -82,10 +86,15 @@ main() {
                     if (!cnt) continue;
                     ll s = s2 + cnt * 1LL * vec1[i];
                     answ += cnt * 1LL * d;
-                    answ += s / d;
+                    // делить долго:
+                    // answ += s / d;
+                    totalSum += s;
                 }
             }
         }
+        // прибавляем все парные делители разом:
+        answ += totalSum / d;
+        // очищаем структуру:
         for (int rem : rems) {
             if (!visited[rem]) continue;
             visited[rem] = false;
