@@ -28,6 +28,7 @@ static inline uint64_t splitmix64(uint64_t &x) {
     z = (z ^ (z >> 27)) * 0x94d049bb133111ebULL;
     return z ^ (z >> 31);
 }
+// ищем покрытие кругами в гексагональной сетке
 bool findCoverCenters(const std::vector<Pt> &p,
                       ld tx, ld ty, std::vector<Pt> &centers)
 {
@@ -37,8 +38,9 @@ bool findCoverCenters(const std::vector<Pt> &p,
     for (const auto &[x, y] : p) {
         bool found = false;
         Pt best{0, 0};
+        // jj * sqrt(3) + ty = y
         ld jj = (y - ty) / SQRT3;
-        ll j0 = (ll)std::round(jj);
+        ll j0 = (ll)std::round(jj); // примерно по оси Oy
         for (ll j = j0-2; j <= j0+2 && !found; j++) {
             ld cy = ty + (ld)j * SQRT3;
             ld dy = y - cy;
@@ -47,9 +49,11 @@ bool findCoverCenters(const std::vector<Pt> &p,
                 continue;
             int par = (int)(j & 1LL);
             ld xrel = x - tx - (ld)par;
-            ll i0 = (ll)std::round(xrel / 2.0);
-            for (ll i = i0-2; i <= i0+2; i++) {
+            ll i0 = (ll)std::round(xrel / 2.0); // примерно по оси Оx
+            for (ll i = i0-2; i <= i0+2; i++) { // найдём точное решение
                 ld cx = tx + (ld)par + 2.0*(ld)i;
+                // (cx, cy) - центр текущей окружности на нашей
+                // гексагональной сетке
                 ld d2 = (x - cx) * (x - cx) + dy2;
                 if (d2 <= 1.0 + EPS) {
                     best = {cx, cy};
