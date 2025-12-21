@@ -51,8 +51,12 @@ void solve() {
     std::vector<Pt> p(n);
     for (auto &[x, y] : p)
         std::cin >> x >> y;
+    // будем случайным образом двигать гексагональную сетку из кругов
+    // пока не получим такой сдвиг, при котором ни одна из точек не попадёт
+    // в пространство между кругами.
     std::vector<Pt> centers;
     while (!findCoverCenters(p, shiftX(gen), shiftY(gen), centers));
+    // выводим ответ. он всегда существует
     std::cout << "YES\n";
     std::cout << centers.size() << "\n";
     for (const auto &[x,y] : centers)
