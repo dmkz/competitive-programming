@@ -135,9 +135,14 @@ REMOVE(std::map,(x=*c.begin(),c.erase(c.begin())),(x=*std::prev(c.end()),c.erase
 REMOVE(std::unordered_map,(x=*c.begin(),c.erase(c.begin())),(x=*std::prev(c.end()),c.erase(std::prev(c.end()))))
 #undef REMOVE
  
-#define EXTRACT(cont) \
-template<typename X, typename... T> cont<X,T...>& operator>>(cont<X,T...>& c, X& x) { return x=c--,c; } \
-template<typename X, typename... T> cont<X,T...>& operator<<(X& x, cont<X,T...>& c) { return x=--c,c; }
+#define EXTRACT(cont)                                                                 \
+template<typename X, typename... T, typename Y,                                        \
+         std::enable_if_t<std::is_assignable_v<Y&, X>, int> = 0>                       \
+cont<X,T...>& operator>>(cont<X,T...>& c, Y& x) { return x = c--, c; }                 \
+                                                                                       \
+template<typename X, typename... T, typename Y,                                        \
+         std::enable_if_t<std::is_assignable_v<Y&, X>, int> = 0>                       \
+cont<X,T...>& operator<<(Y& x, cont<X,T...>& c) { return x = --c, c; }
  
 EXTRACT(std::vector) EXTRACT(std::list) EXTRACT(std::deque) EXTRACT(std::queue)
 EXTRACT(std::stack) EXTRACT(std::priority_queue) EXTRACT(std::set) 
