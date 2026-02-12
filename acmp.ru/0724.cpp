@@ -1,51 +1,34 @@
-#include <stdio.h>
-#include <vector>
-#include <algorithm>
-#include <cassert>
-
-int main() {
-    int nRows, nCols;
-    scanf("%d %d", &nRows, &nCols);
-    std::vector<std::vector<int>> arr(nRows, std::vector<int>(nCols));
-    for (auto& row : arr) {
-        int nZeros = 0;
-        for (auto& it : row) {
-            scanf("%d", &it);
-            nZeros += (it == 0);
+// перебор, битмаски, O(m * 2^m)
+#include <bits/stdc++.h>
+#define isz(x) (int)(x).size()
+using namespace std;
+using vi = vector<int>;
+using pii = pair<int,int>;
+main() {
+    int n, m; cin >> n >> m;
+    vi a(m);
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++) {
+            int x; cin >> x;
+            a[j] |= ((1-x) << i);
         }
-        if (nZeros == 0) {
-            printf("Impossible");
-            return 0;
-        }
-    }
-    
-    std::vector<int> used(nRows, false), answer;
-    int nUsed = 0;
-    while (nUsed < nRows) {
-        int max = 0, max_j = -1;
-        for (int j = 0; j < nCols; ++j) {
-            int count = 0;
-            for (int i = 0; i < nRows; ++i) {
-                if (used[i] || arr[i][j] == 1) continue;
-                ++count;
+    pii best(INT_MAX, 0);
+    for (int subset = 1; subset < (1 << m); subset++) {
+        int total = 0, sz = 0;
+        for (int i = 0; i < m; i++)
+            if ((subset >> i) & 1) {
+                total |= a[i];
+                sz++;
             }
-            if (count > max) {
-                max = count;
-                max_j = j;
-            }
-        }
-        assert(max_j != -1);
-        const int j = max_j;
-        answer.push_back(j+1);
-        for (int i = 0; i < nRows; ++i) {
-            if (used[i] || arr[i][j] == 1) continue;
-            used[i] = true;
-            ++nUsed;
-        }
+        if (total == ((1 << n) - 1))
+            best = min(best, pii(sz, subset));
     }
-    printf("%d\n", (int)answer.size());
-    for (auto& it : answer) {
-        printf("%d ", it);
-    }
-    return 0;
+    if (best.first <= m) {
+        cout << best.first << "\n";
+        for (int i = 0; i < m; i++)
+            if ((best.second >> i) & 1)
+                cout << i+1 << ' ';
+        cout << '\n';
+    } else
+        cout << "Impossible\n";
 }
