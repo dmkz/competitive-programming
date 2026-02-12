@@ -1,22 +1,16 @@
-#pragma GCC diagnostic ignored "-Wunused-result"
-
-#include <stdio.h>
+// перестановки, следующая лексикографически
 #include <bits/stdc++.h>
-
-int main() {
-    int n; scanf("%d", &n); 
-    
-    std::vector<int> a(n); 
-    for (auto& it : a) scanf("%d", &it);
-    
-    if (!std::next_permutation(a.begin(), a.end())) {
-        std::reverse(a.begin(), a.end());
-    }
-    
-    for (auto& it : a) {
-        printf("%d ", it);
-    }
-    printf("\n");
-    
-    return 0;
+using namespace std;
+main() {
+    int n; cin >> n;
+    vector<int> p(n);
+    for (int i = 0; i < n; i++)
+        cin >> p[i];
+    bool ok = next_permutation(p.begin(), p.end());
+    if (!ok)
+        for (int i = 0; i < n; i++)
+            p[i] = i+1;
+    for (auto it : p)
+        cout << it << ' ';
+    cout << endl;
 }
