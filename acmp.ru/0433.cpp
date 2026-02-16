@@ -1,4 +1,4 @@
-// префикс-суммы, комбинаторика
+// префикс-суммы, комбинаторика, O(n log(n))
 #include <bits/stdc++.h>
 using namespace std;
 main() {
