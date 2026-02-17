@@ -3,12 +3,11 @@
 #define all(x) (x).begin(),(x).end()
 #define isz(x) (int)(x).size()
 using ll = long long;
-std::tuple<int,int,int>
-countLEG(const auto &v, int px) {
-    int nLess = int(std::lower_bound(all(v), px) - v.begin());
-    int nGreater = int(v.end() - std::upper_bound(all(v), px));
-    int nEqual = isz(v) - nLess - nGreater;
-    return {nLess, nEqual, nGreater};
+int countLess(const auto &v, int px) {
+    return int(std::lower_bound(all(v), px) - v.begin());
+}
+int countGreater(const auto &v, int px) {
+    return int(v.end() - std::upper_bound(all(v), px));
 }
 void solve() {
     // читаем данные, сортируем координаты, считаем их сумму:
@@ -28,20 +27,16 @@ void solve() {
     assert(isz(s) == m);
     for (const auto &dir : s) {
         if (dir == 'N') {
-            auto [l,e,g] = countLEG(y, py);
-            answ += (l+e)-g;
+            answ += n - 2 * countGreater(y, py);
             py++;
         } else if (dir == 'S') {
-            auto [l,e,g] = countLEG(y, py);
-            answ += (g+e)-l;
+            answ += n - 2 * countLess(y, py);
             py--;
         } else if (dir == 'W') {
-            auto [l,e,g] = countLEG(x, px);
-            answ += (g+e)-l;
+            answ += n - 2 * countLess(x, px);;
             px--;
         } else if (dir == 'E') {
-            auto [l,e,g] = countLEG(x, px);
-            answ += (l+e)-g;
+            answ += n - 2 * countGreater(x, px);
             px++;
         }
         std::cout << answ << "\n";
