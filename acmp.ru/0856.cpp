@@ -1,153 +1,94 @@
-/*
-    Задача: 856. Космический кегельбан
-    
-    Решение: геометрия, прямая, точка, окружность, бинарный поиск, O(n log(n))
-    
-    Автор: Дмитрий Козырев, https://github.com/dmkz , dmkozyrev@rambler.ru
-*/
-
-#include <iostream>
-#include <cmath>
-#include <algorithm>
-#include <cassert>
-#include <functional>
-
-typedef long double Real;
-
-const Real PI = std::acos(Real(-1));
-
-struct Point {
-    Real x, y;
-    
-    static Point read() {
-        Real x_, y_;
-        std::cin >> x_ >> y_;
-        return Point{x_, y_};
-    }
-    
-    inline Real norm() const {
-        return std::sqrt(x * x + y * y);
-    }
-    
-    inline Point operator-(const Point& other) const {
-        return Point{x-other.x, y-other.y};
-    }
-    
-    inline Point operator+(const Point& other) const {
-        return Point{x+other.x, y+other.y};
-    }
-    
-    inline Point operator/(const Real q) const {
-        return Point{x / q, y / q};
-    }
-    
-    inline Point operator*(const Real q) const {
-        return Point{x * q, y * q};
-    }
-    
-    inline Point rotate(const Real angle) const {
-        return Point {
-            std::cos(angle) * x - std::sin(angle) * y,
-            std::sin(angle) * x + std::cos(angle) * y
-        };
-    }
-};
-
-inline Real det(const Point& a, const Point& b) {
-    return a.x * b.y - a.y * b.x;
+// геометрия, бинарный поиск, пересечение прямых, расстояние от точки до прямой
+#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+using ld = long double;
+using pll = pair<ll, ll>;
+using pdd = pair<ld, ld>;
+ld det(ll a, ll b, ll c, ll d) {
+    return a * d - b * c;
 }
-
 struct Line {
-
-    Real A, B, C;
-
-    Line(const Point& a, const Point& b) {
-        // -(b.y-a.y)*(x-a.x) + (b.x-a.x)*(y - a.y) = 0
-        A = a.y - b.y;
-        B = b.x - a.x;
-        C = -(a.x * A + a.y * B);
+    ll A{}, B{}, C{};
+    Line(ll xc, ll yc, ll vx, ll vy)
+    {
+        // уравнение прямой, проходящей через точку (xc, yc) в направлении (vx, vy)
+        // (x - xc) * (-vy) + (y - yc) * vx = 0
+        // (-vy) * x + (vx) * y + xc * vy - yc * vx = 0
+        A = -vy, B = vx, C = xc * 1LL * vy - yc * 1LL * vx;
     }
-    
-    inline Point intersect(const Line& L) const {
-        auto q = det(Point{ A, B}, Point{ L.A, L.B});
-        auto a = det(Point{-C, B}, Point{-L.C, L.B});
-        auto b = det(Point{ A,-C}, Point{ L.A,-L.C});
-        return Point{a / q, b / q};
+    ll operator()(ll x, ll y) const {
+        return A * x + B * y + C;
     }
-    
-    inline Real value(const Point& p) const {
-        return A * p.x + B * p.y + C;
+    ll operator()(pll pt) const {
+        return (*this)(pt.first, pt.second);
+    }
+    ld dist(pll pt) const {
+        ll a = (*this)(pt);
+        ld b = std::sqrt(ld(A*A+B*B));
+        return std::abs(a) / b;
+    }
+    ld dist(ll x, ll y) const {
+        return dist(pll(x, y));
+    }
+    pdd intersect(const Line &L) {
+        // пересечение двух прямых
+        // A * x + B * y + C == 0
+        ld a = det(-C, -L.C, B, L.B);
+        ld b = det(A, L.A, -C, -L.C);
+        ld q = det(A, B, L.A, L.B);
+        return {a/q, b/q};
     }
 };
-
-inline Real dist(const Point& p, const Line& L) {
-    return std::abs(L.value(p)) / Point{L.A, L.B}.norm();
-}
-
-inline Real dist(const Point& a, const Point& b) {
-    return (a-b).norm();
-}
-
-int solve(int n, Real r, Real R, Point C, Point V) {
-    // Cтроим две прямые, отвечающие за пересечения кегель с шаром:
-    Line L1(C+V.rotate(PI/2)*R, C+V.rotate(PI/2)*R+V);
-    Line L2(C-V.rotate(PI/2)*R, C-V.rotate(PI/2)*R+V);
-    // Тестовая точка, которая точно лежит справа от каждой прямой:
-    Point test = C + V.rotate(-PI/2) * 2 * R;
-    // Максимальный и минимальный номера кегель в ряду:
-    int max_id = (n % 2 == 1) ? ( n / 2) : (( n-1) / 2);
-    int min_id = (n % 2 == 1) ? (-n / 2) : ((-n-1) / 2);
-    // Центр кегли в ряду по ее номеру:
-    std::function<Point(int)> point = [n](const int id) {
-        if (n % 2 == 1) {
-            return Point{Real(id) * 2000, Real(n-1) * 1000};
-        } else {
-            return Point{1000 + Real(id) * 2000, Real(n-1) * 1000};
-        }
-    };
-    // Бинарный поиск по первой кегле слева от левой прямой, не пересекающей ее:
-    int low = min_id - 1, high = max_id + 1;
-    while (high - low > 1) {
-        int mid = (low + high) / 2;
-        if (L1.value(point(mid)) * L1.value(test) <= 0) {
-            low = mid;
-        } else {
-            high = mid;
-        }
+main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    // читаем все данные и преобразуем их в метры:
+    int r, n, q; cin >> r >> n >> q;
+    int xc, yc; cin >> xc >> yc;
+    xc *= 1000, yc *= 1000;
+    int vx, vy;
+    cin >> vx >> vy;
+    vx *= 1000, vy *= 1000;
+    // Правая граница траектории:
+    Line line(xc, yc, vx, vy);
+    // начинаем считать ответ для каждого ряда:
+    ll answ{};
+    for (int i = 0; i < n; i++) {
+        int L = -i * 1000;
+        Line curr(-i*1000, i*1000, 1, 0);
+        auto [x, _] = curr.intersect(line);
+        // ближайшие слева и справа к точке x:
+        // L + 2000 * k <= x
+        // L + 2000 * k >= x
+        ll leftK = (ll)std::floor((x - L) / 2000.0L);
+        ll rightK = (ll)std::ceil((x - L) / 2000.0L);
+        // бинарным поиском находим левую точку:
+        ll left = [&]() -> ll{
+            ll low = -1, high = leftK+1;
+            while (high - low > 1) {
+                ll mid = (low+high) / 2;
+                if (line.dist(L + mid * 2000, i * 1000) > q + r)
+                    low = mid;
+                else
+                    high = mid;
+            }
+            return low;
+        }();
+        // бинарным поиском находим правую точку:
+        ll right = [&]() -> ll {
+            ll low = rightK-1, high = i+1;
+            while (high - low > 1) {
+                ll mid = (low + high) / 2;
+                if (line.dist(L+mid*2000,i*1000) > q + r)
+                    high = mid;
+                else
+                    low = mid;
+            }
+            return high;
+        }();
+        // увеличиваем ответ: все точки от left+1 до right-1:
+        answ += std::max<ll>(0, right - left - 1);
     }
-    while (low >= min_id && dist(point(low), L1) <= r) --low;
-    // Количество целых кегель слева:
-    int left = std::max(0, low - min_id + 1);
-    // Бинарный поиск по первой кегле справа от правой прямой, не пересекающей ее:
-    low = min_id - 1, high = max_id + 1;
-    while (high - low > 1) {
-        int mid = (low + high) / 2;
-        if (L2.value(point(mid)) * L2.value(test) <= 0) {
-            low = mid;
-        } else {
-            high = mid;
-        }
-    }
-    low = high;
-    while (low <= max_id && dist(point(low), L2) <= r) ++low;
-    // Количество целых кегель справа:
-    int right = std::max(0, max_id - low + 1);
-    return n - left - right;
-}
-
-int main() {
-    int r, n, R;
-    std::cin >> r >> n >> R;
-    
-    Point P = Point::read();
-    Point V = Point::read();
-    P = P * 1000;
-    V = V / V.norm();
-    
-    long long answ = 0;    
-    for (int i = 1; i <= n; ++i) {
-        answ += solve(i, r, R, P, V);
-    }
-    std::cout << answ;
-    return 0;
+    std::cout << answ << std::endl;
 }
