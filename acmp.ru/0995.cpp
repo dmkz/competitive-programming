@@ -1,134 +1,53 @@
-/*
-    "Голова на плечах": сортировка по полярному углу, дерево отрезков, O(n log(n))
-*/
-
-#include <stdio.h>
-#include <vector>
-#include <algorithm>
-#include <cassert>
-#include <cmath>
-#include <string>
-
-struct SegmentTree {
-    
-    const int size;
-    
-    std::vector<int> data;
-    
-    void build(int v, int l, int r, const std::vector<int>& arr) {
-        if (l == r) {
-            data[v] = arr[l];
-        } else {
-            int m = (l + r) / 2;
-            build(2*v+1,   l, m, arr);
-            build(2*v+2, m+1, r, arr);
-            data[v] = data[2*v+1]+data[2*v+2];
-        }
+// полярный угол, сортировка, инверсии, ordered_set
+#include <bits/stdc++.h>
+#define all(x) (x).begin(),(x).end()
+using namespace std;
+using Real = long double;
+// подключаем ordered_set!
+#include <ext/pb_ds/assoc_container.hpp>
+using namespace __gnu_pbds;
+template<typename T>
+using ordered_set = tree<T,null_type,less<T>,rb_tree_tag, tree_order_statistics_node_update>;
+// set.find_by_order(k); <-- найти k-й элемент (порядковая статистика)
+// set.order_of_key(x); <-- сколько элементов меньше чем x
+using prr = pair<Real,Real>;
+// функция readReal() читает и возвращает вещественное число:
+Real readReal() {
+    string s; cin >> s;
+    return stold(s);
+}
+main() {
+    // чтение данных:
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    int R, K; cin >> R >> K;
+    int N; cin >> N;
+    vector<pair<prr,prr>> segments(N);
+    for (auto &[A, B] : segments) {
+        A.first = readReal();
+        A.second = readReal();
+        B.first = readReal();
+        B.second = readReal();
     }
-    
-    void set(int v, int l, int r, int pos, int value) {
-        if (l == r) {
-            data[v] = value;
-        } else {
-            int m = (l + r) / 2;
-            if (pos <= m) {
-                set(2*v+1,   l, m, pos, value);
-            } else {
-                set(2*v+2, m+1, r, pos, value);
-            }
-            data[v] = data[2*v+1]+data[2*v+2];
-        }
-    }
-    
-    void set(int pos, int value) {
-        set(0, 0, size-1, pos, value);
-    }
-    
-    int get(int v, int l, int r, int ql, int qr) const {
-        if (l == ql && r == qr) {
-            return data[v];
-        } else {
-            int m = (l + r) / 2;
-            if (qr <= m) {
-                return get(2*v+1,   l, m, ql, qr);
-            } else if (ql > m) {
-                return get(2*v+2, m+1, r, ql, qr);
-            } else {
-                return get(2*v+1,   l, m, ql, m) + get(2*v+2, m+1, r, m+1, qr);
-            }
-        }
-    }
-    
-    int get(int left, int right) const {
-        return get(0, 0, size-1, left, right);
-    }
-    
-    SegmentTree(const std::vector<int>& arr) : size((int)arr.size()) {
-        int pow = 1;
-        while (pow < size) pow *= 2;
-        data.resize(2 * pow);
-        build(0, 0, size-1, arr);
-    }
-};
-
-typedef double Real;
-
-const Real PI = std::acos(-1.0L);
-
-struct Point {
-    Real x, y; int id;
-    
-    inline Point rotate(Real angle) const {
-        return Point{
-            std::cos(angle) * x - std::sin(angle) * y,
-            std::sin(angle) * x + std::cos(angle) * y,
-            id
+    // сортировка по полярному углу:
+    sort(all(segments), [](const auto &lhs, const auto &rhs){
+        auto ang = [](Real x, Real y){
+            const Real PI = acosl(-1.0L);
+            Real a = atan2l(y, x);
+            if (a > PI/2) a -= 2*PI; // (-pi,pi] -> [-3pi/2, pi/2]
+            return a;
         };
-    }
-    
-    inline Real angle() const {
-        return std::atan2(y, x);
-    }
-};
-
-int main() {    
-    int n; scanf("%*d %*d %d", &n);
-    if (n == 0) {
-        printf("0");
-        return 0;
-    }
-    std::vector<Point> circle, line;
-    circle.reserve(n);
-    line.reserve(n);
-    for (int i = 0; i < n; ++i) {
-        double x1, y1, x2, y2;
-        scanf("%lf %lf %lf %lf", &x1, &y1, &x2, &y2);
-        circle.push_back(Point{Real(x1),Real(y1),i});
-        line.push_back(Point{Real(x2),Real(y2),i});
-    }
-    
-    std::sort(line.begin(), line.end(), [](const Point& a, const Point& b) {
-        assert(a.x != b.x);
-        return a.x < b.x;
+        const auto [x1,y1] = lhs.first;
+        const auto [x2,y2] = rhs.first;
+        return ang(x1,y1) < ang(x2,y2);
     });
-    
-    std::sort(circle.begin(), circle.end(), [](const Point& a, const Point& b) {
-        return a.rotate(PI/2).angle() < b.rotate(PI/2).angle();
-    });
-    
-    int pos = 0;
-    std::vector<int> f(n);
-    for (auto& p : line) {
-        f[p.id] = pos++;
+    // подсчёт числа пересечений:
+    ordered_set<Real> s;
+    int64_t answ{};
+    for (const auto &[_, P] : segments) {
+        auto [x2, y2] = P;
+        answ += s.size() - s.order_of_key(x2);
+        s.insert(x2);
     }
-    
-    SegmentTree st(std::vector<int>(n,0));
-    
-    long long answ = 0;
-    for (auto& p : circle) {
-        answ += st.get(f[p.id], n-1);
-        st.set(f[p.id],1);
-    }
-    printf("%s", std::to_string(answ).c_str());
-    return 0;
+    cout << answ << '\n';
 }
