@@ -145,7 +145,7 @@ a.push_back(13);
 
 После этого вектор содержит три элемента: `5`, `8`, `13`.
 
-Полный пример с основными операциями: [C++](example-01.cpp), [Python3](example-01.py).
+Полный пример с основными операциями: [C++](examples/example-01.cpp), [Python3](examples/example-01.py).
 
 ---
 
@@ -176,7 +176,7 @@ a.append(13)
 
 После этого список содержит три элемента: `5`, `8`, `13`.
 
-Полный пример с основными операциями: [C++](example-01.cpp), [Python3](example-01.py).
+Полный пример с основными операциями: [C++](examples/example-01.cpp), [Python3](examples/example-01.py).
 
 ---
 
@@ -225,7 +225,7 @@ int main() {
 
 </details>
 
-Файлы примера: [C++](example-02.cpp), [Python3](example-02.py).
+Файлы примера: [C++](examples/example-02.cpp), [Python3](examples/example-02.py).
 
 ### Вариант 2. Считывать элементы и добавлять их в конец
 
@@ -273,7 +273,7 @@ int main() {
 
 </details>
 
-Файлы примера: [C++](example-03.cpp), [Python3](example-03.py).
+Файлы примера: [C++](examples/example-03.cpp), [Python3](examples/example-03.py).
 
 ### Аналогичные примеры на Python
 

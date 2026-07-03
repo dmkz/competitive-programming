@@ -94,7 +94,7 @@ a = list(map(int, input().split()))
 print(sum(a))
 ```
 
-Файлы примера: [C++](example-04.cpp), [Python3](example-04.py).
+Файлы примера: [C++](examples/example-04.cpp), [Python3](examples/example-04.py).
 
 ---
 
@@ -134,7 +134,7 @@ a = list(map(int, input().split()))
 print(min(a), max(a))
 ```
 
-Файлы примера: [C++](example-05.cpp), [Python3](example-05.py).
+Файлы примера: [C++](examples/example-05.cpp), [Python3](examples/example-05.py).
 
 ---
 
@@ -228,7 +228,7 @@ for i in range(1, len(a)):
 print(mx, cnt, first, last)
 ```
 
-Файлы примера: [C++](example-06.cpp), [Python3](example-06.py).
+Файлы примера: [C++](examples/example-06.cpp), [Python3](examples/example-06.py).
 
 ---
 
