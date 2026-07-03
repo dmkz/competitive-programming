@@ -28,5 +28,19 @@
 *.app
 *.stackdump
 
+# Python cache and bytecode
+__pycache__/
+*.py[cod]
+
+# Common temporary files
+*.tmp
+*.temp
+*.log
+*~
+
+# Editor and OS transient files
+.DS_Store
+Thumbs.db
+
 # Simple text
 *.txt
