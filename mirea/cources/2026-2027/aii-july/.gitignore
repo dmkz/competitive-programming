@@ -1,0 +1,3 @@
+# Internal Polygon packages and local testlib copy are kept out of the repository.
+/01/problems-internal/
+/testlib.h
