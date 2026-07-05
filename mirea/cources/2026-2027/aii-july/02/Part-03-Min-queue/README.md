@@ -88,35 +88,35 @@
 using namespace std;
 
 int main() {
-	int q;
-	cin >> q;
+    int q;
+    cin >> q;
 
-	deque<pair<int, int>> mins;
-	int left_pos = 0;
-	int right_pos = 0;
+    deque<pair<int, int>> mins;
+    int left_pos = 0;
+    int right_pos = 0;
 
-	for (int i = 0; i < q; i++) {
-		char op;
-		cin >> op;
+    for (int i = 0; i < q; i++) {
+        char op;
+        cin >> op;
 
-		if (op == '+') {
-			int x;
-			cin >> x;
+        if (op == '+') {
+            int x;
+            cin >> x;
 
-			while (!mins.empty() && mins.back().first >= x) {
-				mins.pop_back();
-			}
-			mins.push_back({x, right_pos});
-			right_pos++;
-		} else if (op == '-') {
-			if (!mins.empty() && mins.front().second == left_pos) {
-				mins.pop_front();
-			}
-			left_pos++;
-		} else {
-			cout << mins.front().first << '\n';
-		}
-	}
+            while (!mins.empty() && mins.back().first >= x) {
+                mins.pop_back();
+            }
+            mins.push_back({x, right_pos});
+            right_pos++;
+        } else if (op == '-') {
+            if (!mins.empty() && mins.front().second == left_pos) {
+                mins.pop_front();
+            }
+            left_pos++;
+        } else {
+            cout << mins.front().first << '\n';
+        }
+    }
 }
 ```
 
@@ -134,22 +134,22 @@ left_pos = 0
 right_pos = 0
 
 for _ in range(q):
-	parts = input().split()
-	op = parts[0]
+    parts = input().split()
+    op = parts[0]
 
-	if op == '+':
-		x = int(parts[1])
+    if op == '+':
+        x = int(parts[1])
 
-		while mins and mins[-1][0] >= x:
-			mins.pop()
-		mins.append((x, right_pos))
-		right_pos += 1
-	elif op == '-':
-		if mins and mins[0][1] == left_pos:
-			mins.popleft()
-		left_pos += 1
-	else:
-		print(mins[0][0])
+        while mins and mins[-1][0] >= x:
+            mins.pop()
+        mins.append((x, right_pos))
+        right_pos += 1
+    elif op == '-':
+        if mins and mins[0][1] == left_pos:
+            mins.popleft()
+        left_pos += 1
+    else:
+        print(mins[0][0])
 ```
 
 </details>

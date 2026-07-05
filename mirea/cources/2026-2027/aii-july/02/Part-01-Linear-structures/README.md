@@ -83,21 +83,21 @@ st.pop()
 using namespace std;
 
 int main() {
-	int n;
-	cin >> n;
+    int n;
+    cin >> n;
 
-	vector<int> st;
-	for (int i = 0; i < n; i++) {
-		int x;
-		cin >> x;
-		st.push_back(x);
-	}
+    vector<int> st;
+    for (int i = 0; i < n; i++) {
+        int x;
+        cin >> x;
+        st.push_back(x);
+    }
 
-	while (!st.empty()) {
-		cout << st.back() << ' ';
-		st.pop_back();
-	}
-	cout << '\n';
+    while (!st.empty()) {
+        cout << st.back() << ' ';
+        st.pop_back();
+    }
+    cout << '\n';
 }
 ```
 
@@ -111,7 +111,7 @@ n = int(input())
 st = list(map(int, input().split()))
 
 while st:
-	print(st.pop(), end=' ')
+    print(st.pop(), end=' ')
 print()
 ```
 
@@ -212,21 +212,21 @@ q.popleft()
 using namespace std;
 
 int main() {
-	int n;
-	cin >> n;
+    int n;
+    cin >> n;
 
-	queue<int> q;
-	for (int i = 0; i < n; i++) {
-		int x;
-		cin >> x;
-		q.push(x);
-	}
+    queue<int> q;
+    for (int i = 0; i < n; i++) {
+        int x;
+        cin >> x;
+        q.push(x);
+    }
 
-	while (!q.empty()) {
-		cout << q.front() << ' ';
-		q.pop();
-	}
-	cout << '\n';
+    while (!q.empty()) {
+        cout << q.front() << ' ';
+        q.pop();
+    }
+    cout << '\n';
 }
 ```
 
@@ -242,7 +242,7 @@ n = int(input())
 q = deque(map(int, input().split()))
 
 while q:
-	print(q.popleft(), end=' ')
+    print(q.popleft(), end=' ')
 print()
 ```
 
@@ -340,26 +340,26 @@ d.popleft()
 using namespace std;
 
 int main() {
-	int n;
-	cin >> n;
+    int n;
+    cin >> n;
 
-	deque<int> d;
-	for (int i = 0; i < n; i++) {
-		char side;
-		int x;
-		cin >> side >> x;
+    deque<int> d;
+    for (int i = 0; i < n; i++) {
+        char side;
+        int x;
+        cin >> side >> x;
 
-		if (side == 'L') {
-			d.push_front(x);
-		} else {
-			d.push_back(x);
-		}
-	}
+        if (side == 'L') {
+            d.push_front(x);
+        } else {
+            d.push_back(x);
+        }
+    }
 
-	for (int x : d) {
-		cout << x << ' ';
-	}
-	cout << '\n';
+    for (int x : d) {
+        cout << x << ' ';
+    }
+    cout << '\n';
 }
 ```
 
@@ -375,13 +375,13 @@ n = int(input())
 d = deque()
 
 for _ in range(n):
-	side, value = input().split()
-	x = int(value)
+    side, value = input().split()
+    x = int(value)
 
-	if side == 'L':
-		d.appendleft(x)
-	else:
-		d.append(x)
+    if side == 'L':
+        d.appendleft(x)
+    else:
+        d.append(x)
 
 print(*d)
 ```

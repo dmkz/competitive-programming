@@ -1,3 +1,6 @@
+<!-- Этот файл собран автоматически из README.md внутри Part-01-Linear-structures, Part-02-Stack-patterns, Part-03-Min-queue и Part-04-Monostack. -->
+<!-- Для обновления запустите: python build-readme.py -->
+
 # Лекция 2. Stack, queue, deque и линейная обработка последовательностей
 
 ## 1. Stack, queue и deque в олимпиадном программировании
@@ -85,21 +88,21 @@ st.pop()
 using namespace std;
 
 int main() {
-	int n;
-	cin >> n;
+    int n;
+    cin >> n;
 
-	vector<int> st;
-	for (int i = 0; i < n; i++) {
-		int x;
-		cin >> x;
-		st.push_back(x);
-	}
+    vector<int> st;
+    for (int i = 0; i < n; i++) {
+        int x;
+        cin >> x;
+        st.push_back(x);
+    }
 
-	while (!st.empty()) {
-		cout << st.back() << ' ';
-		st.pop_back();
-	}
-	cout << '\n';
+    while (!st.empty()) {
+        cout << st.back() << ' ';
+        st.pop_back();
+    }
+    cout << '\n';
 }
 ```
 
@@ -113,7 +116,7 @@ n = int(input())
 st = list(map(int, input().split()))
 
 while st:
-	print(st.pop(), end=' ')
+    print(st.pop(), end=' ')
 print()
 ```
 
@@ -214,21 +217,21 @@ q.popleft()
 using namespace std;
 
 int main() {
-	int n;
-	cin >> n;
+    int n;
+    cin >> n;
 
-	queue<int> q;
-	for (int i = 0; i < n; i++) {
-		int x;
-		cin >> x;
-		q.push(x);
-	}
+    queue<int> q;
+    for (int i = 0; i < n; i++) {
+        int x;
+        cin >> x;
+        q.push(x);
+    }
 
-	while (!q.empty()) {
-		cout << q.front() << ' ';
-		q.pop();
-	}
-	cout << '\n';
+    while (!q.empty()) {
+        cout << q.front() << ' ';
+        q.pop();
+    }
+    cout << '\n';
 }
 ```
 
@@ -244,7 +247,7 @@ n = int(input())
 q = deque(map(int, input().split()))
 
 while q:
-	print(q.popleft(), end=' ')
+    print(q.popleft(), end=' ')
 print()
 ```
 
@@ -342,26 +345,26 @@ d.popleft()
 using namespace std;
 
 int main() {
-	int n;
-	cin >> n;
+    int n;
+    cin >> n;
 
-	deque<int> d;
-	for (int i = 0; i < n; i++) {
-		char side;
-		int x;
-		cin >> side >> x;
+    deque<int> d;
+    for (int i = 0; i < n; i++) {
+        char side;
+        int x;
+        cin >> side >> x;
 
-		if (side == 'L') {
-			d.push_front(x);
-		} else {
-			d.push_back(x);
-		}
-	}
+        if (side == 'L') {
+            d.push_front(x);
+        } else {
+            d.push_back(x);
+        }
+    }
 
-	for (int x : d) {
-		cout << x << ' ';
-	}
-	cout << '\n';
+    for (int x : d) {
+        cout << x << ' ';
+    }
+    cout << '\n';
 }
 ```
 
@@ -377,13 +380,13 @@ n = int(input())
 d = deque()
 
 for _ in range(n):
-	side, value = input().split()
-	x = int(value)
+    side, value = input().split()
+    x = int(value)
 
-	if side == 'L':
-		d.appendleft(x)
-	else:
-		d.append(x)
+    if side == 'L':
+        d.appendleft(x)
+    else:
+        d.append(x)
 
 print(*d)
 ```
@@ -503,22 +506,22 @@ L 2
 using namespace std;
 
 int main() {
-	string s;
-	cin >> s;
+    string s;
+    cin >> s;
 
-	vector<char> st;
-	for (char c : s) {
-		if (!st.empty() && st.back() == c) {
-			st.pop_back();
-		} else {
-			st.push_back(c);
-		}
-	}
+    vector<char> st;
+    for (char c : s) {
+        if (!st.empty() && st.back() == c) {
+            st.pop_back();
+        } else {
+            st.push_back(c);
+        }
+    }
 
-	for (char c : st) {
-		cout << c;
-	}
-	cout << '\n';
+    for (char c : st) {
+        cout << c;
+    }
+    cout << '\n';
 }
 ```
 
@@ -532,10 +535,10 @@ s = input().strip()
 st = []
 
 for c in s:
-	if st and st[-1] == c:
-		st.pop()
-	else:
-		st.append(c)
+    if st and st[-1] == c:
+        st.pop()
+    else:
+        st.append(c)
 
 print(''.join(st))
 ```
@@ -591,29 +594,29 @@ CA
 using namespace std;
 
 int main() {
-	string s;
-	cin >> s;
+    string s;
+    cin >> s;
 
-	vector<char> st;
-	bool ok = true;
+    vector<char> st;
+    bool ok = true;
 
-	for (char ch : s) {
-		if (ch == '(') {
-			st.push_back(ch);
-		} else {
-			if (st.empty()) {
-				ok = false;
-				break;
-			}
-			st.pop_back();
-		}
-	}
+    for (char ch : s) {
+        if (ch == '(') {
+            st.push_back(ch);
+        } else {
+            if (st.empty()) {
+                ok = false;
+                break;
+            }
+            st.pop_back();
+        }
+    }
 
-	if (!st.empty()) {
-		ok = false;
-	}
+    if (!st.empty()) {
+        ok = false;
+    }
 
-	cout << (ok ? "correct" : "incorrect") << '\n';
+    cout << (ok ? "correct" : "incorrect") << '\n';
 }
 ```
 
@@ -628,16 +631,16 @@ stack = []
 ok = True
 
 for ch in s:
-	if ch == '(':
-		stack.append(ch)
-	else:
-		if not stack:
-			ok = False
-			break
-		stack.pop()
+    if ch == '(':
+        stack.append(ch)
+    else:
+        if not stack:
+            ok = False
+            break
+        stack.pop()
 
 if stack:
-	ok = False
+    ok = False
 
 print("correct" if ok else "incorrect")
 ```
@@ -794,35 +797,35 @@ correct
 using namespace std;
 
 int main() {
-	int q;
-	cin >> q;
+    int q;
+    cin >> q;
 
-	deque<pair<int, int>> mins;
-	int left_pos = 0;
-	int right_pos = 0;
+    deque<pair<int, int>> mins;
+    int left_pos = 0;
+    int right_pos = 0;
 
-	for (int i = 0; i < q; i++) {
-		char op;
-		cin >> op;
+    for (int i = 0; i < q; i++) {
+        char op;
+        cin >> op;
 
-		if (op == '+') {
-			int x;
-			cin >> x;
+        if (op == '+') {
+            int x;
+            cin >> x;
 
-			while (!mins.empty() && mins.back().first >= x) {
-				mins.pop_back();
-			}
-			mins.push_back({x, right_pos});
-			right_pos++;
-		} else if (op == '-') {
-			if (!mins.empty() && mins.front().second == left_pos) {
-				mins.pop_front();
-			}
-			left_pos++;
-		} else {
-			cout << mins.front().first << '\n';
-		}
-	}
+            while (!mins.empty() && mins.back().first >= x) {
+                mins.pop_back();
+            }
+            mins.push_back({x, right_pos});
+            right_pos++;
+        } else if (op == '-') {
+            if (!mins.empty() && mins.front().second == left_pos) {
+                mins.pop_front();
+            }
+            left_pos++;
+        } else {
+            cout << mins.front().first << '\n';
+        }
+    }
 }
 ```
 
@@ -840,22 +843,22 @@ left_pos = 0
 right_pos = 0
 
 for _ in range(q):
-	parts = input().split()
-	op = parts[0]
+    parts = input().split()
+    op = parts[0]
 
-	if op == '+':
-		x = int(parts[1])
+    if op == '+':
+        x = int(parts[1])
 
-		while mins and mins[-1][0] >= x:
-			mins.pop()
-		mins.append((x, right_pos))
-		right_pos += 1
-	elif op == '-':
-		if mins and mins[0][1] == left_pos:
-			mins.popleft()
-		left_pos += 1
-	else:
-		print(mins[0][0])
+        while mins and mins[-1][0] >= x:
+            mins.pop()
+        mins.append((x, right_pos))
+        right_pos += 1
+    elif op == '-':
+        if mins and mins[0][1] == left_pos:
+            mins.popleft()
+        left_pos += 1
+    else:
+        print(mins[0][0])
 ```
 
 </details>
@@ -978,7 +981,7 @@ for _ in range(q):
 
 ```cpp
 while (!st.empty() && a[st.back()] <= a[i]) {
-	st.pop_back();
+    st.pop_back();
 }
 ```
 
@@ -1009,29 +1012,29 @@ while (!st.empty() && a[st.back()] <= a[i]) {
 using namespace std;
 
 int main() {
-	int n;
-	cin >> n;
+    int n;
+    cin >> n;
 
-	vector<int> a(n);
-	for (int i = 0; i < n; i++) {
-		cin >> a[i];
-	}
+    vector<int> a(n);
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+    }
 
-	vector<int> st;
-	for (int i = 0; i < n; i++) {
-		while (!st.empty() && a[st.back()] <= a[i]) {
-			st.pop_back();
-		}
+    vector<int> st;
+    for (int i = 0; i < n; i++) {
+        while (!st.empty() && a[st.back()] <= a[i]) {
+            st.pop_back();
+        }
 
-		if (st.empty()) {
-			cout << -1 << ' ';
-		} else {
-			cout << a[st.back()] << ' ';
-		}
+        if (st.empty()) {
+            cout << -1 << ' ';
+        } else {
+            cout << a[st.back()] << ' ';
+        }
 
-		st.push_back(i);
-	}
-	cout << '\n';
+        st.push_back(i);
+    }
+    cout << '\n';
 }
 ```
 
@@ -1046,15 +1049,15 @@ a = list(map(int, input().split()))
 
 st = []
 for i, x in enumerate(a):
-	while st and a[st[-1]] <= x:
-		st.pop()
+    while st and a[st[-1]] <= x:
+        st.pop()
 
-	if st:
-		print(a[st[-1]], end=' ')
-	else:
-		print(-1, end=' ')
+    if st:
+        print(a[st[-1]], end=' ')
+    else:
+        print(-1, end=' ')
 
-	st.append(i)
+    st.append(i)
 print()
 ```
 

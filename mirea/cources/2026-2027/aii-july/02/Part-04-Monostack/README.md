@@ -55,7 +55,7 @@
 
 ```cpp
 while (!st.empty() && a[st.back()] <= a[i]) {
-	st.pop_back();
+    st.pop_back();
 }
 ```
 
@@ -86,29 +86,29 @@ while (!st.empty() && a[st.back()] <= a[i]) {
 using namespace std;
 
 int main() {
-	int n;
-	cin >> n;
+    int n;
+    cin >> n;
 
-	vector<int> a(n);
-	for (int i = 0; i < n; i++) {
-		cin >> a[i];
-	}
+    vector<int> a(n);
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+    }
 
-	vector<int> st;
-	for (int i = 0; i < n; i++) {
-		while (!st.empty() && a[st.back()] <= a[i]) {
-			st.pop_back();
-		}
+    vector<int> st;
+    for (int i = 0; i < n; i++) {
+        while (!st.empty() && a[st.back()] <= a[i]) {
+            st.pop_back();
+        }
 
-		if (st.empty()) {
-			cout << -1 << ' ';
-		} else {
-			cout << a[st.back()] << ' ';
-		}
+        if (st.empty()) {
+            cout << -1 << ' ';
+        } else {
+            cout << a[st.back()] << ' ';
+        }
 
-		st.push_back(i);
-	}
-	cout << '\n';
+        st.push_back(i);
+    }
+    cout << '\n';
 }
 ```
 
@@ -123,15 +123,15 @@ a = list(map(int, input().split()))
 
 st = []
 for i, x in enumerate(a):
-	while st and a[st[-1]] <= x:
-		st.pop()
+    while st and a[st[-1]] <= x:
+        st.pop()
 
-	if st:
-		print(a[st[-1]], end=' ')
-	else:
-		print(-1, end=' ')
+    if st:
+        print(a[st[-1]], end=' ')
+    else:
+        print(-1, end=' ')
 
-	st.append(i)
+    st.append(i)
 print()
 ```
 

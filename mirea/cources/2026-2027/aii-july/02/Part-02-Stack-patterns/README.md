@@ -49,22 +49,22 @@
 using namespace std;
 
 int main() {
-	string s;
-	cin >> s;
+    string s;
+    cin >> s;
 
-	vector<char> st;
-	for (char c : s) {
-		if (!st.empty() && st.back() == c) {
-			st.pop_back();
-		} else {
-			st.push_back(c);
-		}
-	}
+    vector<char> st;
+    for (char c : s) {
+        if (!st.empty() && st.back() == c) {
+            st.pop_back();
+        } else {
+            st.push_back(c);
+        }
+    }
 
-	for (char c : st) {
-		cout << c;
-	}
-	cout << '\n';
+    for (char c : st) {
+        cout << c;
+    }
+    cout << '\n';
 }
 ```
 
@@ -78,10 +78,10 @@ s = input().strip()
 st = []
 
 for c in s:
-	if st and st[-1] == c:
-		st.pop()
-	else:
-		st.append(c)
+    if st and st[-1] == c:
+        st.pop()
+    else:
+        st.append(c)
 
 print(''.join(st))
 ```
@@ -137,29 +137,29 @@ CA
 using namespace std;
 
 int main() {
-	string s;
-	cin >> s;
+    string s;
+    cin >> s;
 
-	vector<char> st;
-	bool ok = true;
+    vector<char> st;
+    bool ok = true;
 
-	for (char ch : s) {
-		if (ch == '(') {
-			st.push_back(ch);
-		} else {
-			if (st.empty()) {
-				ok = false;
-				break;
-			}
-			st.pop_back();
-		}
-	}
+    for (char ch : s) {
+        if (ch == '(') {
+            st.push_back(ch);
+        } else {
+            if (st.empty()) {
+                ok = false;
+                break;
+            }
+            st.pop_back();
+        }
+    }
 
-	if (!st.empty()) {
-		ok = false;
-	}
+    if (!st.empty()) {
+        ok = false;
+    }
 
-	cout << (ok ? "correct" : "incorrect") << '\n';
+    cout << (ok ? "correct" : "incorrect") << '\n';
 }
 ```
 
@@ -174,16 +174,16 @@ stack = []
 ok = True
 
 for ch in s:
-	if ch == '(':
-		stack.append(ch)
-	else:
-		if not stack:
-			ok = False
-			break
-		stack.pop()
+    if ch == '(':
+        stack.append(ch)
+    else:
+        if not stack:
+            ok = False
+            break
+        stack.pop()
 
 if stack:
-	ok = False
+    ok = False
 
 print("correct" if ok else "incorrect")
 ```
