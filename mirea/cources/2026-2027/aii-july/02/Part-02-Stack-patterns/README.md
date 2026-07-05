@@ -128,7 +128,7 @@ CA
 </details>
 
 <details>
-<summary><strong>C++: в стеке лежат ещё не закрытые скобки</strong></summary>
+<summary><strong>Код на C++</strong></summary>
 
 ```cpp
 #include <iostream>
@@ -166,7 +166,7 @@ int main() {
 </details>
 
 <details>
-<summary><strong>Python3: тот же приём на list</strong></summary>
+<summary><strong>Код на Python3</strong></summary>
 
 ```python
 s = input().strip()
