@@ -1,6 +1,3 @@
-<!-- Этот файл собран автоматически из README.md внутри Part-01-Arrays-and-lists, Part-02-Processing, Part-03-Sorting и Part-04-Binary-search. -->
-<!-- Для обновления запустите: python build-readme.py -->
-
 # Лекция 1. Массивы, сортировки, бинарный поиск в отсортированном массиве
 
 ## 1. Массивы
