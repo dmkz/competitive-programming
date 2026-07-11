@@ -179,7 +179,7 @@ set<int, greater<int>> s;
 Рекомендуется к использованию, если нужно держать элементы в порядке убывания.
 
 <details>
-<summary><strong>Пример: вставка, поиск и удаление элементов в `set` по убыванию</strong></summary>
+<summary><strong>Пример: вставка, поиск и удаление элементов в <code>set</code> по убыванию</strong></summary>
 
 ```cpp
 #include <functional>
