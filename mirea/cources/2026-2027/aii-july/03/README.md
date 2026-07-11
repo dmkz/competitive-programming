@@ -1,7 +1,7 @@
 <!-- Этот файл собран автоматически из README.md внутри Part-01-Ordered-set, Part-02-Bounds-and-multiset, Part-03-Map-and-frequencies и Part-04-Hashing-and-pitfalls. -->
 <!-- Для обновления запустите: python build-readme.py -->
 
-# Лекция 3. set, multiset, map и хеш-таблицы
+# Лекция 3. Структуры данных map и set. Частоты и количество различных значений
 
 ## 1. Что такое `set`?
 

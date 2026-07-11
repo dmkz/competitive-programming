@@ -2,7 +2,7 @@ import re
 from pathlib import Path
 
 
-TITLE = "# Лекция 3. set, multiset, map и хеш-таблицы"
+TITLE = "# Лекция 3. Структуры данных map и set. Частоты и количество различных значений"
 PART_DIRS = [
     "Part-01-Ordered-set",
     "Part-02-Bounds-and-multiset",
