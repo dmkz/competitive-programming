@@ -1,5 +1,6 @@
 # Internal Polygon packages and local testlib copy are kept out of the repository.
 /01/problems-internal/
 /02/problems-internal/
+/03/problems-internal/
 /testlib.h
 /POLYGON_STATEMENT_CRITERIA.md
