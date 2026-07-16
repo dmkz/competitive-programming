@@ -1,4 +1,87 @@
-# Вердикт: ..., Время: ..., Память: ..., Язык: PyPy 3-64
+# Вердикт: OK, Время: 2781 мс, Память: 107600 КБ, Язык: PyPy 3-64
+
+import atexit
+from sys import stdin, stdout
+
+
+# -------------------------
+# FastIO
+# -------------------------
+
+_INPUT = stdin.buffer.read()
+_INPUT_LEN = len(_INPUT)
+_INPUT_POS = 0
+_OUTPUT = bytearray()
+
+
+def readInt():
+    global _INPUT_POS
+    data = _INPUT
+    pos = _INPUT_POS
+    size = _INPUT_LEN
+
+    while pos < size and data[pos] <= 32:
+        pos += 1
+
+    sign = 1
+    if data[pos] == 45:
+        sign = -1
+        pos += 1
+
+    value = 0
+    while pos < size:
+        ch = data[pos]
+        if ch <= 32:
+            break
+        value = value * 10 + ch - 48
+        pos += 1
+
+    _INPUT_POS = pos
+    return sign * value
+
+
+def readChar(skip_whitespace=True):
+    global _INPUT_POS
+    data = _INPUT
+    pos = _INPUT_POS
+    size = _INPUT_LEN
+
+    if skip_whitespace:
+        while pos < size and data[pos] <= 32:
+            pos += 1
+
+    if pos >= size:
+        _INPUT_POS = pos
+        return ""
+
+    _INPUT_POS = pos + 1
+    return chr(data[pos])
+
+
+def writeInt(value):
+    _OUTPUT.extend(str(value).encode())
+
+
+def writeChar(ch):
+    _OUTPUT.append(ord(ch))
+
+
+def writeSpace():
+    _OUTPUT.append(32)
+
+
+def writeEndl():
+    _OUTPUT.append(10)
+
+
+def flushOutput():
+    if _OUTPUT:
+        stdout.write(_OUTPUT.decode("ascii"))
+        stdout.flush()
+        _OUTPUT.clear()
+
+
+atexit.register(flushOutput)
 
 # -------------------------
 # RedBlackTree
@@ -14,6 +97,11 @@
   Возвращает node_id этого ключа.
 - tree.set(key, value, with_id=True) -> (node_id, was_inserted)
   Возвращает node_id и флаг, был ли ключ создан заново.
+- tree[key] = value
+    Короткая запись для tree.set(key, value).
+- tree[key] += delta / tree[key] -= delta
+    Короткая запись для изменения счётчика по ключу без потери эффективности.
+    Для обычного чтения значения удобнее использовать tree.get(key, default).
 - tree.add(key, delta) -> node_id
   Увеличивает значение по ключу на delta. Если ключа нет, создаёт его.
 - tree.get(key, default=None) -> value
@@ -32,12 +120,80 @@
   Возвращает максимальный ключ, его значение и node_id.
   Если дерево пусто, возвращает (None, None, 0).
 - tree.erase_id(node_id) -> bool
-  Удаляет узел по его node_id.
-  Возвращает True, если удаление произошло, иначе False.
+    Удаляет узел по его node_id без дополнительной проверки.
+    Возвращает True, если удаление произошло, иначе False.
+- tree.erase_id(node_id, check=True) -> bool
+    Сначала проверяет, что node_id указывает на текущий узел дерева.
+    Возвращает True, если удаление произошло, иначе False.
 
 Замечание:
 - node_id стабилен после поворотов и следующих вставок, пока сам узел не удалён.
 """
+
+
+class _ValueSlot:
+    __slots__ = ("tree", "key", "node_id", "value", "loaded", "applied")
+
+    def __init__(self, tree, key):
+        self.tree = tree
+        self.key = key
+        self.node_id = 0
+        self.value = 0
+        self.loaded = False
+        self.applied = False
+
+    def _load(self):
+        if not self.loaded:
+            node_id = self.tree._find_node(self.key)
+            self.node_id = node_id
+            self.value = 0 if node_id == 0 else self.tree.value[node_id]
+            self.loaded = True
+
+    def __iadd__(self, delta):
+        if not self.loaded:
+            node_id = self.tree.add(self.key, delta)
+            self.node_id = node_id
+            self.value = self.tree.value[node_id]
+            self.loaded = True
+            self.applied = True
+            return self
+
+        if self.node_id == 0:
+            self.value += delta
+            self.node_id = self.tree.set(self.key, self.value)
+        else:
+            self.value += delta
+            self.tree.value[self.node_id] = self.value
+
+        self.applied = True
+        return self
+
+    def __isub__(self, delta):
+        return self.__iadd__(-delta)
+
+    def __int__(self):
+        self._load()
+        return self.value
+
+    def __index__(self):
+        self._load()
+        return self.value
+
+    def __bool__(self):
+        self._load()
+        return self.value != 0
+
+    def __repr__(self):
+        self._load()
+        return repr(self.value)
+
+    def __str__(self):
+        self._load()
+        return str(self.value)
+
+    def __eq__(self, other):
+        self._load()
+        return self.value == other
 
 
 class RedBlackTree:
@@ -346,6 +502,16 @@ class RedBlackTree:
                 self.value[node] = value
                 return (node, False) if with_id else node
 
+    def __getitem__(self, key):
+        return _ValueSlot(self, key)
+
+    def __setitem__(self, key, value):
+        if isinstance(value, _ValueSlot):
+            if value.tree is self and value.key == key and value.applied:
+                return
+            value = int(value)
+        self.set(key, value)
+
     def add(self, key, delta):
         root = self.root
         if root == 0:
@@ -431,8 +597,8 @@ class RedBlackTree:
             node = right[node]
         return self._node_entry(node)
 
-    def erase_id(self, node_id):
-        if not self._contains_node(node_id):
+    def erase_id(self, node_id, check=False):
+        if check and not self._contains_node(node_id):
             return False
         self._erase_node(node_id)
         return True
@@ -450,15 +616,12 @@ def solve() -> None:
     # и будет тем самым [L, R], который содержит запрос [l, r].
     # Вместо multiset длин храним ещё один map<int, int>: ключ - длина,
     # значение - количество отрезков такой длины.
-    n, q = map(int, input().split())
+    n, q = readInt(), readInt()
     segments = RedBlackTree(((1, n),))
     lengths = RedBlackTree(((0, 1), (n, 1)))
     _, _, max_length_id = lengths.last()
-    answers = []
     while q > 0:
-        c, l, r = input().split()
-        l = int(l)
-        r = int(r)
+        c, l, r = readChar(), readInt(), readInt()
         # находим отрезок, в который попадает граница l:
         _, _, next_segment_id = segments.upper_bound_with_id(l)
         if next_segment_id == 0:
@@ -467,25 +630,25 @@ def solve() -> None:
             L, R, segment_id = segments.prev(next_segment_id)
         # запоминаем его левую и правую границу, затем удаляем вместе с длиной:
         segments.erase_id(segment_id)
-        lengths.add(R - L + 1, -1)
+        lengths[R - L + 1] -= 1
         # Из отрезка [L, R] мы вырезали подотрезок [l, r]. Нужно вставить два
         # отрезка: [L, l-1] и [r+1, R]:
         if L < l:
-            segments.set(L, l - 1)
-            lengths.add(l - L, +1)
+            segments[L] = l - 1
+            lengths[l - L] += 1
         if r < R:
-            segments.set(r + 1, R)
-            lengths.add(R - r, +1)
+            segments[r + 1] = R
+            lengths[R - r] += 1
         # максимальная длина могла только уменьшиться, поэтому двигаемся влево,
         # пока количество отрезков текущей длины не станет положительным:
         while lengths.get_value(max_length_id) == 0:
             _, _, max_length_id = lengths.prev(max_length_id)
         # выводим ответ - максимальную длину отрезка:
-        answers.append(str(lengths.get_key(max_length_id)))
+        writeInt(lengths.get_key(max_length_id))
+        writeEndl()
         q -= 1
-    print("\n".join(answers))
 
 
-t = int(input())
+t = readInt()
 for _ in range(t):
     solve()
