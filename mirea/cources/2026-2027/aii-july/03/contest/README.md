@@ -254,7 +254,7 @@ if (iter->second == 0)
 <summary>Решение на C++: способ 2</summary>
 
 ```cpp
-// Данное решение работает за линейное время - за O(n+q). Мы храним одновременно:
+// Данное решение работает за линейное времян - за O(n+q). Мы храним одновременно:
 // 1) стек из элементов;
 // 2) стек на минимум;
 // 3) стек на максимум;
@@ -340,7 +340,7 @@ stMax.push(max(stMax.top(), x));
 <summary>Решение на Python3</summary>
 
 ```python
-# Данное решение работает за линейное время - за O(n+q). Мы храним одновременно:
+# Данное решение работает за линейное времян - за O(n+q). Мы храним одновременно:
 # 1) стек из элементов;
 # 2) стек на минимум;
 # 3) стек на максимум;
@@ -539,9 +539,11 @@ auto [iter, wasInserted] = s.insert(x);
   Возвращает итератор на следующий элемент в inorder и флаг успешного удаления.
   Если x не найден, возвращает ((None, 0), False).
 - tree.erase_id(node_id) -> ((next_value, next_node_id), was_erased)
-  Удаляет узел по его node_id.
-  Возвращает итератор на следующий элемент в inorder и флаг успешного удаления.
-  Если node_id не указывает на текущий узел дерева, возвращает ((None, 0), False).
+    Удаляет узел по его node_id без дополнительной проверки.
+    Возвращает итератор на следующий элемент в inorder и флаг успешного удаления.
+- tree.erase_id(node_id, check=True) -> ((next_value, next_node_id), was_erased)
+    Сначала проверяет, что node_id указывает на текущий узел дерева.
+    Если проверка не прошла, возвращает ((None, 0), False).
 
 Замечание:
 - node_id стабилен после поворотов и следующих вставок, потому что узлы
@@ -895,8 +897,8 @@ class RedBlackTree:
         next_node = self._erase_node(node)
         return self._iter_pair(next_node), True
 
-    def erase_id(self, node_id):
-        if not self._contains_node(node_id):
+    def erase_id(self, node_id, check=False):
+        if check and not self._contains_node(node_id):
             return (None, 0), False
         next_node = self._erase_node(node_id)
         return self._iter_pair(next_node), True
@@ -1042,9 +1044,11 @@ cout << min(x - *leftIter, *rightIter - x) << '\n';
   Возвращает итератор на следующий элемент в inorder и флаг успешного удаления.
   Если x не найден, возвращает ((None, 0), False).
 - tree.erase_id(node_id) -> ((next_value, next_node_id), was_erased)
-  Удаляет узел по его node_id.
-  Возвращает итератор на следующий элемент в inorder и флаг успешного удаления.
-  Если node_id не указывает на текущий узел дерева, возвращает ((None, 0), False).
+    Удаляет узел по его node_id без дополнительной проверки.
+    Возвращает итератор на следующий элемент в inorder и флаг успешного удаления.
+- tree.erase_id(node_id, check=True) -> ((next_value, next_node_id), was_erased)
+    Сначала проверяет, что node_id указывает на текущий узел дерева.
+    Если проверка не прошла, возвращает ((None, 0), False).
 
 Замечание:
 - node_id стабилен после поворотов и следующих вставок, потому что узлы
@@ -1398,8 +1402,8 @@ class RedBlackTree:
         next_node = self._erase_node(node)
         return self._iter_pair(next_node), True
 
-    def erase_id(self, node_id):
-        if not self._contains_node(node_id):
+    def erase_id(self, node_id, check=False):
+        if check and not self._contains_node(node_id):
             return (None, 0), False
         next_node = self._erase_node(node_id)
         return self._iter_pair(next_node), True
@@ -1670,32 +1674,32 @@ Next[pi] = ni
 ```cpp
 #include <bits/stdc++.h>
 using namespace std;
-const int inf = 1000000007;
 void solve() {
-    // храним границы свободных отрезков в виде пар (R, L) - сначала правая граница,
-    // затем левая граница. Это удобно, потому что s.lower_bound({x,-inf}) найдёт нам
-    // первый отрезок такой, что: x <= R.
+    // храним свободные отрезки в map<int, int>: ключ - левая граница L,
+    // значение - правая граница R. Тогда upper_bound(l) найдёт первый
+    // отрезок, который начинается строго правее l, а предыдущий отрезок
+    // и будет тем самым [L, R], который содержит запрос [l, r].
     // Дополнительно храним мультисет из длин отрезков, чтобы выдавать максимум.
     int n, q; cin >> n >> q;
-    set<pair<int,int>> segments{{n, 1}}; // 1 отрезок: [1, n]
-    multiset<int> lengths = {n, 0};      // 2 элемента: "n" и "0"
+    map<int, int> segments{{1, n}}; // 1 отрезок: [1, n]
+    multiset<int> lengths = {n, 0}; // 2 элемента: "n" и "0"
     while (q --> 0) {
         char c; int l, r;
         cin >> c >> l >> r;
-        // находим отрезок, в который попадает граница r:
-        auto iter = segments.lower_bound({r, -inf});
+        // находим отрезок, в который попадает граница l:
+        auto iter = prev(segments.upper_bound(l));
         // запоминаем его левую и правую границу, затем удаляем вместе с длиной:
-        auto [R, L] = *iter;
+        auto [L, R] = *iter;
         segments.erase(iter);
         lengths.erase(lengths.find(R-L+1));
         // Из отрезка [L, R] мы вырезали подотрезок [l, r]. Нужно вставить два
-        // два отрезка: [L, l-1] и [r+1, R]:
+        // отрезка: [L, l-1] и [r+1, R]:
         if (L < l) {
-            segments.insert({l-1, L});
+            segments[L] = l-1;
             lengths.insert(l - L);
         }
         if (r < R) {
-            segments.insert({R, r+1});
+            segments[r+1] = R;
             lengths.insert(R - r);
         }
         // выводим ответ - максимальную длину отрезка:
@@ -1740,10 +1744,93 @@ lengths.erase(lengths.find(R-L+1));
 <details>
 <summary>Решение на Python3: способ 1</summary>
 
-Ниже приведена базовая версия этого подхода. Она получила вердикт `OK` на `PyPy 3-64` за `2781 мс` и `107600 КБ`. В файле `E-1-map-optimized.py` лежит её более быстрая реализация с переиспользованием узла левого остатка свободного отрезка; она получила вердикт `OK` на `PyPy 3-64` за `1875 мс` и `106900 КБ`.
+Ниже приведена оптимизированная версия этого подхода из файла `E-1-map-optimized.py`. Она получила вердикт `OK` на `PyPy 3-64` за `1875 мс` и `106900 КБ`. Более прямолинейная базовая реализация лежит в файле `E-1-map.py`; она получила вердикт `OK` на `PyPy 3-64` за `2781 мс` и `107600 КБ`.
 
 ```python
-# Вердикт: OK, Время: 2781 мс, Память: 107600 КБ, Язык: PyPy 3-64
+# Вердикт: OK, Время: 1875 мс, Память: 106900 КБ, Язык: PyPy 3-64
+
+import atexit
+from sys import stdin, stdout
+
+
+# -------------------------
+# FastIO
+# -------------------------
+
+_INPUT = stdin.buffer.read()
+_INPUT_LEN = len(_INPUT)
+_INPUT_POS = 0
+_OUTPUT = bytearray()
+
+
+def readInt():
+    global _INPUT_POS
+    data = _INPUT
+    pos = _INPUT_POS
+    size = _INPUT_LEN
+
+    while pos < size and data[pos] <= 32:
+        pos += 1
+
+    sign = 1
+    if data[pos] == 45:
+        sign = -1
+        pos += 1
+
+    value = 0
+    while pos < size:
+        ch = data[pos]
+        if ch <= 32:
+            break
+        value = value * 10 + ch - 48
+        pos += 1
+
+    _INPUT_POS = pos
+    return sign * value
+
+
+def readChar(skip_whitespace=True):
+    global _INPUT_POS
+    data = _INPUT
+    pos = _INPUT_POS
+    size = _INPUT_LEN
+
+    if skip_whitespace:
+        while pos < size and data[pos] <= 32:
+            pos += 1
+
+    if pos >= size:
+        _INPUT_POS = pos
+        return ""
+
+    _INPUT_POS = pos + 1
+    return chr(data[pos])
+
+
+def writeInt(value):
+    _OUTPUT.extend(str(value).encode())
+
+
+def writeChar(ch):
+    _OUTPUT.append(ord(ch))
+
+
+def writeSpace():
+    _OUTPUT.append(32)
+
+
+def writeEndl():
+    _OUTPUT.append(10)
+
+
+def flushOutput():
+    if _OUTPUT:
+        stdout.write(_OUTPUT.decode("ascii"))
+        stdout.flush()
+        _OUTPUT.clear()
+
+
+atexit.register(flushOutput)
 
 # -------------------------
 # RedBlackTree
@@ -1759,6 +1846,14 @@ lengths.erase(lengths.find(R-L+1));
   Возвращает node_id этого ключа.
 - tree.set(key, value, with_id=True) -> (node_id, was_inserted)
   Возвращает node_id и флаг, был ли ключ создан заново.
+- tree[key] = value
+    Короткая запись для tree.set(key, value).
+- tree[key] += delta / tree[key] -= delta
+    Короткая запись для изменения счётчика по ключу без потери эффективности.
+    Для обычного чтения значения удобнее использовать tree.get(key, default).
+- tree.set_value(node_id, value) -> None
+    Меняет значение по существующему node_id за O(1).
+    Этот метод предполагает, что node_id живой и не был удалён.
 - tree.add(key, delta) -> node_id
   Увеличивает значение по ключу на delta. Если ключа нет, создаёт его.
 - tree.get(key, default=None) -> value
@@ -1777,12 +1872,80 @@ lengths.erase(lengths.find(R-L+1));
   Возвращает максимальный ключ, его значение и node_id.
   Если дерево пусто, возвращает (None, None, 0).
 - tree.erase_id(node_id) -> bool
-  Удаляет узел по его node_id.
-  Возвращает True, если удаление произошло, иначе False.
+    Удаляет узел по его node_id без дополнительной проверки.
+    Возвращает True, если удаление произошло, иначе False.
+- tree.erase_id(node_id, check=True) -> bool
+    Сначала проверяет, что node_id указывает на текущий узел дерева.
+    Возвращает True, если удаление произошло, иначе False.
 
 Замечание:
 - node_id стабилен после поворотов и следующих вставок, пока сам узел не удалён.
 """
+
+
+class _ValueSlot:
+    __slots__ = ("tree", "key", "node_id", "value", "loaded", "applied")
+
+    def __init__(self, tree, key):
+        self.tree = tree
+        self.key = key
+        self.node_id = 0
+        self.value = 0
+        self.loaded = False
+        self.applied = False
+
+    def _load(self):
+        if not self.loaded:
+            node_id = self.tree._find_node(self.key)
+            self.node_id = node_id
+            self.value = 0 if node_id == 0 else self.tree.value[node_id]
+            self.loaded = True
+
+    def __iadd__(self, delta):
+        if not self.loaded:
+            node_id = self.tree.add(self.key, delta)
+            self.node_id = node_id
+            self.value = self.tree.value[node_id]
+            self.loaded = True
+            self.applied = True
+            return self
+
+        if self.node_id == 0:
+            self.value += delta
+            self.node_id = self.tree.set(self.key, self.value)
+        else:
+            self.value += delta
+            self.tree.value[self.node_id] = self.value
+
+        self.applied = True
+        return self
+
+    def __isub__(self, delta):
+        return self.__iadd__(-delta)
+
+    def __int__(self):
+        self._load()
+        return self.value
+
+    def __index__(self):
+        self._load()
+        return self.value
+
+    def __bool__(self):
+        self._load()
+        return self.value != 0
+
+    def __repr__(self):
+        self._load()
+        return repr(self.value)
+
+    def __str__(self):
+        self._load()
+        return str(self.value)
+
+    def __eq__(self, other):
+        self._load()
+        return self.value == other
 
 
 class RedBlackTree:
@@ -2091,6 +2254,19 @@ class RedBlackTree:
                 self.value[node] = value
                 return (node, False) if with_id else node
 
+    def __getitem__(self, key):
+        return _ValueSlot(self, key)
+
+    def __setitem__(self, key, value):
+        if isinstance(value, _ValueSlot):
+            if value.tree is self and value.key == key and value.applied:
+                return
+            value = int(value)
+        self.set(key, value)
+
+    def set_value(self, node_id, value):
+        self.value[node_id] = value
+
     def add(self, key, delta):
         root = self.root
         if root == 0:
@@ -2176,8 +2352,8 @@ class RedBlackTree:
             node = right[node]
         return self._node_entry(node)
 
-    def erase_id(self, node_id):
-        if not self._contains_node(node_id):
+    def erase_id(self, node_id, check=False):
+        if check and not self._contains_node(node_id):
             return False
         self._erase_node(node_id)
         return True
@@ -2195,43 +2371,42 @@ def solve() -> None:
     # и будет тем самым [L, R], который содержит запрос [l, r].
     # Вместо multiset длин храним ещё один map<int, int>: ключ - длина,
     # значение - количество отрезков такой длины.
-    n, q = map(int, input().split())
+    n, q = readInt(), readInt()
     segments = RedBlackTree(((1, n),))
     lengths = RedBlackTree(((0, 1), (n, 1)))
     _, _, max_length_id = lengths.last()
-    answers = []
     while q > 0:
-        c, l, r = input().split()
-        l = int(l)
-        r = int(r)
+        c, l, r = readChar(), readInt(), readInt()
         # находим отрезок, в который попадает граница l:
         _, _, next_segment_id = segments.upper_bound_with_id(l)
         if next_segment_id == 0:
             L, R, segment_id = segments.last()
         else:
             L, R, segment_id = segments.prev(next_segment_id)
-        # запоминаем его левую и правую границу, затем удаляем вместе с длиной:
-        segments.erase_id(segment_id)
-        lengths.add(R - L + 1, -1)
-        # Из отрезка [L, R] мы вырезали подотрезок [l, r]. Нужно вставить два
-        # отрезка: [L, l-1] и [r+1, R]:
+        # запоминаем его левую и правую границу, затем обновляем структуру
+        # свободных отрезков и счётчики длин:
+        lengths[R - L + 1] -= 1
+        # Если левая часть [L, l-1] осталась, переиспользуем тот же node_id:
         if L < l:
-            segments.set(L, l - 1)
-            lengths.add(l - L, +1)
+            segments.set_value(segment_id, l - 1)
+            lengths[l - L] += 1
+        else:
+            segments.erase_id(segment_id)
+        # Правую часть при необходимости всё равно добавляем как новый узел:
         if r < R:
-            segments.set(r + 1, R)
-            lengths.add(R - r, +1)
+            segments[r + 1] = R
+            lengths[R - r] += 1
         # максимальная длина могла только уменьшиться, поэтому двигаемся влево,
         # пока количество отрезков текущей длины не станет положительным:
         while lengths.get_value(max_length_id) == 0:
             _, _, max_length_id = lengths.prev(max_length_id)
         # выводим ответ - максимальную длину отрезка:
-        answers.append(str(lengths.get_key(max_length_id)))
+        writeInt(lengths.get_key(max_length_id))
+        writeEndl()
         q -= 1
-    print("\n".join(answers))
 
 
-t = int(input())
+t = readInt()
 for _ in range(t):
     solve()
 ```
@@ -2250,11 +2425,11 @@ while lengths.get_value(max_length_id) == 0:
     _, _, max_length_id = lengths.prev(max_length_id)
 ```
 
-Во втором дереве мы не удаляем ключи-длины, даже если их количество стало равно $0$. Вместо этого просто меняем счётчики. Это удобно, потому что ответ по задаче никогда не возрастает: максимальный свободный отрезок после очередного вырезания может только уменьшиться или остаться тем же. Значит, указатель $\text{max\_length\_id}$ никогда не двигается вправо, а только шаг за шагом уходит влево.
+Во втором дереве мы не удаляем ключи-длины, даже если их количество стало равно $0$. Вместо этого просто меняем счётчики. Это удобно, потому что ответ по задаче никогда не возрастает: максимальный свободный отрезок после очередного вырезания может только уменьшиться или остаться тем же. Значит, этот указатель никогда не двигается вправо, а только шаг за шагом уходит влево.
 
 Поиск нужного свободного отрезка устроен так же, как в версии на `map<int, int>` в C++: `upper_bound_with_id(l)` возвращает первый отрезок, начинающийся строго правее $l$, а предыдущий узел и есть тот самый отрезок, который содержит текущий запрос.
 
-В файле `E-1-map-optimized.py` используется та же структура данных и та же асимптотика $O(q \log q)$, но обновление отрезков записано чуть аккуратнее. В обычной версии мы удаляем найденный отрезок $[L, R]$, а потом при необходимости заново вставляем левый остаток $[L, l-1]$. В оптимизированной версии ключ $L$ не меняется, поэтому левый остаток можно оставить в том же узле: достаточно вызвать `segments.set_value(segment_id, l - 1)`. Удаление через `erase_id(segment_id)` требуется только когда левого остатка вообще нет, а правый остаток $[r+1, R]$ по-прежнему создаётся как новый узел, потому что у него уже другой ключ. За счёт этого в Python уменьшается число удалений, вставок и выделений новых вершин дерева.
+Здесь используется та же структура данных и та же асимптотика $O(q \log q)$, но обновление отрезков записано чуть аккуратнее. В базовой версии из файла `E-1-map.py` мы удаляем найденный отрезок $[L, R]$, а потом при необходимости заново вставляем левый остаток $[L, l-1]$. В оптимизированной версии ключ $L$ не меняется, поэтому левый остаток можно оставить в том же узле: достаточно вызвать `segments.set_value(segment_id, l - 1)`. Удаление через `erase_id(segment_id)` требуется только когда левого остатка вообще нет, а правый остаток $[r+1, R]$ по-прежнему создаётся как новый узел, потому что у него уже другой ключ. За счёт этого в Python уменьшается число удалений, вставок и выделений новых вершин дерева.
 
 </details>
 
