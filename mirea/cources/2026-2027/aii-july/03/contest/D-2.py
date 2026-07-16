@@ -33,9 +33,11 @@
   Возвращает итератор на следующий элемент в inorder и флаг успешного удаления.
   Если x не найден, возвращает ((None, 0), False).
 - tree.erase_id(node_id) -> ((next_value, next_node_id), was_erased)
-  Удаляет узел по его node_id.
-  Возвращает итератор на следующий элемент в inorder и флаг успешного удаления.
-  Если node_id не указывает на текущий узел дерева, возвращает ((None, 0), False).
+    Удаляет узел по его node_id без дополнительной проверки.
+    Возвращает итератор на следующий элемент в inorder и флаг успешного удаления.
+- tree.erase_id(node_id, check=True) -> ((next_value, next_node_id), was_erased)
+    Сначала проверяет, что node_id указывает на текущий узел дерева.
+    Если проверка не прошла, возвращает ((None, 0), False).
 
 Замечание:
 - node_id стабилен после поворотов и следующих вставок, потому что узлы
@@ -389,8 +391,8 @@ class RedBlackTree:
         next_node = self._erase_node(node)
         return self._iter_pair(next_node), True
 
-    def erase_id(self, node_id):
-        if not self._contains_node(node_id):
+    def erase_id(self, node_id, check=False):
+        if check and not self._contains_node(node_id):
             return (None, 0), False
         next_node = self._erase_node(node_id)
         return self._iter_pair(next_node), True
