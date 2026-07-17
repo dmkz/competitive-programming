@@ -26,6 +26,9 @@
 - храним все уже встреченные префиксные суммы;
 - если очередная сумма уже была, найден подотрезок с суммой $0$.
 
+<details>
+<summary><strong>C++: поиск двух равных префиксов</strong></summary>
+
 ```cpp
 set<long long> seen;
 seen.insert(0);
@@ -41,6 +44,8 @@ for (int x : a) {
 }
 cout << "NO\n";
 ```
+
+</details>
 
 Полная программа: [C++](examples/example-01.cpp), [Python3](examples/example-01.py).
 
@@ -154,6 +159,9 @@ for (int i = n - 2; i >= 0; i--) {
 
 Остаётся просто перебрать все позиции $i$ и взять максимум из всех таких значений.
 
+<details>
+<summary><strong>C++: максимум НОД после удаления одного элемента</strong></summary>
+
 ```cpp
 vector<long long> pref(n + 2, 0), suff(n + 2, 0);
 for (int i = 1; i <= n; i++) {
@@ -168,5 +176,7 @@ for (int i = 1; i <= n; i++) {
     answer = max(answer, gcd(pref[i - 1], suff[i + 1]));
 }
 ```
+
+</details>
 
 Полная программа: [C++](examples/example-05.cpp), [Python3](examples/example-05.py).
