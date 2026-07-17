@@ -6,10 +6,9 @@ TITLE = "# Лекция 4. Префиксные суммы, запросы на 
 PART_DIRS = [
     "Part-01-Prefix-sums",
     "Part-02-Prefix-and-suffix-approach",
-    "Part-03-Binary-search-and-difference-array",
-    "Part-04-Recognition-and-pitfalls",
+    "Part-03-Difference-array",
 ]
-NOTICE = """<!-- Этот файл собран автоматически из README.md внутри Part-01-Prefix-sums, Part-02-Prefix-and-suffix-approach, Part-03-Binary-search-and-difference-array и Part-04-Recognition-and-pitfalls. -->
+NOTICE = """<!-- Этот файл собран автоматически из README.md внутри Part-01-Prefix-sums, Part-02-Prefix-and-suffix-approach и Part-03-Difference-array. -->
 <!-- Для обновления запустите: python build-readme.py -->"""
 LINK_RE = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
 
