@@ -2,7 +2,7 @@ import re
 from pathlib import Path
 
 
-TITLE = "# Лекция 4. Префиксные суммы, запросы на отрезках, префиксный и суффиксный подход. Разностный массив"
+TITLE = "# Лекция 4. Префиксные суммы, запросы на отрезках и префиксный подход. Разностный массив"
 PART_DIRS = [
     "Part-01-Prefix-sums",
     "Part-02-Prefix-and-suffix-approach",
