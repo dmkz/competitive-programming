@@ -44,6 +44,9 @@ $$
 
 ### Построение префиксных сумм в C++
 
+<details>
+<summary><strong>Показать код на C++</strong></summary>
+
 ```cpp
 int n;
 cin >> n;
@@ -58,7 +61,12 @@ for (int i = 0; i < n; i++) {
 }
 ```
 
+</details>
+
 ### Построение префиксных сумм в Python3
+
+<details>
+<summary><strong>Показать код на Python3</strong></summary>
 
 ```python
 n = int(input())
@@ -68,6 +76,8 @@ pref = [0] * (n + 1)
 for i in range(n):
     pref[i + 1] = pref[i] + a[i]
 ```
+
+</details>
 
 ### Ответ на запросы суммы на отрезке
 
@@ -562,6 +572,9 @@ $$
 > [!IMPORTANT]
 > Другого варианта восстановления нет, потому что каждое значение $a_i$ уже однозначно задаётся разностью двух соседних префиксов.
 
+<details>
+<summary><strong>Показать код восстановления на C++</strong></summary>
+
 ```cpp
 int n;
 cin >> n;
@@ -576,6 +589,11 @@ for (int i = 0; i < n; i++) {
 }
 ```
 
+</details>
+
+<details>
+<summary><strong>Показать код восстановления на Python3</strong></summary>
+
 ```python
 n = int(input())
 pref = list(map(int, input().split()))
@@ -584,5 +602,7 @@ a = [0] * n
 for i in range(n):
     a[i] = pref[i + 1] - pref[i]
 ```
+
+</details>
 
 Полная программа: [C++](examples/example-08.cpp), [Python3](examples/example-08.py).
