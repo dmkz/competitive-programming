@@ -6,11 +6,10 @@ TITLE = "# Лекция 6. Рекурсия, полный перебор и ге
 PART_DIRS = [
     "Part-01-Loops-masks-and-basic-generation",
     "Part-02-Recursive-generation-basics",
-    "Part-03-Permutations-duplicates-and-order",
-    "Part-04-Pruning-backtracking-and-rollback",
-    "Part-05-Masks-meet-in-the-middle-and-choice-of-method",
+    "Part-03-Pruning-backtracking-and-rollback",
+    "Part-04-Masks-meet-in-the-middle-and-choice-of-method",
 ]
-NOTICE = """<!-- Этот файл собран автоматически из README.md внутри Part-01-Loops-masks-and-basic-generation, Part-02-Recursive-generation-basics, Part-03-Permutations-duplicates-and-order, Part-04-Pruning-backtracking-and-rollback и Part-05-Masks-meet-in-the-middle-and-choice-of-method. -->
+NOTICE = """<!-- Этот файл собран автоматически из README.md внутри частей лекции 6. -->
 <!-- Для обновления запустите: python build-readme.py -->"""
 LINK_RE = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
 
