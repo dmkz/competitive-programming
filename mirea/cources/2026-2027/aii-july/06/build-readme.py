@@ -7,7 +7,7 @@ PART_DIRS = [
     "Part-01-Loops-masks-and-basic-generation",
     "Part-02-Recursive-generation-basics",
     "Part-03-Pruning-backtracking-and-rollback",
-    "Part-04-Masks-meet-in-the-middle-and-choice-of-method",
+    "Part-04-Meet-in-the-middle",
 ]
 NOTICE = """<!-- Этот файл собран автоматически из README.md внутри частей лекции 6. -->
 <!-- Для обновления запустите: python build-readme.py -->"""
