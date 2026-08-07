@@ -1,0 +1,27 @@
+# Внутренние Polygon-пакеты не публикуются вместе с учебными материалами.
+/[0-9][0-9]/problems-internal/
+
+# Локальная копия testlib нужна для сборки валидаторов и генераторов, но не для Git.
+/testlib.h
+/\.copilot-session-context.md
+
+# Артефакты локальных проверок и временные файлы Python.
+/.validation_*.txt
+**/_full-verify-artifacts/
+**/_quality-artifacts/
+**/_sample-dump/
+**/_verify-artifacts/
+**/__pycache__/
+**/.pytest_cache/
+*.py[cod]
+
+# Артефакты локальной C++-сборки.
+*.exe
+*.obj
+*.o
+*.pdb
+*.ilk
+
+# Файлы операционной системы.
+.DS_Store
+Thumbs.db
