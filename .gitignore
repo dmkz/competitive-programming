@@ -44,3 +44,22 @@ Thumbs.db
 
 # Simple text
 *.txt
+
+# Local course instructions, generated lecture indexes, and auxiliary files.
+copilot-instructions.md
+contest-packages.instructions.md
+examples.instructions.md
+lecture-parts.instructions.md
+lecture.json
+AGENTS.md
+CODE_STYLE_PROMPT.md
+CONTEST_STANDARD.md
+CURRICULUM.md
+LECTURE_STANDARD.md
+mirea/cources/2026-2027/aii-august/README.md
+mirea/cources/2026-2027/aii-july/PACKAGE_DEVELOPMENT_REQUIREMENTS.md
+mirea/cources/2026-2027/aii-july/full_verify_07_08.py
+mirea/cources/2026-2027/aii-july/sync-contest-readmes.py
+
+# Word documents.
+*.docx
