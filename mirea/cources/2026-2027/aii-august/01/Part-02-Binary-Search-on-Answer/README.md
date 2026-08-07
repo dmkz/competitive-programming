@@ -350,25 +350,19 @@ $$
 
 Сделаем замену $t = 2k + 1$. Тогда
 
-$$
-\frac{t^3 - t}{4} = 6n, \qquad t^3 - t - 24n = 0.
-$$
+$\frac{t^3 - t}{4} = 6n, \qquad t^3 - t - 24n = 0$.
 
 Это пониженное кубическое уравнение. Обозначим
 
-$$
-D = 144n^2 - \frac{1}{27}, \qquad u = \sqrt[3]{12n + \sqrt{D}}, \qquad v = \sqrt[3]{12n - \sqrt{D}}.
-$$
+$D = 144n^2 - \frac{1}{27}, \qquad u = \sqrt[3]{12n + \sqrt{D}}, \qquad v = \sqrt[3]{12n - \sqrt{D}}$.
 
 Пусть $\omega = \frac{-1 + i\sqrt{3}}{2}$, где $\omega^3 = 1$ и $\omega \ne 1$. По формуле Кардано получаем
 
-$$
-\begin{aligned}
-k_1 &= \frac{u + v - 1}{2}, \\
-k_2 &= \frac{\omega u + \omega^2 v - 1}{2}, \\
-k_3 &= \frac{\omega^2 u + \omega v - 1}{2}.
-\end{aligned}
-$$
+$k_1 = \frac{u + v - 1}{2}$.
+
+$k_2 = \frac{\omega u + \omega^2 v - 1}{2}$.
+
+$k_3 = \frac{\omega^2 u + \omega v - 1}{2}$.
 
 </details>
 
