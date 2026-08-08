@@ -1,6 +1,7 @@
+inf = 10 ** 30
 def best(i):
     if i == n: return 0
-    answ = -(10 ** 30)
+    answ = -inf
     # Перебираем все следующие прыжки без запоминания ответов.
     for jump in (1, 2):
         if i + jump <= n:

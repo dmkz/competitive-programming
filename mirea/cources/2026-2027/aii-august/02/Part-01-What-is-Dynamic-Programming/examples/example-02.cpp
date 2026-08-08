@@ -4,6 +4,7 @@ using ll = long long;
 main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
+    const ll inf = 1LL << 60;
     // Читаем награды ступеней:
     int n; cin >> n;
     vector<ll> a(n + 1);
@@ -11,8 +12,7 @@ main() {
         cin >> a[i];
     function<ll(int)> best = [&](int i) {
         if (i == n) return 0LL;
-        const ll neg = -(1LL << 60);
-        ll answ = neg;
+        ll answ = -inf;
         // Перебираем все следующие прыжки без запоминания ответов.
         for (int jump : {1, 2})
             if (i + jump <= n)
