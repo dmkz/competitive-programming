@@ -66,8 +66,10 @@ if dp[ni][nj] < candidate:
 for (int i = 0; i <= n; i++)
 	for (int r = 0; r <= 2; r++) {
 		if (dp[i][r] == -inf) continue;
+		// Одинарный прыжок сбрасывает длину серии двойных прыжков.
 		if (i + 1 <= n && cells[i] == '.')
 			setmax(dp[i + 1][0], dp[i][r] + a[i + 1]);
+		// После двух двойных прыжков следующий двойной прыжок запрещён.
 		if (r < 2 && i + 2 <= n && cells[i + 1] == '.')
 			setmax(dp[i + 2][r + 1], dp[i][r] + a[i + 2]);
 	}
@@ -77,8 +79,10 @@ for (int i = 0; i <= n; i++)
 for i in range(n + 1):
 	for r in range(3):
 		if dp[i][r] == -inf: continue
+		# Одинарный прыжок сбрасывает длину серии двойных прыжков.
 		if i + 1 <= n and cells[i] == '.':
 			setmax(dp[i + 1], 0, dp[i][r] + a[i + 1])
+		# После двух двойных прыжков следующий двойной прыжок запрещён.
 		if r < 2 and i + 2 <= n and cells[i + 1] == '.':
 			setmax(dp[i + 2], r + 1, dp[i][r] + a[i + 2])
 ```
