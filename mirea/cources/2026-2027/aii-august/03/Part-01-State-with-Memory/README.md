@@ -18,9 +18,11 @@
 
 ```cpp
 void setmax(auto& x, const auto& y) {
+	// Заменяем значение, только если кандидат его улучшает.
 	if (x < y) x = y;
 }
 void setmin(auto& x, const auto& y) {
+	// Заменяем значение, только если кандидат его уменьшает.
 	if (x > y) x = y;
 }
 ```
@@ -31,8 +33,10 @@ void setmin(auto& x, const auto& y) {
 
 ```python
 def setmax(a, index, value):
+	# Заменяем элемент, только если кандидат его улучшает.
 	if a[index] < value: a[index] = value
 def setmin(a, index, value):
+	# Заменяем элемент, только если кандидат его уменьшает.
 	if a[index] > value: a[index] = value
 ```
 
@@ -44,7 +48,9 @@ def setmin(a, index, value):
 В Python создание и сравнение кортежей в каждой релаксации заметно замедляет большую динамику. Поэтому, если время работы программы критично, то значение оставляют в `dp`, а переход – в отдельном массиве `parent` и записывают их одним условием:
 
 ```python
+# Улучшаем значение состояния найденным кандидатом.
 if dp[ni][nj] < candidate:
+	# Вместе со значением сохраняем переход, который его дал.
 	dp[ni][nj] = candidate
 	parent[ni][nj] = move
 ```

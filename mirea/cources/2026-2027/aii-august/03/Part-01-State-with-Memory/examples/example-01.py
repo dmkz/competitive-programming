@@ -3,6 +3,7 @@ n = int(input())
 a = [0] + list(map(int, input().split()))
 cells = input()
 def setmax(a, index, value):
+    # Заменяем элемент, только если кандидат его улучшает.
     if a[index] < value: a[index] = value
 # dp[i][r] — лучший путь к ступени i после r двойных прыжков подряд.
 inf = 10 ** 30

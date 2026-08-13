@@ -2,6 +2,7 @@
 using namespace std;
 using ll = long long;
 void setmax(auto& x, const auto& y) {
+    // Заменяем значение, только если кандидат его улучшает.
     if (x < y) x = y;
 }
 main() {
