@@ -68,6 +68,9 @@ if dp[ni][nj] < candidate:
 
 Из $(i,2)$ второго перехода нет. Это и есть место, где правило об усталости попадает в динамику.
 
+<details>
+<summary><strong>C++: прыжки робота по лестнице</strong></summary>
+
 ```cpp
 for (int i = 0; i <= n; i++)
 	for (int r = 0; r <= 2; r++) {
@@ -82,6 +85,11 @@ for (int i = 0; i <= n; i++)
 	}
 ```
 
+</details>
+
+<details>
+<summary><strong>Python3: прыжки робота по лестнице</strong></summary>
+
 ```python
 for i in range(n + 1):
 	for r in range(3):
@@ -94,6 +102,8 @@ for i in range(n + 1):
 		if r < 2 and i + 2 <= n and cells[i + 1] == '.':
 			setmax(dp[i + 2], r + 1, dp[i][r] + a[i + 2])
 ```
+
+</details>
 
 Как обычно, у нас тут $1$-индексация, поэтому `cells[i]` описывает ступень $i+1$. Ответом будет максимум из трёх состояний на последней ступени. Если все три недостижимы, пути нет.
 
