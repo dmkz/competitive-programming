@@ -453,20 +453,13 @@ $C_5^3=10$.
 
 Сначала применим симметрию сочетаний:
 
-$$
-\binom{n}{k}=\binom{n}{n-k}.
-$$
+$\binom{n}{k}=\binom{n}{n-k}$.
 
 Поэтому достаточно взять $limit=\min(k,n-k)$.
 
 После этого формулу сочетания можно записать так:
 
-$$
-\binom{n}{k}
-=
-\frac{n(n-1)\cdots(n-limit+1)}
-{1\cdot 2\cdots limit}.
-$$
+$\binom{n}{k}=\frac{n(n-1)\cdots(n-limit+1)}{1\cdot 2\cdots limit}$.
 
 В цикле для каждого $i$ от $1$ до $limit$ выполняются два действия:
 
