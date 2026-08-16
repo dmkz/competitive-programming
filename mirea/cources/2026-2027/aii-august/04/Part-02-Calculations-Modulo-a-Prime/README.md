@@ -24,23 +24,11 @@ $$
 
 Так можно поступать благодаря следующим свойствам:
 
-$$
-(a+b)\bmod mod
-=
-\bigl((a\bmod mod)+(b\bmod mod)\bigr)\bmod mod,
-$$
+$(a+b)\bmod mod =\bigl((a\bmod mod)+(b\bmod mod)\bigr)\bmod mod$,
 
-$$
-(a-b)\bmod mod
-=
-\bigl((a\bmod mod)-(b\bmod mod)\bigr)\bmod mod,
-$$
+$(a-b)\bmod mod = \bigl((a\bmod mod)-(b\bmod mod)\bigr)\bmod mod$,
 
-$$
-(a\cdot b)\bmod mod
-=
-\bigl((a\bmod mod)\cdot(b\bmod mod)\bigr)\bmod mod.
-$$
+$(a\cdot b)\bmod mod = \bigl((a\bmod mod)\cdot(b\bmod mod)\bigr)\bmod mod$.
 
 Иными словами, при сложении, вычитании и умножении можно заменить исходные числа их остатками. Итоговый остаток от этого не изменится.
 
