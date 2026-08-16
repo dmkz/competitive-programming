@@ -5,7 +5,8 @@ const ll mod = 1000000007;
 ll power(ll a, ll exponent) {
 	ll answ = 1;
 	while (exponent > 0) {
-		if (exponent % 2 == 1) answ = answ * a % mod;
+		if (exponent % 2 == 1)
+			answ = answ * a % mod;
 		a = a * a % mod;
 		exponent /= 2;
 	}
@@ -14,7 +15,8 @@ ll power(ll a, ll exponent) {
 main() {
 	int maxN, q; cin >> maxN >> q;
 	// Предподсчитываем факториалы до наибольшей границы запросов.
-	vector<ll> fact(maxN + 1), invFact(maxN + 1);
+	vector<ll> fact(maxN + 1);
+	vector<ll> invFact(maxN + 1);
 	fact[0] = 1;
 	for (int i = 1; i <= maxN; i++)
 		fact[i] = fact[i - 1] * i % mod;
@@ -22,10 +24,15 @@ main() {
 	invFact[maxN] = power(fact[maxN], mod - 2);
 	for (int i = maxN; i >= 1; i--)
 		invFact[i - 1] = invFact[i] * i % mod;
-	// Для каждого запроса подставляем три предподсчитанных значения в формулу.
+	// Для каждого запроса подставляем три предподсчитанных значения в формулу сочетания.
 	while (q --> 0) {
 		int n, k; cin >> n >> k;
-		if (k < 0 || k > n) cout << 0 << '\n';
-		else cout << fact[n] * invFact[k] % mod * invFact[n - k] % mod << '\n';
+		if (k < 0 || k > n)
+			cout << 0 << '\n';
+		else {
+			ll answ = fact[n] * invFact[k] % mod;
+			answ = answ * invFact[n - k] % mod;
+			cout << answ << '\n';
+		}
 	}
 }

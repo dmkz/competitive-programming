@@ -204,7 +204,8 @@ int64_t powerRecursive(int64_t a, int e) {
 	if (e == 0) return 1;
 	int64_t half = powerRecursive(a, e / 2);
 	int64_t answ = half * half % mod;
-	if (e % 2 == 1) answ = answ * a % mod;
+    if (e % 2 == 1)
+        answ = answ * a % mod;
 	return answ;
 }
 ```
@@ -275,7 +276,8 @@ powerRecursive(3, 0)
 int64_t power(int64_t a, int e) {
 	int64_t answ = 1;
 	while (e > 0) {
-		if (e % 2 == 1) answ = answ * a % mod;
+        if (e % 2 == 1)
+            answ = answ * a % mod;
 		a = a * a % mod;
 		e /= 2;
 	}
@@ -393,15 +395,23 @@ const int mod = 1000000007;
 main() {
     int n, k; cin >> n >> k;
     // ways[i][j] хранит число путей после i шагов вниз и j шагов вправо.
-    vector<vector<int>> ways(n + 1, vector<int>(k + 1));
+    vector ways(n + 1, vector<int>(k + 1));
     ways[0][0] = 1;
     // В каждую клетку приходим из клетки сверху или слева.
     for (int i = 0; i <= n; i++)
         for (int j = 0; j <= k; j++) {
-            if (i == 0 && j == 0) continue;
-            int fromTop = i == 0 ? 0 : ways[i - 1][j];
-            int fromLeft = j == 0 ? 0 : ways[i][j - 1];
-            ways[i][j] = (fromTop + fromLeft) % mod;
+            if (i == 0 && j == 0)
+                continue;
+            int top = 0;
+            int left = 0;
+            if (i > 0)
+                top = ways[i - 1][j];
+            if (j > 0)
+                left = ways[i][j - 1];
+            int answ = top + left;
+            if (answ >= mod)
+                answ -= mod;
+            ways[i][j] = answ;
         }
     cout << ways[n][k] << '\n';
 }
@@ -421,10 +431,17 @@ ways[0][0] = 1
 # В каждую клетку приходим из клетки сверху или слева.
 for i in range(n + 1):
     for j in range(k + 1):
-        if i == 0 and j == 0: continue
-        fromTop = 0 if i == 0 else ways[i - 1][j]
-        fromLeft = 0 if j == 0 else ways[i][j - 1]
-        ways[i][j] = (fromTop + fromLeft) % mod
+        if i == 0 and j == 0:
+            continue
+        fromTop, fromLeft = 0, 0
+        if i > 0:
+            fromTop = ways[i - 1][j]
+        if j > 0:
+            fromLeft = ways[i][j - 1]
+        answ = fromTop + fromLeft
+        if answ >= mod:
+            answ -= mod
+        ways[i][j] = answ
 print(ways[n][k])
 ```
 
@@ -496,7 +513,8 @@ const ll mod = 1000000007;
 ll power(ll a, ll exponent) {
     ll answ = 1;
     while (exponent > 0) {
-        if (exponent % 2 == 1) answ = answ * a % mod;
+        if (exponent % 2 == 1)
+            answ = answ * a % mod;
         a = a * a % mod;
         exponent /= 2;
     }
@@ -509,7 +527,8 @@ main() {
     ll answ = 1;
     for (int i = 1; i <= limit; i++) {
         answ = answ * (n - i + 1) % mod;
-        answ = answ * power(i, mod - 2) % mod;
+        ll inverse = power(i, mod - 2);
+        answ = answ * inverse % mod;
     }
     cout << answ << '\n';
 }
@@ -528,7 +547,8 @@ limit = min(k, n - k)
 answ = 1
 for i in range(1, limit + 1):
     answ = answ * (n - i + 1) % mod
-    answ = answ * pow(i, -1, mod) % mod
+    inverse = pow(i, -1, mod)
+    answ = answ * inverse % mod
 print(answ)
 ```
 
@@ -621,7 +641,8 @@ const ll mod = 1000000007;
 ll power(ll a, ll exponent) {
     ll answ = 1;
     while (exponent > 0) {
-        if (exponent % 2 == 1) answ = answ * a % mod;
+        if (exponent % 2 == 1)
+            answ = answ * a % mod;
         a = a * a % mod;
         exponent /= 2;
     }
@@ -630,19 +651,29 @@ ll power(ll a, ll exponent) {
 main() {
     int maxN, q; cin >> maxN >> q;
     // Предподсчитываем факториалы до наибольшей границы запросов.
-    vector<ll> fact(maxN + 1), invFact(maxN + 1);
+    vector<ll> fact(maxN + 1);
+    vector<ll> invFact(maxN + 1);
     fact[0] = 1;
     for (int i = 1; i <= maxN; i++)
         fact[i] = fact[i - 1] * i % mod;
     // Один обратный факториал восстанавливает все остальные движением вниз.
     invFact[maxN] = power(fact[maxN], mod - 2);
-    for (int i = maxN; i >= 1; i--)
+    for (int i = maxN; i >= 1; i--) {
         invFact[i - 1] = invFact[i] * i % mod;
-    // Для каждого запроса подставляем три предподсчитанных значения в формулу.
+    }
+    // Для каждого запроса подставляем три предподсчитанных значения в формулу сочетания.
     while (q --> 0) {
         int n, k; cin >> n >> k;
-        if (k < 0 || k > n) cout << 0 << '\n';
-        else cout << fact[n] * invFact[k] % mod * invFact[n - k] % mod << '\n';
+        if (k < 0 || k > n)
+            cout << 0 << '\n';
+        else {
+            ll answ = fact[n];
+            answ *= invFact[k];
+            answ %= mod;
+            answ *= invFact[n - k];
+            answ %= mod;
+            cout << answ << '\n';
+        }
     }
 }
 ```
@@ -657,7 +688,8 @@ mod = 10 ** 9 + 7
 def power(a, exponent):
     answ = 1
     while exponent > 0:
-        if exponent % 2 == 1: answ = answ * a % mod
+        if exponent % 2 == 1:
+            answ = answ * a % mod
         a = a * a % mod
         exponent //= 2
     return answ
@@ -670,12 +702,19 @@ for i in range(1, maxN + 1):
 invFact = [1] * (maxN + 1)
 invFact[maxN] = power(fact[maxN], mod - 2)
 for i in range(maxN, 0, -1):
-    invFact[i - 1] = invFact[i] * i % mod
-# Для каждого запроса подставляем три предподсчитанных значения в формулу.
+    invFact[i - 1] = invFact[i] * i
+    invFact[i - 1] %= mod
+# Для каждого запроса подставляем три предподсчитанных значения в формулу сочетания.
 for queryId in range(q):
     n, k = map(int, input().split())
     if k < 0 or k > n: print(0)
-    else: print(fact[n] * invFact[k] % mod * invFact[n - k] % mod)
+    else:
+        answ = fact[n]
+        answ *= invFact[k]
+        answ %= mod
+        answ *= invFact[n - k]
+        answ %= mod
+        print(answ)
 ```
 
 </details>

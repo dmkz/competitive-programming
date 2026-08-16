@@ -5,7 +5,8 @@ const ll mod = 1000000007;
 ll power(ll a, ll exponent) {
 	ll answ = 1;
 	while (exponent > 0) {
-		if (exponent % 2 == 1) answ = answ * a % mod;
+		if (exponent % 2 == 1)
+			answ = answ * a % mod;
 		a = a * a % mod;
 		exponent /= 2;
 	}
@@ -18,7 +19,8 @@ main() {
 	ll answ = 1;
 	for (int i = 1; i <= limit; i++) {
 		answ = answ * (n - i + 1) % mod;
-		answ = answ * power(i, mod - 2) % mod;
+		ll inverse = power(i, mod - 2);
+		answ = answ * inverse % mod;
 	}
 	cout << answ << '\n';
 }

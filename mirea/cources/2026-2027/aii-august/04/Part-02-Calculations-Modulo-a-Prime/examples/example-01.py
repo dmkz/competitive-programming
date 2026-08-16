@@ -7,7 +7,10 @@ ways[0][0] = 1
 for i in range(n + 1):
 	for j in range(k + 1):
 		if i == 0 and j == 0: continue
-		fromTop = 0 if i == 0 else ways[i - 1][j]
-		fromLeft = 0 if j == 0 else ways[i][j - 1]
-		ways[i][j] = (fromTop + fromLeft) % mod
+		fromTop, fromLeft = 0, 0
+		if i > 0: fromTop = ways[i - 1][j]
+		if j > 0: fromLeft = ways[i][j - 1]
+		answ = fromTop + fromLeft
+		if answ >= mod: answ -= mod
+		ways[i][j] = answ
 print(ways[n][k])
