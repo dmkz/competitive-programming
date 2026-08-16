@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" role="img" aria-labelledby="title description">
+  <title id="title">Диаграмма Венна для двух множеств</title>
+  <desc id="description">Два пересекающихся круга, обозначенные A и B.</desc>
+  <circle cx="245" cy="150" r="105" fill="#48a9e6" fill-opacity="0.62" stroke="#176b9e" stroke-width="4"/>
+  <circle cx="395" cy="150" r="105" fill="#f6ad55" fill-opacity="0.62" stroke="#b85c00" stroke-width="4"/>
+  <text x="190" y="150" fill="#17324d" font-family="sans-serif" font-size="30" text-anchor="middle">A</text>
+  <text x="450" y="150" fill="#5c3100" font-family="sans-serif" font-size="30" text-anchor="middle">B</text>
+  <text x="320" y="158" fill="#202020" font-family="sans-serif" font-size="24" text-anchor="middle">A ∩ B</text>
+</svg>
