@@ -134,29 +134,42 @@ const ll mod = 1000000007;
 ll power(ll a, ll exponent) {
 	ll answ = 1;
 	while (exponent > 0) {
-		if (exponent % 2 == 1) answ = answ * a % mod;
+		if (exponent % 2 == 1)
+			answ = answ * a % mod;
 		a = a * a % mod;
 		exponent /= 2;
 	}
 	return answ;
 }
 main() {
-	int n, m, r, c; cin >> n >> m >> r >> c;
+	int n, m, r, c;
+	cin >> n >> m >> r >> c;
 	int maxN = n + m;
-	// Предподсчитываем факториалы, чтобы быстро получать каждое сочетание.
-	vector<ll> fact(maxN + 1), invFact(maxN + 1);
+	// Предподсчитываем факториалы, чтобы быстро получать сочетания.
+	vector<ll> fact(maxN + 1);
+	vector<ll> invFact(maxN + 1);
 	fact[0] = 1;
-	for (int i = 1; i <= maxN; i++) fact[i] = fact[i - 1] * i % mod;
+	for (int i = 1; i <= maxN; i++)
+		fact[i] = fact[i - 1] * i % mod;
 	invFact[maxN] = power(fact[maxN], mod - 2);
-	for (int i = maxN; i >= 1; i--) invFact[i - 1] = invFact[i] * i % mod;
+	for (int i = maxN; i >= 1; i--)
+		invFact[i - 1] = invFact[i] * i % mod;
 	auto combination = [&](int all, int chosen) {
-		if (chosen < 0 || chosen > all) return 0LL;
-		return fact[all] * invFact[chosen] % mod * invFact[all - chosen] % mod;
+			if (chosen < 0 || chosen > all)
+				return 0LL;
+			ll answ = fact[all];
+			answ = answ * invFact[chosen] % mod;
+			answ *= invFact[all - chosen];
+			answ %= mod;
+			return answ;
 	};
-	// Вычитаем пути через закрытую клетку из числа всех маршрутов.
+	// Вычитаем пути через закрытую клетку из всех маршрутов.
 	ll allWays = combination(n + m - 2, n - 1);
-	ll throughCell = combination(r + c - 2, r - 1) * combination(n + m - r - c, n - r) % mod;
-	cout << (allWays - throughCell + mod) % mod << '\n';
+	ll throughCell = combination(r + c - 2, r - 1);
+	throughCell *= combination(n + m - r - c, n - r);
+	throughCell %= mod;
+	ll answ = allWays - throughCell + mod;
+	cout << answ % mod << '\n';
 }
 ```
 
@@ -170,24 +183,32 @@ mod = 10 ** 9 + 7
 def power(a, exponent):
 	answ = 1
 	while exponent > 0:
-		if exponent % 2 == 1: answ = answ * a % mod
+		if exponent % 2 == 1:
+			answ = answ * a % mod
 		a = a * a % mod
 		exponent //= 2
 	return answ
 n, m, r, c = map(int, input().split())
 maxN = n + m
-# Предподсчитываем факториалы, чтобы быстро получать каждое сочетание.
+# Предподсчитываем факториалы, чтобы быстро получать сочетания.
 fact = [1] * (maxN + 1)
-for i in range(1, maxN + 1): fact[i] = fact[i - 1] * i % mod
+for i in range(1, maxN + 1):
+	fact[i] = fact[i - 1] * i % mod
 invFact = [1] * (maxN + 1)
 invFact[maxN] = power(fact[maxN], mod - 2)
-for i in range(maxN, 0, -1): invFact[i - 1] = invFact[i] * i % mod
+for i in range(maxN, 0, -1):
+	invFact[i - 1] = invFact[i] * i % mod
 def combination(allCount, chosen):
-	if chosen < 0 or chosen > allCount: return 0
-	return fact[allCount] * invFact[chosen] % mod * invFact[allCount - chosen] % mod
-# Вычитаем пути через закрытую клетку из числа всех маршрутов.
+	if chosen < 0 or chosen > allCount:
+		return 0
+	answ = fact[allCount]
+	answ = answ * invFact[chosen] % mod
+	answ *= invFact[allCount - chosen]
+	return answ % mod
+# Вычитаем пути через закрытую клетку из всех маршрутов.
 allWays = combination(n + m - 2, n - 1)
-throughCell = combination(r + c - 2, r - 1) * combination(n + m - r - c, n - r) % mod
+throughCell = combination(r + c - 2, r - 1)
+throughCell *= combination(n + m - r - c, n - r)
 print((allWays - throughCell) % mod)
 ```
 
