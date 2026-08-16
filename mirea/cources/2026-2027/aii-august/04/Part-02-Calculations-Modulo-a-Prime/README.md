@@ -562,67 +562,37 @@ $$\binom{n}{k} = \frac{n!}{k!(n-k)!}.$$
 
 Заменим деление умножением на обратные элементы:
 
-$$
-\binom{n}{k}
-\equiv
-n!\cdot(k!)^{-1}\cdot((n-k)!)^{-1}
-\pmod{mod}.
-$$
+$$\binom{n}{k}\equiv n!\cdot(k!)^{-1}\cdot((n-k)!)^{-1}\pmod{mod}.$$
 
 Сначала предподсчитаем факториалы:
 
-$$
-fact[i]=i!\bmod mod.
-$$
+$$fact[i]=i!\bmod mod.$$
 
 Они вычисляются последовательно:
 
-$$
-fact[0]=1,
-$$
+$$fact[0]=1,$$
 
-$$
-fact[i]=fact[i-1]\cdot i\bmod mod.
-$$
+$$fact[i]=fact[i-1]\cdot i\bmod mod.$$
 
 Затем найдём обратный факториал для наибольшего значения:
 
-$$
-invFact[maxN]
-=
-fact[maxN]^{mod-2}
-\bmod mod.
-$$
+$$invFact[maxN]=fact[maxN]^{mod-2}\bmod mod.$$
 
 Остальные обратные факториалы можно восстановить движением вниз. Поскольку
 
-$$
-i!=(i-1)!\cdot i,
-$$
+$$i!=(i-1)!\cdot i,$$
 
 для обратных значений выполняется
 
-$$
-((i-1)!)^{-1}=(i!)^{-1}\cdot i.
-$$
+$$((i-1)!)^{-1}=(i!)^{-1}\cdot i.$$
 
 Следовательно,
 
-$$
-invFact[i-1]
-=
-invFact[i]\cdot i
-\bmod mod.
-$$
+$$invFact[i-1]=invFact[i]\cdot i\bmod mod.$$
 
 После предподсчёта каждое сочетание вычисляется за $O(1)$:
 
-$$
-\binom{n}{k}
-=
-fact[n]\cdot invFact[k]\cdot invFact[n-k]
-\bmod mod.
-$$
+$$\binom{n}{k}=fact[n]\cdot invFact[k]\cdot invFact[n-k]\bmod mod.$$
 
 Итоговая сложность:
 
