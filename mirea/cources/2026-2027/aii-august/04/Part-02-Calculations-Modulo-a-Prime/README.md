@@ -40,7 +40,7 @@ $(a\cdot b)\bmod mod = \bigl((a\bmod mod)\cdot(b\bmod mod)\bigr)\bmod mod$.
 Пусть $a$ и $b$ — уже нормализованные остатки, то есть
 
 $$
-0\le a,b<mod.
+0\le a,b < mod.
 $$
 
 Тогда сложение по модулю выполняется так:
