@@ -23,9 +23,5 @@ main() {
 	for (int i = n; i >= 1; i--)
 		invFact[i - 1] = invFact[i] * i % mod;
 	// Выбираем k - 1 промежутков между n единицами для знаков сложения.
-	ll answ = fact[n - 1];
-	answ = answ * invFact[k - 1] % mod;
-	answ *= invFact[n - k];
-	answ %= mod;
-	cout << answ << '\n';
+	cout << fact[n - 1] * invFact[k - 1] % mod * invFact[n - k] % mod << '\n';
 }
