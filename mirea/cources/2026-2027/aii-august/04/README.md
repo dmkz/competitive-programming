@@ -486,12 +486,9 @@ $$
 <summary><strong>C++</strong></summary>
 
 ```cpp
-int64_t powerRecursive(
-    int64_t a, int e
-) {
+int64_t powerRecursive(int64_t a, int e) {
 	if (e == 0) return 1;
-    int64_t half =
-        powerRecursive(a, e / 2);
+	int64_t half = powerRecursive(a, e / 2);
 	int64_t answ = half * half % mod;
     if (e % 2 == 1)
         answ = answ * a % mod;
@@ -946,12 +943,9 @@ main() {
     for (int i = 1; i <= maxN; i++)
         fact[i] = fact[i - 1] * i % mod;
     // Один обратный факториал восстанавливает все остальные движением вниз.
-    invFact[maxN] = power(
-        fact[maxN], mod - 2
-    );
+    invFact[maxN] = power(fact[maxN], mod - 2);
     for (int i = maxN; i >= 1; i--) {
-        invFact[i - 1] =
-            invFact[i] * i % mod;
+        invFact[i - 1] = invFact[i] * i % mod;
     }
     // Для каждого запроса подставляем три предподсчитанных значения в формулу сочетания.
     while (q --> 0) {
@@ -992,9 +986,7 @@ for i in range(1, maxN + 1):
     fact[i] = fact[i - 1] * i % mod
 # Один обратный факториал восстанавливает все остальные движением вниз.
 invFact = [1] * (maxN + 1)
-invFact[maxN] = power(
-    fact[maxN], mod - 2
-)
+invFact[maxN] = power(fact[maxN], mod - 2)
 for i in range(maxN, 0, -1):
     invFact[i - 1] = invFact[i] * i
     invFact[i - 1] %= mod
@@ -1202,13 +1194,10 @@ main() {
 	fact[0] = 1;
 	for (int i = 1; i <= maxN; i++)
 		fact[i] = fact[i - 1] * i % mod;
-	invFact[maxN] = power(
-		fact[maxN], mod - 2
-	);
+	invFact[maxN] = power(fact[maxN], mod - 2);
 	for (int i = maxN; i >= 1; i--)
 		invFact[i - 1] = invFact[i] * i % mod;
-	auto combination =
-		[&](int all, int chosen) {
+	auto combination = [&](int all, int chosen) {
 			if (chosen < 0 || chosen > all)
 				return 0LL;
 			ll answ = fact[all];
@@ -1218,15 +1207,9 @@ main() {
 			return answ;
 	};
 	// Вычитаем пути через закрытую клетку из всех маршрутов.
-	ll allWays = combination(
-		n + m - 2, n - 1
-	);
-	ll throughCell = combination(
-		r + c - 2, r - 1
-	);
-	throughCell *= combination(
-		n + m - r - c, n - r
-	);
+	ll allWays = combination(n + m - 2, n - 1);
+	ll throughCell = combination(r + c - 2, r - 1);
+	throughCell *= combination(n + m - r - c, n - r);
 	throughCell %= mod;
 	ll answ = allWays - throughCell + mod;
 	cout << answ % mod << '\n';
@@ -1255,9 +1238,7 @@ fact = [1] * (maxN + 1)
 for i in range(1, maxN + 1):
 	fact[i] = fact[i - 1] * i % mod
 invFact = [1] * (maxN + 1)
-invFact[maxN] = power(
-	fact[maxN], mod - 2
-)
+invFact[maxN] = power(fact[maxN], mod - 2)
 for i in range(maxN, 0, -1):
 	invFact[i - 1] = invFact[i] * i % mod
 def combination(allCount, chosen):
@@ -1268,15 +1249,9 @@ def combination(allCount, chosen):
 	answ *= invFact[allCount - chosen]
 	return answ % mod
 # Вычитаем пути через закрытую клетку из всех маршрутов.
-allWays = combination(
-	n + m - 2, n - 1
-)
-throughCell = combination(
-	r + c - 2, r - 1
-)
-throughCell *= combination(
-	n + m - r - c, n - r
-)
+allWays = combination(n + m - 2, n - 1)
+throughCell = combination(r + c - 2, r - 1)
+throughCell *= combination(n + m - r - c, n - r)
 print((allWays - throughCell) % mod)
 ```
 
@@ -1757,15 +1732,11 @@ main() {
 	int limit = 1 << s;
 	// intersection[mask] хранит размер пересечения множеств, выбранных маской.
 	vector<ll> intersection(limit);
-	for (int mask = 1;
-		mask < limit;
-		mask++)
+	for (int mask = 1; mask < limit; mask++)
 		cin >> intersection[mask];
 	// Нечётное число свойств даёт плюс, чётное число свойств даёт минус.
 	ll answ = 0;
-	for (int mask = 1;
-		mask < limit;
-		mask++) {
+	for (int mask = 1; mask < limit; mask++) {
 		if (__builtin_popcount(mask) % 2 == 1)
 			answ += intersection[mask];
 		else answ -= intersection[mask];
@@ -1791,8 +1762,7 @@ main() {
 s = int(input())
 limit = 1 << s
 # intersection[mask] хранит размер пересечения множеств, выбранных маской.
-values = list(map(int, input().split()))
-intersection = [0] + values
+intersection = [0] + list(map(int, input().split()))
 # Нечётное число свойств даёт плюс, чётное число свойств даёт минус.
 answ = 0
 for mask in range(1, limit):
