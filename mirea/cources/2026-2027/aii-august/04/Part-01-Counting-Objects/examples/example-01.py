@@ -10,7 +10,8 @@ for i in range(k):
 # После каждого шага частное остаётся целым и равно очередному сочетанию.
 combination = 1
 for i in range(1, k + 1):
-	combination = combination * (n - i + 1) // i
+	combination *= n - i + 1
+	combination //= i
 print(permutation)
 print(arrangement)
 print(combination)

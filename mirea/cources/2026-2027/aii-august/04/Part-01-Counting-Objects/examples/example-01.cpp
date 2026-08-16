@@ -13,7 +13,11 @@ main() {
 		arrangement *= n - i;
 	// После каждого шага частное остаётся целым и равно очередному сочетанию.
 	ll combination = 1;
-	for (int i = 1; i <= k; i++)
-		combination = combination * (n - i + 1) / i;
-	cout << permutation << '\n' << arrangement << '\n' << combination << '\n';
+	for (int i = 1; i <= k; i++) {
+		combination *= n - i + 1;
+		combination /= i;
+	}
+	cout << permutation << '\n';
+	cout << arrangement << '\n';
+	cout << combination << '\n';
 }

@@ -172,9 +172,13 @@ main() {
 		arrangement *= n - i;
 	// После каждого шага частное остаётся целым и равно очередному сочетанию.
 	ll combination = 1;
-	for (int i = 1; i <= k; i++)
-		combination = combination * (n - i + 1) / i;
-	cout << permutation << '\n' << arrangement << '\n' << combination << '\n';
+	for (int i = 1; i <= k; i++) {
+		combination *= n - i + 1;
+		combination /= i;
+	}
+	cout << permutation << '\n';
+	cout << arrangement << '\n';
+	cout << combination << '\n';
 }
 ```
 
@@ -196,7 +200,8 @@ for i in range(k):
 # После каждого шага частное остаётся целым и равно очередному сочетанию.
 combination = 1
 for i in range(1, k + 1):
-	combination = combination * (n - i + 1) // i
+	combination *= n - i + 1
+	combination //= i
 print(permutation)
 print(arrangement)
 print(combination)
