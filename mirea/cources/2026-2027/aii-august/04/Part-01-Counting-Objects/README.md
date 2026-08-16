@@ -154,6 +154,57 @@ $$
 Полная программа для небольших значений $n$ вычисляет $P_n$, $A_n^k$ и $C_n^k$: [C++](examples/example-01.cpp) и [Python 3](examples/example-01.py).
 
 <details>
+<summary><strong>C++: перестановки, размещения и сочетания</strong></summary>
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+main() {
+	int n, k; cin >> n >> k;
+	// Считаем произведение всех чисел от 1 до n.
+	ll permutation = 1;
+	for (int i = 1; i <= n; i++)
+		permutation *= i;
+	// В размещении выбираем только первые k множителей.
+	ll arrangement = 1;
+	for (int i = 0; i < k; i++)
+		arrangement *= n - i;
+	// После каждого шага частное остаётся целым и равно очередному сочетанию.
+	ll combination = 1;
+	for (int i = 1; i <= k; i++)
+		combination = combination * (n - i + 1) / i;
+	cout << permutation << '\n' << arrangement << '\n' << combination << '\n';
+}
+```
+
+</details>
+
+<details>
+<summary><strong>Python3: перестановки, размещения и сочетания</strong></summary>
+
+```python
+n, k = map(int, input().split())
+# Считаем произведение всех чисел от 1 до n.
+permutation = 1
+for i in range(1, n + 1):
+	permutation *= i
+# В размещении выбираем только первые k множителей.
+arrangement = 1
+for i in range(k):
+	arrangement *= n - i
+# После каждого шага частное остаётся целым и равно очередному сочетанию.
+combination = 1
+for i in range(1, k + 1):
+	combination = combination * (n - i + 1) // i
+print(permutation)
+print(arrangement)
+print(combination)
+```
+
+</details>
+
+<details>
 <summary><strong>Пример запуска</strong></summary>
 
 ```text
