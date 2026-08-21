@@ -1,4 +1,4 @@
-<!-- Authors: dmkz, xraygirl -->
+<!-- Authors: dmkz & xraygirl -->
 
 ## Глава 5. Степень вхождения простого числа в факториал
 
