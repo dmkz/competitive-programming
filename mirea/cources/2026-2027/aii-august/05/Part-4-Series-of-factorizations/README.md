@@ -1,4 +1,4 @@
-<!-- Authors: dmkz, xraygirl -->
+<!-- Authors: dmkz & xraygirl -->
 
 ## Глава 4. Массовая факторизация
 
