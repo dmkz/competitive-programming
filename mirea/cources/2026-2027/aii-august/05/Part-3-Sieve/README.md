@@ -1,4 +1,4 @@
-<!-- Authors: dmkz, xraygirl -->
+<!-- Authors: dmkz & xraygirl -->
 
 ## Глава 3. Решето Эратосфена и распределение простых чисел
 
