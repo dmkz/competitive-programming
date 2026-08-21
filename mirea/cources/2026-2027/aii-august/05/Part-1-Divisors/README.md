@@ -1,4 +1,4 @@
-<!-- Authors: dmkz, xraygirl -->
+<!-- Authors: dmkz & xraygirl -->
 
 # Теория чисел в олимпиадных задачах
 
