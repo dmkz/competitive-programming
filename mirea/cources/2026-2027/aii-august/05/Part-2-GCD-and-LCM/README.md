@@ -1,4 +1,4 @@
-<!-- Authors: dmkz, xraygirl -->
+<!-- Authors: dmkz & xraygirl -->
 
 ## Глава 2. Наибольший общий делитель и алгоритм Евклида
 
