@@ -13,9 +13,9 @@ fill="none" stroke="#334155" stroke-width="5" stroke-linecap="round" stroke-line
 <rect x="250" y="100" width="270" height="55" rx="9" fill="#fff1f2" stroke="#fca5a5" stroke-width="1.5"/>
 <text x="385" y="123" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#b91c1c">угол к пикам 2 и 3</text>
 <text x="385" y="144" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#b91c1c">больше</text>
-<line x1="163" y1="211" x2="205" y2="251" stroke="#2563eb" stroke-width="1.5"/>
-<rect x="175" y="247" width="190" height="46" rx="9" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
-<text x="270" y="275" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1d4ed8">угол к пику 1</text>
+<line x1="163" y1="211" x2="205" y2="151" stroke="#2563eb" stroke-width="1.5"/>
+<rect x="175" y="147" width="190" height="46" rx="9" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
+<text x="270" y="175" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1d4ed8">угол к пику 1</text>
 <g fill="#334155">
 <circle cx="35" cy="355" r="6"/>
 <circle cx="220" cy="455" r="6"/>
@@ -30,7 +30,7 @@ fill="none" stroke="#334155" stroke-width="5" stroke-linecap="round" stroke-line
 <circle cx="600" cy="430" r="17" fill="none" stroke="#dc2626" stroke-width="2.5"/>
 <g font-family="Arial, sans-serif" font-size="20" font-weight="bold">
 <text x="79" y="168" fill="#111827">пик 0</text>
-<text x="344" y="304" fill="#2563eb">пик 1</text>
+<text x="344" y="285" fill="#2563eb">пик 1</text>
 <text x="619" y="419" fill="#dc2626">пик 2</text>
 <text x="858" y="542" fill="#7c3aed">пик 3</text>
 </g>
