@@ -1,53 +1,57 @@
-<svg viewBox="0 0 1100 650" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Точка с максимальной высотой может иметь меньший угол, чем более низкая точка, закрывающая обзор">
-<defs>
-<marker id="smallBlueArrow" markerWidth="6" markerHeight="6" refX="5.5" refY="3" orient="auto" markerUnits="strokeWidth">
-<path d="M0,0 L6,3 L0,6 Z" fill="#2563eb"/>
-</marker>
-<marker id="smallRedArrow" markerWidth="6" markerHeight="6" refX="5.5" refY="3" orient="auto" markerUnits="strokeWidth">
-<path d="M0,0 L6,3 L0,6 Z" fill="#dc2626"/>
-</marker>
-</defs>
-<rect width="1100" height="650" fill="white"/>
-<text x="550" y="38" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#111827">Высота вершины и угол направления — разные критерии</text>
-<polyline points="40,260 100,100 200,350 300,215 410,420 520,310 650,510 780,440 930,570"
+<svg viewBox="0 0 1200 780" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Самая высокая вершина не обязательно задаёт максимальный угол обзора">
+<rect width="1200" height="780" fill="white"/>
+<text x="600" y="38" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#111827">Высота вершины и угол направления — разные критерии</text>
+<line x1="130" y1="110" x2="920" y2="110" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="7 7"/>
+<text x="730" y="96" font-family="Arial, sans-serif" font-size="16" fill="#64748b">горизонтальное направление</text>
+<polyline points="40,290 130,110 220,390 330,212 445,455 580,310 700,535 850,430 980,590"
 fill="none" stroke="#334155" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-<line x1="100" y1="100" x2="780" y2="440" stroke="#dc2626" stroke-width="3.5" stroke-dasharray="11 8" marker-end="url(#smallRedArrow)"/>
-<line x1="100" y1="100" x2="300" y2="215" stroke="#2563eb" stroke-width="3.5" marker-end="url(#smallBlueArrow)"/>
-<line x1="300" y1="215" x2="965" y2="215" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="7 7"/>
+<line x1="130" y1="110" x2="850" y2="430" stroke="#dc2626" stroke-width="3.5" stroke-dasharray="11 8"/>
+<line x1="130" y1="110" x2="330" y2="212" stroke="#2563eb" stroke-width="3.5"/>
+<path d="M220 110 A90 90 0 0 1 212.25 146" fill="none" stroke="#dc2626" stroke-width="2.5"/>
+<path d="M190 110 A60 60 0 0 1 183.48 137.31" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+<text x="212" y="164" font-family="Arial, sans-serif" font-size="17" font-weight="bold" fill="#dc2626">угол к пикам 2 и 3</text>
+<text x="145" y="145" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#2563eb">угол к пику 1</text>
 <g fill="#334155">
-<circle cx="40" cy="260" r="6"/>
-<circle cx="200" cy="350" r="6"/>
-<circle cx="410" cy="420" r="6"/>
-<circle cx="650" cy="510" r="6"/>
-<circle cx="930" cy="570" r="6"/>
+<circle cx="40" cy="290" r="6"/>
+<circle cx="220" cy="390" r="6"/>
+<circle cx="445" cy="455" r="6"/>
+<circle cx="700" cy="535" r="6"/>
+<circle cx="980" cy="590" r="6"/>
 </g>
-<circle cx="100" cy="100" r="9" fill="#111827"/>
-<circle cx="300" cy="215" r="8" fill="#2563eb"/>
-<circle cx="520" cy="310" r="8" fill="#dc2626"/>
-<circle cx="780" cy="440" r="8" fill="#7c3aed"/>
-<circle cx="520" cy="310" r="15" fill="none" stroke="#dc2626" stroke-width="2.5"/>
-<g font-family="Arial, sans-serif" font-size="19" font-weight="bold">
-<text x="61" y="82" fill="#111827">пик 0</text>
-<text x="263" y="198" fill="#2563eb">пик 1</text>
-<text x="535" y="301" fill="#dc2626">пик 2</text>
-<text x="794" y="432" fill="#7c3aed">пик 3</text>
+<circle cx="130" cy="110" r="10" fill="#111827"/>
+<circle cx="330" cy="212" r="9" fill="#2563eb"/>
+<circle cx="580" cy="310" r="9" fill="#dc2626"/>
+<circle cx="850" cy="430" r="9" fill="#7c3aed"/>
+<circle cx="580" cy="310" r="16" fill="none" stroke="#dc2626" stroke-width="2.5"/>
+<g font-family="Arial, sans-serif" font-size="20" font-weight="bold">
+<text x="86" y="89" fill="#111827">пик 0</text>
+<text x="286" y="197" fill="#2563eb">пик 1</text>
+<text x="596" y="300" fill="#dc2626">пик 2</text>
+<text x="865" y="422" fill="#7c3aed">пик 3</text>
 </g>
-<text x="60" y="126" font-family="Arial, sans-serif" font-size="16" fill="#475569">наблюдатель</text>
-<path d="M157 100 A57 57 0 0 1 149.5 128.4" fill="none" stroke="#2563eb" stroke-width="2.5"/>
-<path d="M174 100 A74 74 0 0 1 166.2 133.1" fill="none" stroke="#dc2626" stroke-width="2.5"/>
-<text x="119" y="161" font-family="Arial, sans-serif" font-size="16" fill="#2563eb">угол к пику 1</text>
-<text x="183" y="133" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#dc2626">угол к пикам 2 и 3 больше</text>
-<rect x="700" y="102" width="330" height="91" rx="10" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
-<circle cx="724" cy="130" r="6" fill="#2563eb"/>
-<text x="741" y="136" font-family="Arial, sans-serif" font-size="17" fill="#111827">пик 1 выше пиков 2 и 3</text>
-<text x="724" y="169" font-family="Arial, sans-serif" font-size="16" fill="#475569">но луч к пику 3 проходит над ним</text>
-<line x1="520" y1="290" x2="596" y2="226" stroke="#dc2626" stroke-width="1.5"/>
-<rect x="590" y="194" width="380" height="74" rx="10" fill="#fff1f2" stroke="#fca5a5" stroke-width="1.5"/>
-<text x="780" y="222" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="bold" fill="#b91c1c">Пик 2 лежит на отрезке к пику 3</text>
-<text x="780" y="249" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#111827">касание склона закрывает обзор</text>
-<line x1="300" y1="215" x2="300" y2="174" stroke="#2563eb" stroke-width="1.5"/>
-<text x="300" y="158" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#2563eb">максимальная высота</text>
-<rect x="105" y="535" width="860" height="76" rx="11" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
-<text x="535" y="565" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" fill="#111827">Если убрать пик 2, пунктирный отрезок нигде не касается склона,</text>
-<text x="535" y="591" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="bold" fill="#7c3aed">поэтому пик 3 будет виден из пика 0</text>
+<rect x="30" y="125" width="122" height="44" rx="8" fill="white" stroke="#cbd5e1" stroke-width="1.5"/>
+<text x="91" y="152" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#111827">наблюдатель</text>
+<line x1="130" y1="125" x2="130" y2="117" stroke="#64748b" stroke-width="1.5"/>
+<line x1="330" y1="192" x2="330" y2="165" stroke="#2563eb" stroke-width="1.5"/>
+<rect x="232" y="121" width="196" height="46" rx="8" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
+<text x="330" y="149" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1d4ed8">максимальная высота</text>
+<line x1="580" y1="290" x2="640" y2="238" stroke="#dc2626" stroke-width="1.5"/>
+<rect x="630" y="183" width="330" height="78" rx="10" fill="#fff1f2" stroke="#fca5a5" stroke-width="1.5"/>
+<text x="795" y="212" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="bold" fill="#b91c1c">Пик 2 лежит на отрезке к пику 3</text>
+<text x="795" y="240" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#111827">касание склона закрывает обзор</text>
+<rect x="960" y="78" width="220" height="128" rx="10" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
+<circle cx="983" cy="106" r="6" fill="#2563eb"/>
+<text x="998" y="112" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1d4ed8">Пик 1 выше</text>
+<text x="983" y="139" font-family="Arial, sans-serif" font-size="16" fill="#111827">пиков 2 и 3,</text>
+<text x="983" y="165" font-family="Arial, sans-serif" font-size="16" fill="#111827">но красный луч</text>
+<text x="983" y="190" font-family="Arial, sans-serif" font-size="16" fill="#111827">проходит над ним</text>
+<line x1="850" y1="449" x2="850" y2="492" stroke="#7c3aed" stroke-width="1.5"/>
+<rect x="750" y="490" width="360" height="76" rx="10" fill="#faf5ff" stroke="#c4b5fd" stroke-width="1.5"/>
+<text x="930" y="518" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#111827">Если убрать пик 2, отрезок к пику 3</text>
+<text x="930" y="545" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#7c3aed">не касается склона: пик 3 будет виден</text>
+<rect x="90" y="625" width="1020" height="112" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+<circle cx="125" cy="658" r="7" fill="#2563eb"/>
+<text x="147" y="664" font-family="Arial, sans-serif" font-size="17" fill="#111827">Пик 1 имеет максимальную высоту, но задаёт более низкое направление и не закрывает пик 3.</text>
+<circle cx="125" cy="706" r="7" fill="#dc2626"/>
+<text x="147" y="712" font-family="Arial, sans-serif" font-size="17" fill="#111827">Пик 2 ниже пика 1, но имеет больший угол и лежит на отрезке к пику 3, поэтому закрывает его.</text>
 </svg>
