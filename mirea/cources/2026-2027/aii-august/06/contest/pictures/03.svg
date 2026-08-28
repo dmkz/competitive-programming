@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800" role="img" aria-labelledby="title desc">
+  <title id="title">Точный чертёж окружности и зеркально симметричных синих столбцов на квадратной сетке</title>
+  <desc id="desc">Квадратная сетка с шагом 40, окружностью радиуса 6 клеток и двумя зеркальными синими областями.</desc>
+  <rect width="800" height="800" fill="#ffffff"/>
+
+  <!-- Uniform square grid: 40 px in both directions -->
+  <g stroke="#d9dde3" stroke-width="1" shape-rendering="crispEdges">
+    <path d="M40 40V760 M80 40V760 M120 40V760 M160 40V760 M200 40V760 M240 40V760 M280 40V760 M320 40V760 M360 40V760 M400 40V760 M440 40V760 M480 40V760 M520 40V760 M560 40V760 M600 40V760 M640 40V760 M680 40V760 M720 40V760 M760 40V760"/>
+    <path d="M40 40H760 M40 80H760 M40 120H760 M40 160H760 M40 200H760 M40 240H760 M40 280H760 M40 320H760 M40 360H760 M40 400H760 M40 440H760 M40 480H760 M40 520H760 M40 560H760 M40 600H760 M40 640H760 M40 680H760 M40 720H760 M40 760H760"/>
+  </g>
+
+  <!-- Eight full unit cells in each reflected column -->
+  <rect x="240" y="240" width="40" height="320" fill="#2f80ed" fill-opacity="0.38"/>
+  <rect x="520" y="240" width="40" height="320" fill="#2f80ed" fill-opacity="0.38"/>
+
+  <!-- Main axes through the central grid node -->
+  <g stroke="#111111" stroke-width="2" shape-rendering="crispEdges">
+    <path d="M40 400H760"/>
+    <path d="M400 40V760"/>
+  </g>
+
+  <!-- Circle: centre (400,400), radius 240 = six grid cells -->
+  <circle cx="400" cy="400" r="240" fill="none" stroke="#111111" stroke-width="2.4"/>
+
+  <!-- Dotted double-headed horizontal symmetry arrow -->
+  <defs>
+    <marker id="arrowhead" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto-start-reverse" markerUnits="strokeWidth">
+      <path d="M0,0 L7,3.5 L0,7 z" fill="#222222"/>
+    </marker>
+  </defs>
+  <path d="M288 400H512" fill="none" stroke="#222222" stroke-width="1.4" stroke-dasharray="4 5" marker-start="url(#arrowhead)" marker-end="url(#arrowhead)"/>
+
+  <!-- Nine black points at the far boundary of the left column -->
+  <g fill="#111111">
+    <circle cx="240" cy="560" r="4"/>
+    <circle cx="240" cy="520" r="4"/>
+    <circle cx="240" cy="480" r="4"/>
+    <circle cx="240" cy="440" r="4"/>
+    <circle cx="240" cy="400" r="4"/>
+    <circle cx="240" cy="360" r="4"/>
+    <circle cx="240" cy="320" r="4"/>
+    <circle cx="240" cy="280" r="4"/>
+    <circle cx="240" cy="240" r="4"/>
+  </g>
+
+  <!-- Exterior red points -->
+  <g fill="#e53935">
+    <circle cx="240" cy="200" r="5"/>
+    <circle cx="240" cy="600" r="5"/>
+  </g>
+
+  <!-- Only requested labels -->
+  <g font-family="Arial, Helvetica, sans-serif" font-size="20" fill="#111111">
+    <text x="240" y="218" text-anchor="middle" font-style="italic">x</text>
+    <text x="280" y="218" text-anchor="middle" font-style="italic">x+1</text>
+    <text x="520" y="218" text-anchor="middle" font-style="italic">-x-1</text>
+    <text x="560" y="218" text-anchor="middle" font-style="italic">-x</text>
+    <text x="254" y="194" fill="#d32f2f">yMax</text>
+    <text x="254" y="617" fill="#d32f2f">yMin</text>
+  </g>
+</svg>
