@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1680" height="900" viewBox="0 0 1680 900" role="img" aria-labelledby="title desc">
+  <title id="title">Классическое и параметрическое представления окружности</title>
+  <desc id="desc">Окружность с центром C с координатами 2, 2 и радиусом 5. Точка P с координатами 5, 6 лежит на окружности. Показаны составляющие радиуса 3 и 4, угол t, классическое и параметрическое уравнения.</desc>
+  <defs>
+    <marker id="arrowBlack" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#111827"/>
+    </marker>
+    <filter id="pointShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="#000000" flood-opacity="0.25"/>
+    </filter>
+    <style>
+      .grid{stroke:#d1d5db;stroke-width:1}
+      .gridMajor{stroke:#9ca3af;stroke-width:1.2}
+      .axis{stroke:#111827;stroke-width:2.2}
+      .tick{font-family:Arial,Helvetica,sans-serif;font-size:18px;fill:#4b5563}
+      .axisName{font-family:Georgia,'Times New Roman',serif;font-size:25px;font-style:italic;fill:#111827}
+      .label{font-family:Georgia,'Times New Roman',serif;font-size:25px;fill:#111827}
+      .smallLabel{font-family:Georgia,'Times New Roman',serif;font-size:22px;fill:#374151}
+      .formula{font-family:Georgia,'Times New Roman',serif;font-size:43px;fill:#111827}
+      .formulaSmall{font-family:Georgia,'Times New Roman',serif;font-size:28px;fill:#374151}
+    </style>
+  </defs>
+  <rect width="1680" height="900" fill="#ffffff"/>
+  <rect x="60" y="50" width="780" height="780" fill="#fafafa" stroke="#9ca3af" stroke-width="1.2"/>
+  <g aria-label="Координатная сетка">
+    <path class="grid" d="M60 50V830 M125 50V830 M190 50V830 M255 50V830 M385 50V830 M450 50V830 M515 50V830 M580 50V830 M645 50V830 M710 50V830 M775 50V830 M840 50V830"/>
+    <path class="grid" d="M60 50H840 M60 115H840 M60 180H840 M60 245H840 M60 310H840 M60 375H840 M60 440H840 M60 505H840 M60 635H840 M60 700H840 M60 765H840 M60 830H840"/>
+    <path class="gridMajor" d="M320 50V830 M60 570H840"/>
+  </g>
+  <g aria-label="Подписи координат">
+    <text class="tick" x="60" y="598" text-anchor="middle">−4</text>
+    <text class="tick" x="125" y="598" text-anchor="middle">−3</text>
+    <text class="tick" x="190" y="598" text-anchor="middle">−2</text>
+    <text class="tick" x="255" y="598" text-anchor="middle">−1</text>
+    <text class="tick" x="333" y="598">0</text>
+    <text class="tick" x="385" y="598" text-anchor="middle">1</text>
+    <text class="tick" x="450" y="598" text-anchor="middle">2</text>
+    <text class="tick" x="515" y="598" text-anchor="middle">3</text>
+    <text class="tick" x="580" y="598" text-anchor="middle">4</text>
+    <text class="tick" x="645" y="598" text-anchor="middle">5</text>
+    <text class="tick" x="710" y="598" text-anchor="middle">6</text>
+    <text class="tick" x="775" y="598" text-anchor="middle">7</text>
+    <text class="tick" x="840" y="598" text-anchor="middle">8</text>
+    <text class="tick" x="45" y="57" text-anchor="end">8</text>
+    <text class="tick" x="45" y="122" text-anchor="end">7</text>
+    <text class="tick" x="45" y="187" text-anchor="end">6</text>
+    <text class="tick" x="45" y="252" text-anchor="end">5</text>
+    <text class="tick" x="45" y="317" text-anchor="end">4</text>
+    <text class="tick" x="45" y="382" text-anchor="end">3</text>
+    <text class="tick" x="45" y="447" text-anchor="end">2</text>
+    <text class="tick" x="45" y="512" text-anchor="end">1</text>
+    <text class="tick" x="45" y="642" text-anchor="end">−1</text>
+    <text class="tick" x="45" y="707" text-anchor="end">−2</text>
+    <text class="tick" x="45" y="772" text-anchor="end">−3</text>
+    <text class="tick" x="45" y="837" text-anchor="end">−4</text>
+  </g>
+  <g aria-label="Оси координат">
+    <line class="axis" x1="60" y1="570" x2="865" y2="570" marker-end="url(#arrowBlack)"/>
+    <line class="axis" x1="320" y1="830" x2="320" y2="25" marker-end="url(#arrowBlack)"/>
+    <text class="axisName" x="873" y="578">x</text>
+    <text class="axisName" x="307" y="25">y</text>
+  </g>
+  <g aria-label="Окружность и радиус">
+    <circle cx="450" cy="440" r="325" fill="#2563eb" fill-opacity="0.035" stroke="#111827" stroke-width="3"/>
+    <line x1="450" y1="440" x2="645" y2="440" stroke="#6b7280" stroke-width="3" stroke-dasharray="10 8"/>
+    <line x1="645" y1="440" x2="645" y2="180" stroke="#6b7280" stroke-width="3" stroke-dasharray="10 8"/>
+    <line x1="450" y1="440" x2="645" y2="180" stroke="#1d4ed8" stroke-width="6" stroke-linecap="round"/>
+    <path d="M625 440V420H645" fill="none" stroke="#111827" stroke-width="3"/>
+    <path d="M502 440 A52 52 0 0 0 481.2 398.4" fill="none" stroke="#111827" stroke-width="2.5"/>
+    <text class="label" x="512" y="411" font-style="italic">t</text>
+    <text x="457" y="297" font-family="Georgia,'Times New Roman',serif" font-size="29" font-style="italic" fill="#1d4ed8">R = 5</text>
+    <text class="smallLabel" x="548" y="475" text-anchor="middle">
+      <tspan font-style="italic">R</tspan><tspan> cos </tspan><tspan font-style="italic">t</tspan><tspan> = 3</tspan>
+    </text>
+    <text class="smallLabel" x="652" y="370">
+      <tspan font-style="italic">R</tspan><tspan> sin </tspan><tspan font-style="italic">t</tspan><tspan> = 4</tspan>
+    </text>
+  </g>
+  <g aria-label="Точки C, H и P">
+    <circle cx="450" cy="440" r="8" fill="#111827" filter="url(#pointShadow)"/>
+    <circle cx="645" cy="440" r="8" fill="#111827" filter="url(#pointShadow)"/>
+    <circle cx="645" cy="180" r="9" fill="#111827" filter="url(#pointShadow)"/>
+    <text class="label" x="390" y="477">
+      <tspan font-style="italic">C</tspan><tspan>(2, 2)</tspan>
+    </text>
+    <text class="label" x="655" y="477">
+      <tspan font-style="italic">H</tspan><tspan>(5, 2)</tspan>
+    </text>
+    <text class="label" x="661" y="169">
+      <tspan font-style="italic">P</tspan><tspan>(5, 6)</tspan>
+    </text>
+  </g>
+  <line x1="910" y1="85" x2="910" y2="815" stroke="#e5e7eb" stroke-width="2"/>
+  <g aria-label="Уравнения окружности">
+    <text x="975" y="135" font-family="Arial,Helvetica,sans-serif" font-size="23" font-weight="700" fill="#1f2937">Параметрическое представление</text>
+    <text class="formula" x="1030" y="225">
+      <tspan font-style="italic">x</tspan><tspan>(</tspan><tspan font-style="italic">t</tspan><tspan>) = </tspan>
+      <tspan font-style="italic">x</tspan><tspan baseline-shift="sub" font-size="27">0</tspan>
+      <tspan> + </tspan><tspan font-style="italic">R</tspan><tspan> cos </tspan><tspan font-style="italic">t</tspan>
+    </text>
+    <text class="formula" x="1030" y="315">
+      <tspan font-style="italic">y</tspan><tspan>(</tspan><tspan font-style="italic">t</tspan><tspan>) = </tspan>
+      <tspan font-style="italic">y</tspan><tspan baseline-shift="sub" font-size="27">0</tspan>
+      <tspan> + </tspan><tspan font-style="italic">R</tspan><tspan> sin </tspan><tspan font-style="italic">t</tspan>
+    </text>
+    <text x="975" y="420" font-family="Arial,Helvetica,sans-serif" font-size="23" font-weight="700" fill="#1f2937">Классическое представление</text>
+    <text class="formula" x="960" y="515">
+      <tspan>(</tspan><tspan font-style="italic">x</tspan><tspan> − </tspan>
+      <tspan font-style="italic">x</tspan><tspan baseline-shift="sub" font-size="27">0</tspan><tspan>)</tspan>
+      <tspan baseline-shift="super" font-size="27">2</tspan>
+      <tspan> + (</tspan><tspan font-style="italic">y</tspan><tspan> − </tspan>
+      <tspan font-style="italic">y</tspan><tspan baseline-shift="sub" font-size="27">0</tspan><tspan>)</tspan>
+      <tspan baseline-shift="super" font-size="27">2</tspan>
+      <tspan> = </tspan><tspan font-style="italic">R</tspan>
+      <tspan baseline-shift="super" font-size="27">2</tspan>
+    </text>
+    <rect x="970" y="605" width="630" height="170" rx="16" fill="#eff6ff" stroke="#bfdbfe" stroke-width="2"/>
+    <text x="1000" y="650" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="700" fill="#1e3a8a">Для изображённой точки P(5, 6):</text>
+    <text class="formulaSmall" x="1010" y="700">
+      <tspan font-style="italic">x</tspan><tspan> − </tspan>
+      <tspan font-style="italic">x</tspan><tspan baseline-shift="sub" font-size="18">0</tspan>
+      <tspan> = 5 − 2 = 3 = </tspan><tspan font-style="italic">R</tspan>
+      <tspan> cos </tspan><tspan font-style="italic">t</tspan>
+    </text>
+    <text class="formulaSmall" x="1010" y="741">
+      <tspan font-style="italic">y</tspan><tspan> − </tspan>
+      <tspan font-style="italic">y</tspan><tspan baseline-shift="sub" font-size="18">0</tspan>
+      <tspan> = 6 − 2 = 4 = </tspan><tspan font-style="italic">R</tspan>
+      <tspan> sin </tspan><tspan font-style="italic">t</tspan>
+    </text>
+    <text x="1385" y="720" font-family="Georgia,'Times New Roman',serif" font-size="32" fill="#1e3a8a">
+      3² + 4² = 5²
+    </text>
+  </g>
+</svg>
