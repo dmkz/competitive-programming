@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1680" height="900" viewBox="0 0 1680 900" role="img" aria-labelledby="title desc">
+  <title id="title">Три положения точки относительно окружности</title>
+  <desc id="desc">Окружность с центром C в начале координат и радиусом 5. Точка P с координатами 1, 2 находится внутри, точка Q с координатами 3, 4 лежит на окружности, а точка S с координатами 6, 2 находится снаружи.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#111827"/>
+    </marker>
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="1" stdDeviation="1.4" flood-color="#000000" flood-opacity="0.28"/>
+    </filter>
+    <style>
+      .grid{stroke:#d1d5db;stroke-width:1}
+      .border{fill:#fafafa;stroke:#9ca3af;stroke-width:1.2}
+      .axis{stroke:#111827;stroke-width:2.3}
+      .tick{font-family:Arial,Helvetica,sans-serif;font-size:17px;fill:#4b5563}
+      .axisName{font-family:Georgia,'Times New Roman',serif;font-size:27px;font-style:italic;fill:#111827}
+      .pointLabel{font-family:Georgia,'Times New Roman',serif;font-size:25px}
+      .detail{font-family:Georgia,'Times New Roman',serif;font-size:22px}
+      .formula{font-family:Georgia,'Times New Roman',serif;font-size:34px;fill:#111827}
+      .formulaText{font-family:Arial,Helvetica,sans-serif;font-size:25px;fill:#111827}
+      .heading{font-family:Arial,Helvetica,sans-serif;font-size:25px;font-weight:700;fill:#1f2937}
+    </style>
+  </defs>
+  <rect width="1680" height="900" fill="#ffffff"/>
+  <rect class="border" x="80" y="50" width="980" height="770"/>
+  <g aria-label="Координатная сетка">
+    <path class="grid" d="M80 50V820 M150 50V820 M220 50V820 M290 50V820 M360 50V820 M430 50V820 M500 50V820 M570 50V820 M640 50V820 M710 50V820 M780 50V820 M850 50V820 M920 50V820 M990 50V820 M1060 50V820"/>
+    <path class="grid" d="M80 50H1060 M80 120H1060 M80 190H1060 M80 260H1060 M80 330H1060 M80 400H1060 M80 470H1060 M80 540H1060 M80 610H1060 M80 680H1060 M80 750H1060 M80 820H1060"/>
+  </g>
+  <g aria-label="Оси координат">
+    <line class="axis" x1="80" y1="470" x2="1085" y2="470" marker-end="url(#arrow)"/>
+    <line class="axis" x1="570" y1="820" x2="570" y2="28" marker-end="url(#arrow)"/>
+    <text class="axisName" x="1095" y="480">X</text>
+    <text class="axisName" x="558" y="27">Y</text>
+  </g>
+  <g aria-label="Подписи оси X">
+    <text class="tick" x="150" y="497" text-anchor="middle">−6</text>
+    <text class="tick" x="220" y="497" text-anchor="middle">−5</text>
+    <text class="tick" x="290" y="497" text-anchor="middle">−4</text>
+    <text class="tick" x="360" y="497" text-anchor="middle">−3</text>
+    <text class="tick" x="430" y="497" text-anchor="middle">−2</text>
+    <text class="tick" x="500" y="497" text-anchor="middle">−1</text>
+    <text class="tick" x="585" y="497">0</text>
+    <text class="tick" x="640" y="497" text-anchor="middle">1</text>
+    <text class="tick" x="710" y="497" text-anchor="middle">2</text>
+    <text class="tick" x="780" y="497" text-anchor="middle">3</text>
+    <text class="tick" x="850" y="497" text-anchor="middle">4</text>
+    <text class="tick" x="920" y="497" text-anchor="middle">5</text>
+    <text class="tick" x="990" y="497" text-anchor="middle">6</text>
+    <text class="tick" x="1060" y="497" text-anchor="middle">7</text>
+  </g>
+  <g aria-label="Подписи оси Y">
+    <text class="tick" x="65" y="56" text-anchor="end">6</text>
+    <text class="tick" x="65" y="126" text-anchor="end">5</text>
+    <text class="tick" x="65" y="196" text-anchor="end">4</text>
+    <text class="tick" x="65" y="266" text-anchor="end">3</text>
+    <text class="tick" x="65" y="336" text-anchor="end">2</text>
+    <text class="tick" x="65" y="406" text-anchor="end">1</text>
+    <text class="tick" x="65" y="546" text-anchor="end">−1</text>
+    <text class="tick" x="65" y="616" text-anchor="end">−2</text>
+    <text class="tick" x="65" y="686" text-anchor="end">−3</text>
+    <text class="tick" x="65" y="756" text-anchor="end">−4</text>
+    <text class="tick" x="65" y="826" text-anchor="end">−5</text>
+  </g>
+  <g aria-label="Окружность с центром в начале координат и радиусом 5">
+    <circle cx="570" cy="470" r="350" fill="#3b82f6" fill-opacity="0.09" stroke="#1d4ed8" stroke-width="3"/>
+    <line x1="570" y1="470" x2="920" y2="470" stroke="#1d4ed8" stroke-width="3"/>
+    <text x="735" y="452" font-family="Georgia,'Times New Roman',serif" font-size="28" font-style="italic" fill="#1d4ed8">R = 5</text>
+  </g>
+  <g aria-label="Центр окружности">
+    <circle cx="570" cy="470" r="8" fill="#111827" filter="url(#shadow)"/>
+    <text class="pointLabel" x="475" y="510" fill="#111827">
+      <tspan font-style="italic">C</tspan><tspan>(0, 0)</tspan>
+    </text>
+  </g>
+  <g aria-label="Точка P внутри окружности">
+    <circle cx="640" cy="330" r="10" fill="#16a34a" stroke="#14532d" stroke-width="1.5" filter="url(#shadow)"/>
+    <rect x="660" y="274" width="210" height="130" rx="12" fill="#ffffff" fill-opacity="0.88"/>
+    <text class="pointLabel" x="672" y="305" fill="#15803d">
+      <tspan font-style="italic">P</tspan><tspan>(1, 2)</tspan>
+    </text>
+    <text class="detail" x="672" y="341" fill="#15803d">
+      <tspan font-style="italic">D</tspan><tspan baseline-shift="super" font-size="15">2</tspan>
+      <tspan> = 5 &lt; 25</tspan>
+    </text>
+    <text x="672" y="375" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="700" fill="#15803d">внутри</text>
+  </g>
+  <g aria-label="Точка Q на окружности">
+    <circle cx="780" cy="190" r="10" fill="#2563eb" stroke="#1e3a8a" stroke-width="1.5" filter="url(#shadow)"/>
+    <rect x="798" y="138" width="232" height="132" rx="12" fill="#ffffff" fill-opacity="0.9"/>
+    <text class="pointLabel" x="812" y="171" fill="#1d4ed8">
+      <tspan font-style="italic">Q</tspan><tspan>(3, 4)</tspan>
+    </text>
+    <text class="detail" x="812" y="207" fill="#1d4ed8">
+      <tspan font-style="italic">D</tspan><tspan baseline-shift="super" font-size="15">2</tspan>
+      <tspan> = 25</tspan>
+    </text>
+    <text x="812" y="242" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="700" fill="#1d4ed8">на окружности</text>
+  </g>
+  <g aria-label="Точка S снаружи окружности">
+    <circle cx="990" cy="330" r="10" fill="#dc2626" stroke="#7f1d1d" stroke-width="1.5" filter="url(#shadow)"/>
+    <rect x="1007" y="276" width="165" height="130" rx="12" fill="#ffffff" fill-opacity="0.9"/>
+    <text class="pointLabel" x="1020" y="307" fill="#dc2626">
+      <tspan font-style="italic">S</tspan><tspan>(6, 2)</tspan>
+    </text>
+    <text class="detail" x="1020" y="343" fill="#dc2626">
+      <tspan font-style="italic">D</tspan><tspan baseline-shift="super" font-size="15">2</tspan>
+      <tspan> = 40 &gt; 25</tspan>
+    </text>
+    <text x="1020" y="378" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="700" fill="#dc2626">снаружи</text>
+  </g>
+  <line x1="1165" y1="60" x2="1165" y2="825" stroke="#e5e7eb" stroke-width="2"/>
+  <g aria-label="Правила определения положения точки">
+    <text class="heading" x="1210" y="105">Положение точки</text>
+    <text class="formula" x="1210" y="170">
+      <tspan font-style="italic">D</tspan><tspan baseline-shift="super" font-size="22">2</tspan>
+      <tspan> = (</tspan><tspan font-style="italic">x</tspan><tspan> − </tspan>
+      <tspan font-style="italic">x</tspan><tspan baseline-shift="sub" font-size="21">0</tspan><tspan>)</tspan>
+      <tspan baseline-shift="super" font-size="22">2</tspan>
+    </text>
+    <text class="formula" x="1270" y="218">
+      <tspan>+ (</tspan><tspan font-style="italic">y</tspan><tspan> − </tspan>
+      <tspan font-style="italic">y</tspan><tspan baseline-shift="sub" font-size="21">0</tspan><tspan>)</tspan>
+      <tspan baseline-shift="super" font-size="22">2</tspan>
+    </text>
+    <rect x="1200" y="275" width="420" height="280" rx="16" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+    <circle cx="1230" cy="329" r="7" fill="#16a34a"/>
+    <text class="formula" x="1255" y="342">
+      <tspan font-style="italic">D</tspan><tspan baseline-shift="super" font-size="22">2</tspan>
+      <tspan> &lt; </tspan>
+      <tspan font-style="italic">R</tspan><tspan baseline-shift="super" font-size="22">2</tspan>
+    </text>
+    <text class="formulaText" x="1380" y="339">— внутри</text>
+    <line x1="1220" y1="374" x2="1600" y2="374" stroke="#e2e8f0" stroke-width="1.5"/>
+    <circle cx="1230" cy="414" r="7" fill="#2563eb"/>
+    <text class="formula" x="1255" y="427">
+      <tspan font-style="italic">D</tspan><tspan baseline-shift="super" font-size="22">2</tspan>
+      <tspan> = </tspan>
+      <tspan font-style="italic">R</tspan><tspan baseline-shift="super" font-size="22">2</tspan>
+    </text>
+    <text class="formulaText" x="1380" y="424">— на окружности</text>
+    <line x1="1220" y1="459" x2="1600" y2="459" stroke="#e2e8f0" stroke-width="1.5"/>
+    <circle cx="1230" cy="499" r="7" fill="#dc2626"/>
+    <text class="formula" x="1255" y="512">
+      <tspan font-style="italic">D</tspan><tspan baseline-shift="super" font-size="22">2</tspan>
+      <tspan> &gt; </tspan>
+      <tspan font-style="italic">R</tspan><tspan baseline-shift="super" font-size="22">2</tspan>
+    </text>
+    <text class="formulaText" x="1380" y="509">— снаружи</text>
+    <rect x="1200" y="610" width="420" height="150" rx="16" fill="#eff6ff" stroke="#bfdbfe" stroke-width="2"/>
+    <text x="1225" y="653" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="700" fill="#1e3a8a">Для этой окружности:</text>
+    <text class="formula" x="1225" y="710" fill="#1e3a8a">
+      <tspan font-style="italic">R</tspan><tspan> = 5,  </tspan>
+      <tspan font-style="italic">R</tspan><tspan baseline-shift="super" font-size="22">2</tspan>
+      <tspan> = 25</tspan>
+    </text>
+  </g>
+</svg>
