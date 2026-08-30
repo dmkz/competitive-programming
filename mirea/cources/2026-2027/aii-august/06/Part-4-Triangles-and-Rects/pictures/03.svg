@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1680" height="900" viewBox="0 0 1680 900" role="img" aria-labelledby="title desc">
+  <title id="title">Положение точки относительно треугольника</title>
+  <desc id="desc">Треугольник с вершинами A с координатами 0, 0, B с координатами 8, 0 и C с координатами 2, 6. Точка P с координатами 3, 2 находится внутри, точка Q с координатами 4, 0 лежит на границе, точка R с координатами 7, 5 находится снаружи.</desc>
+  <defs>
+    <marker id="axisArrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#111827"/>
+    </marker>
+    <marker id="edgeArrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#111827"/>
+    </marker>
+    <filter id="shadow" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="1" stdDeviation="1.4" flood-color="#000000" flood-opacity="0.28"/>
+    </filter>
+    <style>
+      .plotBorder{fill:#fafafa;stroke:#9ca3af;stroke-width:1.2}
+      .grid{stroke:#d1d5db;stroke-width:1}
+      .axis{stroke:#111827;stroke-width:2.4}
+      .triangle{fill:#3b82f6;fill-opacity:0.1;stroke:#111827;stroke-width:3.5;stroke-linejoin:round}
+      .edgeDirection{stroke:#111827;stroke-width:3;stroke-linecap:round}
+      .guideRed{stroke:#dc2626;stroke-width:1.8;stroke-dasharray:7 7;opacity:0.55}
+      .pointBlack{fill:#111827;stroke:#ffffff;stroke-width:2}
+      .pointGreen{fill:#16a34a;stroke:#ffffff;stroke-width:2}
+      .pointBlue{fill:#2563eb;stroke:#ffffff;stroke-width:2}
+      .pointRed{fill:#dc2626;stroke:#ffffff;stroke-width:2}
+      .tick{font-family:Arial,Helvetica,sans-serif;font-size:18px;fill:#4b5563}
+      .axisName{font-family:Georgia,'Times New Roman',serif;font-size:28px;font-style:italic;fill:#111827}
+      .vertexLabel{font-family:Georgia,'Times New Roman',serif;font-size:25px;font-style:italic;fill:#111827}
+      .pointLabel{font-family:Arial,Helvetica,sans-serif;font-size:22px;font-weight:700}
+      .heading{font-family:Arial,Helvetica,sans-serif;font-size:29px;font-weight:700;fill:#111827}
+      .subheading{font-family:Arial,Helvetica,sans-serif;font-size:20px;fill:#4b5563}
+      .cardTitle{font-family:Arial,Helvetica,sans-serif;font-size:24px;font-weight:700}
+      .formula{font-family:Georgia,'Times New Roman',serif;font-size:24px;fill:#111827}
+      .result{font-family:Arial,Helvetica,sans-serif;font-size:20px;font-weight:700}
+      .note{font-family:Arial,Helvetica,sans-serif;font-size:18px;fill:#4b5563}
+    </style>
+  </defs>
+  <rect width="1680" height="900" fill="#ffffff"/>
+  <text class="heading" x="540" y="48" text-anchor="middle">Положение точки относительно треугольника</text>
+  <text class="subheading" x="540" y="79" text-anchor="middle">Знаки векторных произведений для направленных рёбер A → B → C → A</text>
+  <rect class="plotBorder" x="180" y="140" width="720" height="640"/>
+  <g aria-label="Координатная сетка">
+    <path class="grid" d="M180 140V780 M260 140V780 M340 140V780 M420 140V780 M500 140V780 M580 140V780 M660 140V780 M740 140V780 M820 140V780 M900 140V780"/>
+    <path class="grid" d="M180 140H900 M180 220H900 M180 300H900 M180 380H900 M180 460H900 M180 540H900 M180 620H900 M180 700H900 M180 780H900"/>
+  </g>
+  <g aria-label="Оси координат">
+    <line class="axis" x1="140" y1="700" x2="950" y2="700" marker-end="url(#axisArrow)"/>
+    <line class="axis" x1="180" y1="810" x2="180" y2="105" marker-end="url(#axisArrow)"/>
+    <text class="axisName" x="965" y="710">X</text>
+    <text class="axisName" x="168" y="94">Y</text>
+  </g>
+  <g aria-label="Подписи координат по оси X">
+    <text class="tick" x="180" y="812" text-anchor="middle">0</text>
+    <text class="tick" x="260" y="812" text-anchor="middle">1</text>
+    <text class="tick" x="340" y="812" text-anchor="middle">2</text>
+    <text class="tick" x="420" y="812" text-anchor="middle">3</text>
+    <text class="tick" x="500" y="812" text-anchor="middle">4</text>
+    <text class="tick" x="580" y="812" text-anchor="middle">5</text>
+    <text class="tick" x="660" y="812" text-anchor="middle">6</text>
+    <text class="tick" x="740" y="812" text-anchor="middle">7</text>
+    <text class="tick" x="820" y="812" text-anchor="middle">8</text>
+    <text class="tick" x="900" y="812" text-anchor="middle">9</text>
+  </g>
+  <g aria-label="Подписи координат по оси Y">
+    <text class="tick" x="163" y="146" text-anchor="end">7</text>
+    <text class="tick" x="163" y="226" text-anchor="end">6</text>
+    <text class="tick" x="163" y="306" text-anchor="end">5</text>
+    <text class="tick" x="163" y="386" text-anchor="end">4</text>
+    <text class="tick" x="163" y="466" text-anchor="end">3</text>
+    <text class="tick" x="163" y="546" text-anchor="end">2</text>
+    <text class="tick" x="163" y="626" text-anchor="end">1</text>
+    <text class="tick" x="163" y="786" text-anchor="end">−1</text>
+  </g>
+  <g aria-label="Треугольник ABC">
+    <path class="triangle" d="M180 700 L820 700 L340 220 Z"/>
+    <line class="edgeDirection" x1="335" y1="700" x2="445" y2="700" marker-end="url(#edgeArrow)"/>
+    <line class="edgeDirection" x1="700" y1="580" x2="620" y2="500" marker-end="url(#edgeArrow)"/>
+    <line class="edgeDirection" x1="300" y1="340" x2="265" y2="445" marker-end="url(#edgeArrow)"/>
+  </g>
+  <g aria-label="Вспомогательные проекции точки R на сетку">
+    <line class="guideRed" x1="740" y1="300" x2="740" y2="700"/>
+    <line class="guideRed" x1="180" y1="300" x2="740" y2="300"/>
+  </g>
+  <g aria-label="Вершины треугольника">
+    <circle class="pointBlack" cx="180" cy="700" r="10" filter="url(#shadow)"/>
+    <circle class="pointBlack" cx="820" cy="700" r="10" filter="url(#shadow)"/>
+    <circle class="pointBlack" cx="340" cy="220" r="10" filter="url(#shadow)"/>
+    <rect x="194" y="708" width="92" height="36" rx="8" fill="#ffffff" fill-opacity="0.92"/>
+    <text class="vertexLabel" x="204" y="735">A(0, 0)</text>
+    <rect x="756" y="708" width="119" height="36" rx="8" fill="#ffffff" fill-opacity="0.92"/>
+    <text class="vertexLabel" x="765" y="735">B(8, 0)</text>
+    <rect x="352" y="179" width="119" height="38" rx="8" fill="#ffffff" fill-opacity="0.92"/>
+    <text class="vertexLabel" x="361" y="207">C(2, 6)</text>
+  </g>
+  <g aria-label="Точка P внутри треугольника">
+    <circle class="pointGreen" cx="420" cy="540" r="11" filter="url(#shadow)"/>
+    <rect x="438" y="507" width="164" height="63" rx="10" fill="#ffffff" fill-opacity="0.94" stroke="#bbf7d0" stroke-width="1.5"/>
+    <text class="pointLabel" x="451" y="533" fill="#15803d">P(3, 2)</text>
+    <text x="451" y="558" font-family="Arial,Helvetica,sans-serif" font-size="18" fill="#15803d">внутри</text>
+  </g>
+  <g aria-label="Точка Q на границе треугольника">
+    <circle class="pointBlue" cx="500" cy="700" r="11" filter="url(#shadow)"/>
+    <rect x="518" y="643" width="185" height="47" rx="10" fill="#ffffff" fill-opacity="0.94" stroke="#bfdbfe" stroke-width="1.5"/>
+    <text class="pointLabel" x="531" y="674" fill="#1d4ed8">Q(4, 0) — граница</text>
+  </g>
+  <g aria-label="Точка R снаружи треугольника">
+    <circle class="pointRed" cx="740" cy="300" r="11" filter="url(#shadow)"/>
+    <rect x="758" y="264" width="184" height="68" rx="10" fill="#ffffff" fill-opacity="0.94" stroke="#fecaca" stroke-width="1.5"/>
+    <text class="pointLabel" x="771" y="292" fill="#dc2626">R(7, 5)</text>
+    <text x="771" y="318" font-family="Arial,Helvetica,sans-serif" font-size="18" fill="#dc2626">снаружи</text>
+  </g>
+  <line x1="1020" y1="30" x2="1020" y2="870" stroke="#d1d5db" stroke-width="2"/>
+  <g aria-label="Объяснение метода">
+    <text class="heading" x="1350" y="48" text-anchor="middle">Проверка знаков</text>
+    <text class="subheading" x="1350" y="80" text-anchor="middle">Для рёбер AB, BC и CA вычисляются три значения</text>
+    <rect x="1070" y="110" width="590" height="88" rx="14" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+    <text class="formula" x="1095" y="146">
+      <tspan font-style="italic">s</tspan><tspan baseline-shift="sub" font-size="16">1</tspan>
+      <tspan> = cross(A, B, X)</tspan>
+    </text>
+    <text class="formula" x="1095" y="181">
+      <tspan font-style="italic">s</tspan><tspan baseline-shift="sub" font-size="16">2</tspan>
+      <tspan> = cross(B, C, X),   </tspan>
+      <tspan font-style="italic">s</tspan><tspan baseline-shift="sub" font-size="16">3</tspan>
+      <tspan> = cross(C, A, X)</tspan>
+    </text>
+    <rect x="1070" y="225" width="590" height="145" rx="16" fill="#f0fdf4" stroke="#86efac" stroke-width="2"/>
+    <circle cx="1102" cy="258" r="9" fill="#16a34a"/>
+    <text class="cardTitle" x="1123" y="266" fill="#15803d">P(3, 2) — внутри</text>
+    <text class="formula" x="1100" y="309">
+      <tspan font-style="italic">s</tspan><tspan baseline-shift="sub" font-size="16">1</tspan><tspan> = 16,   </tspan>
+      <tspan font-style="italic">s</tspan><tspan baseline-shift="sub" font-size="16">2</tspan><tspan> = 18,   </tspan>
+      <tspan font-style="italic">s</tspan><tspan baseline-shift="sub" font-size="16">3</tspan><tspan> = 14</tspan>
+    </text>
+    <text class="result" x="1100" y="344" fill="#15803d">Все значения строго положительны</text>
+    <rect x="1070" y="395" width="590" height="145" rx="16" fill="#eff6ff" stroke="#93c5fd" stroke-width="2"/>
+    <circle cx="1102" cy="428" r="9" fill="#2563eb"/>
+    <text class="cardTitle" x="1123" y="436" fill="#1d4ed8">Q(4, 0) — на границе</text>
+    <text class="formula" x="1100" y="479">
+      <tspan font-style="italic">s</tspan><tspan baseline-shift="sub" font-size="16">1</tspan><tspan> = 0,   </tspan>
+      <tspan font-style="italic">s</tspan><tspan baseline-shift="sub" font-size="16">2</tspan><tspan> = 24,   </tspan>
+      <tspan font-style="italic">s</tspan><tspan baseline-shift="sub" font-size="16">3</tspan><tspan> = 24</tspan>
+    </text>
+    <text class="result" x="1100" y="514" fill="#1d4ed8">Знаки не смешиваются, но есть ноль</text>
+    <rect x="1070" y="565" width="590" height="145" rx="16" fill="#fef2f2" stroke="#fca5a5" stroke-width="2"/>
+    <circle cx="1102" cy="598" r="9" fill="#dc2626"/>
+    <text class="cardTitle" x="1123" y="606" fill="#dc2626">R(7, 5) — снаружи</text>
+    <text class="formula" x="1100" y="649">
+      <tspan font-style="italic">s</tspan><tspan baseline-shift="sub" font-size="16">1</tspan><tspan> = 40,   </tspan>
+      <tspan font-style="italic">s</tspan><tspan baseline-shift="sub" font-size="16">2</tspan><tspan> = −24,   </tspan>
+      <tspan font-style="italic">s</tspan><tspan baseline-shift="sub" font-size="16">3</tspan><tspan> = 32</tspan>
+    </text>
+    <text class="result" x="1100" y="684" fill="#dc2626">Присутствуют положительные и отрицательные знаки</text>
+    <rect x="1070" y="750" width="590" height="90" rx="14" fill="#fffbeb" stroke="#fde68a" stroke-width="2"/>
+    <text class="note" x="1095" y="785">Вершины A, B, C перечислены против часовой стрелки,</text>
+    <text class="note" x="1095" y="815">поэтому для внутренней точки все произведения положительны.</text>
+  </g>
+</svg>

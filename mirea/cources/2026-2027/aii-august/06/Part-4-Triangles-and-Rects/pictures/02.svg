@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1680" height="900" viewBox="0 0 1680 900" role="img" aria-labelledby="title desc">
+  <title id="title">Описанная и вписанная окружности треугольника</title>
+  <desc id="desc">Слева показан центр описанной окружности как пересечение серединных перпендикуляров. В центре показан центр вписанной окружности как пересечение биссектрис. Справа показана описанная окружность прямоугольного треугольника с центром в середине гипотенузы.</desc>
+  <defs>
+    <filter id="shadow" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="1" stdDeviation="1.3" flood-color="#000000" flood-opacity="0.25"/>
+    </filter>
+    <style>
+      .separator{stroke:#d1d5db;stroke-width:2}
+      .triangle{fill:#f8fafc;stroke:#111827;stroke-width:3;stroke-linejoin:round}
+      .circumcircle{fill:#2563eb;fill-opacity:0.035;stroke:#2563eb;stroke-width:3}
+      .incircle{fill:#16a34a;fill-opacity:0.06;stroke:#16a34a;stroke-width:3}
+      .radiusBlue{stroke:#2563eb;stroke-width:2.8;stroke-linecap:round}
+      .radiusGreen{stroke:#16a34a;stroke-width:2.8;stroke-linecap:round}
+      .constructionBlue{fill:none;stroke:#2563eb;stroke-width:2.2;stroke-dasharray:9 7;stroke-linecap:round}
+      .constructionGreen{fill:none;stroke:#16a34a;stroke-width:2.2;stroke-dasharray:9 7;stroke-linecap:round}
+      .point{fill:#111827;stroke:#ffffff;stroke-width:1.5}
+      .centerBlue{fill:#2563eb;stroke:#ffffff;stroke-width:1.5}
+      .centerGreen{fill:#16a34a;stroke:#ffffff;stroke-width:1.5}
+      .midpointBlue{fill:#2563eb}
+      .touchGreen{fill:#16a34a}
+      .rightBlue{fill:#ffffff;stroke:#2563eb;stroke-width:2}
+      .rightGreen{fill:#ffffff;stroke:#16a34a;stroke-width:2}
+      .heading{font-family:Arial,Helvetica,sans-serif;font-size:27px;font-weight:700;fill:#111827}
+      .subheading{font-family:Arial,Helvetica,sans-serif;font-size:18px;font-weight:600;fill:#374151}
+      .label{font-family:Georgia,'Times New Roman',serif;font-size:26px;font-style:italic;fill:#111827}
+      .centerLabelBlue{font-family:Georgia,'Times New Roman',serif;font-size:27px;font-style:italic;fill:#1d4ed8}
+      .centerLabelGreen{font-family:Georgia,'Times New Roman',serif;font-size:27px;font-style:italic;fill:#15803d}
+      .caption{font-family:Arial,Helvetica,sans-serif;font-size:20px;fill:#374151}
+      .formula{font-family:Georgia,'Times New Roman',serif;font-size:29px;fill:#111827}
+      .formulaCompact{font-family:Georgia,'Times New Roman',serif;font-size:25px;fill:#111827}
+      .note{font-family:Arial,Helvetica,sans-serif;font-size:18px;fill:#4b5563}
+    </style>
+  </defs>
+  <rect width="1680" height="900" fill="#ffffff"/>
+  <line class="separator" x1="560" y1="25" x2="560" y2="875"/>
+  <line class="separator" x1="1120" y1="25" x2="1120" y2="875"/>
+  <g aria-label="Описанная окружность">
+    <text class="heading" x="280" y="48" text-anchor="middle">Описанная окружность</text>
+    <text class="subheading" x="280" y="80" text-anchor="middle">центр — пересечение серединных перпендикуляров</text>
+    <circle class="circumcircle" cx="280" cy="340" r="205"/>
+    <path class="triangle" d="M116 463 L444 463 L280 135 Z"/>
+    <g aria-label="Радиусы описанной окружности">
+      <line class="radiusBlue" x1="280" y1="340" x2="116" y2="463"/>
+      <line class="radiusBlue" x1="280" y1="340" x2="444" y2="463"/>
+      <line class="radiusBlue" x1="280" y1="340" x2="280" y2="135"/>
+    </g>
+    <g aria-label="Серединные перпендикуляры">
+      <line class="constructionBlue" x1="280" y1="205" x2="280" y2="555"/>
+      <line class="constructionBlue" x1="110" y1="255" x2="450" y2="425"/>
+      <line class="constructionBlue" x1="110" y1="425" x2="450" y2="255"/>
+    </g>
+    <g aria-label="Середины сторон">
+      <circle class="midpointBlue" cx="280" cy="463" r="5"/>
+      <circle class="midpointBlue" cx="198" cy="299" r="5"/>
+      <circle class="midpointBlue" cx="362" cy="299" r="5"/>
+    </g>
+    <g aria-label="Прямые углы между сторонами и серединными перпендикулярами">
+      <rect class="rightBlue" x="271" y="454" width="18" height="18"/>
+      <rect class="rightBlue" x="189" y="290" width="18" height="18" transform="rotate(-63.435 198 299)"/>
+      <rect class="rightBlue" x="353" y="290" width="18" height="18" transform="rotate(63.435 362 299)"/>
+    </g>
+    <g aria-label="Вершины и центр описанной окружности">
+      <circle class="point" cx="116" cy="463" r="8" filter="url(#shadow)"/>
+      <circle class="point" cx="444" cy="463" r="8" filter="url(#shadow)"/>
+      <circle class="point" cx="280" cy="135" r="8" filter="url(#shadow)"/>
+      <circle class="centerBlue" cx="280" cy="340" r="9" filter="url(#shadow)"/>
+      <text class="label" x="84" y="495">A</text>
+      <text class="label" x="456" y="495">B</text>
+      <text class="label" x="291" y="129">C</text>
+      <text class="centerLabelBlue" x="295" y="332">O</text>
+    </g>
+    <rect x="75" y="590" width="410" height="105" rx="14" fill="#eff6ff" stroke="#bfdbfe" stroke-width="2"/>
+    <text class="caption" x="280" y="625" text-anchor="middle">O равноудалён от всех вершин</text>
+    <text class="formula" x="280" y="674" text-anchor="middle">
+      <tspan font-style="italic">OA</tspan><tspan> = </tspan>
+      <tspan font-style="italic">OB</tspan><tspan> = </tspan>
+      <tspan font-style="italic">OC</tspan><tspan> = </tspan>
+      <tspan font-style="italic">R</tspan>
+    </text>
+    <text class="formula" x="280" y="765" text-anchor="middle">
+      <tspan font-style="italic">R</tspan><tspan> = </tspan>
+      <tspan font-style="italic">abc</tspan><tspan> / 4</tspan><tspan font-style="italic">S</tspan>
+    </text>
+    <text class="note" x="280" y="815" text-anchor="middle">Все три вершины лежат на синей окружности</text>
+  </g>
+  <g aria-label="Вписанная окружность">
+    <text class="heading" x="840" y="48" text-anchor="middle">Вписанная окружность</text>
+    <text class="subheading" x="840" y="80" text-anchor="middle">центр — пересечение биссектрис</text>
+    <path class="triangle" d="M620 500 L1020 500 L820 200 Z"/>
+    <g aria-label="Биссектрисы треугольника">
+      <line class="constructionGreen" x1="620" y1="500" x2="820" y2="392.95"/>
+      <line class="constructionGreen" x1="1020" y1="500" x2="820" y2="392.95"/>
+      <line class="constructionGreen" x1="820" y1="200" x2="820" y2="392.95"/>
+    </g>
+    <circle class="incircle" cx="820" cy="392.95" r="107.05"/>
+    <g aria-label="Радиусы к точкам касания">
+      <line class="radiusGreen" x1="820" y1="392.95" x2="730.92" y2="333.95"/>
+      <line class="radiusGreen" x1="820" y1="392.95" x2="909.08" y2="333.95"/>
+      <line class="radiusGreen" x1="820" y1="392.95" x2="820" y2="500"/>
+    </g>
+    <g aria-label="Точки касания">
+      <circle class="touchGreen" cx="730.92" cy="333.95" r="5"/>
+      <circle class="touchGreen" cx="909.08" cy="333.95" r="5"/>
+      <circle class="touchGreen" cx="820" cy="500" r="5"/>
+    </g>
+    <g aria-label="Прямые углы между радиусами и сторонами">
+      <rect class="rightGreen" x="721.92" y="324.95" width="18" height="18" transform="rotate(-56.31 730.92 333.95)"/>
+      <rect class="rightGreen" x="900.08" y="324.95" width="18" height="18" transform="rotate(56.31 909.08 333.95)"/>
+      <rect class="rightGreen" x="811" y="491" width="18" height="18"/>
+    </g>
+    <g aria-label="Вершины и центр вписанной окружности">
+      <circle class="point" cx="620" cy="500" r="8" filter="url(#shadow)"/>
+      <circle class="point" cx="1020" cy="500" r="8" filter="url(#shadow)"/>
+      <circle class="point" cx="820" cy="200" r="8" filter="url(#shadow)"/>
+      <circle class="centerGreen" cx="820" cy="392.95" r="9" filter="url(#shadow)"/>
+      <text class="label" x="588" y="532">A</text>
+      <text class="label" x="1032" y="532">B</text>
+      <text class="label" x="831" y="194">C</text>
+      <text class="centerLabelGreen" x="836" y="387">I</text>
+      <text class="centerLabelGreen" x="775" y="380">r</text>
+    </g>
+    <rect x="585" y="590" width="510" height="105" rx="14" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="2"/>
+    <text class="caption" x="840" y="625" text-anchor="middle">I равноудалён от всех трёх сторон</text>
+    <text class="formulaCompact" x="840" y="674" text-anchor="middle">
+      <tspan font-style="italic">d</tspan><tspan>(</tspan><tspan font-style="italic">I, AB</tspan><tspan>) = </tspan>
+      <tspan font-style="italic">d</tspan><tspan>(</tspan><tspan font-style="italic">I, BC</tspan><tspan>) = </tspan>
+      <tspan font-style="italic">d</tspan><tspan>(</tspan><tspan font-style="italic">I, CA</tspan><tspan>) = </tspan>
+      <tspan font-style="italic">r</tspan>
+    </text>
+    <text class="formula" x="840" y="765" text-anchor="middle">
+      <tspan font-style="italic">r</tspan><tspan> = </tspan>
+      <tspan font-style="italic">S</tspan><tspan> / </tspan><tspan font-style="italic">p</tspan>
+    </text>
+    <text class="note" x="840" y="815" text-anchor="middle">Радиусы к точкам касания перпендикулярны сторонам</text>
+  </g>
+  <g aria-label="Прямоугольный треугольник">
+    <text class="heading" x="1400" y="48" text-anchor="middle">Прямоугольный треугольник</text>
+    <text class="subheading" x="1400" y="80" text-anchor="middle">центр окружности — середина гипотенузы</text>
+    <circle class="circumcircle" cx="1400" cy="380" r="200"/>
+    <path class="triangle" d="M1240 500 L1560 500 L1240 260 Z"/>
+    <g aria-label="Радиусы описанной окружности">
+      <line class="radiusBlue" x1="1400" y1="380" x2="1240" y2="500"/>
+      <line class="radiusBlue" x1="1400" y1="380" x2="1560" y2="500"/>
+      <line class="radiusBlue" x1="1400" y1="380" x2="1240" y2="260"/>
+    </g>
+    <g aria-label="Прямой угол треугольника">
+      <rect class="rightBlue" x="1240" y="476" width="24" height="24"/>
+    </g>
+    <g aria-label="Вершины и центр окружности">
+      <circle class="point" cx="1240" cy="500" r="8" filter="url(#shadow)"/>
+      <circle class="point" cx="1560" cy="500" r="8" filter="url(#shadow)"/>
+      <circle class="point" cx="1240" cy="260" r="8" filter="url(#shadow)"/>
+      <circle class="centerBlue" cx="1400" cy="380" r="9" filter="url(#shadow)"/>
+      <text class="label" x="1208" y="532">A</text>
+      <text class="label" x="1572" y="532">B</text>
+      <text class="label" x="1210" y="253">C</text>
+      <text class="centerLabelBlue" x="1415" y="372">O</text>
+    </g>
+    <g transform="rotate(36.87 1485 444)">
+      <rect x="1410" y="423" width="150" height="34" rx="8" fill="#ffffff" fill-opacity="0.92"/>
+      <text x="1485" y="447" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="19" fill="#111827">гипотенуза c</text>
+    </g>
+    <rect x="1195" y="620" width="410" height="105" rx="14" fill="#eff6ff" stroke="#bfdbfe" stroke-width="2"/>
+    <text class="caption" x="1400" y="655" text-anchor="middle">O — середина гипотенузы AB</text>
+    <text class="formula" x="1400" y="704" text-anchor="middle">
+      <tspan font-style="italic">OA</tspan><tspan> = </tspan>
+      <tspan font-style="italic">OB</tspan><tspan> = </tspan>
+      <tspan font-style="italic">OC</tspan><tspan> = </tspan>
+      <tspan font-style="italic">R</tspan>
+    </text>
+    <text class="formula" x="1400" y="785" text-anchor="middle">
+      <tspan font-style="italic">R</tspan><tspan> = </tspan>
+      <tspan font-style="italic">c</tspan><tspan> / 2</tspan>
+    </text>
+    <text class="note" x="1400" y="835" text-anchor="middle">Гипотенуза является диаметром окружности</text>
+  </g>
+</svg>

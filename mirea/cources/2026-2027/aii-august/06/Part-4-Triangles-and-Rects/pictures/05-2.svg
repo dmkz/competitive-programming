@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="900" viewBox="0 0 900 900" role="img" aria-labelledby="title desc">
+  <title id="title">Невыпуклый многоугольник</title>
+  <desc id="desc">Невыпуклый пятиугольник с вершинами A 1,1, B 7,1, C 4,3, D 7,6 и E 1,6. Чёрные стрелки показывают обход A, B, C, D, E, A. В вершине C поворот отрицательный, а в остальных вершинах положительный.</desc>
+  <defs>
+    <marker id="axisArrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#111827"/>
+    </marker>
+    <marker id="edgeArrow" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#111827"/>
+    </marker>
+    <filter id="shadow" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="1" stdDeviation="1.3" flood-color="#000000" flood-opacity="0.28"/>
+    </filter>
+    <style>
+      .plot{fill:#fafafa;stroke:#9ca3af;stroke-width:1.2}
+      .grid{stroke:#d1d5db;stroke-width:1}
+      .axis{stroke:#111827;stroke-width:2.4}
+      .polygon{fill:#ef4444;fill-opacity:0.11;stroke:#111827;stroke-width:3.5;stroke-linejoin:round}
+      .direction{stroke:#111827;stroke-width:3;stroke-linecap:round}
+      .point{fill:#16a34a;stroke:#ffffff;stroke-width:2}
+      .turnPositive{fill:#f0fdf4;stroke:#16a34a;stroke-width:2.5}
+      .turnNegative{fill:#fef2f2;stroke:#dc2626;stroke-width:2.5}
+      .turnLinkPositive{stroke:#16a34a;stroke-width:2}
+      .turnLinkNegative{stroke:#dc2626;stroke-width:2}
+      .turnTextPositive{font-family:Arial,Helvetica,sans-serif;font-size:25px;font-weight:700;fill:#15803d}
+      .turnTextNegative{font-family:Arial,Helvetica,sans-serif;font-size:27px;font-weight:700;fill:#dc2626}
+      .tick{font-family:Arial,Helvetica,sans-serif;font-size:18px;fill:#4b5563}
+      .axisName{font-family:Georgia,'Times New Roman',serif;font-size:28px;font-style:italic;fill:#111827}
+      .heading{font-family:Arial,Helvetica,sans-serif;font-size:31px;font-weight:700;fill:#111827}
+      .subheading{font-family:Arial,Helvetica,sans-serif;font-size:19px;fill:#4b5563}
+      .vertex{font-family:Georgia,'Times New Roman',serif;font-size:24px;font-style:italic;fill:#111827;stroke:#ffffff;stroke-width:7;paint-order:stroke fill;stroke-linejoin:round}
+      .cardTitle{font-family:Arial,Helvetica,sans-serif;font-size:22px;font-weight:700;fill:#b91c1c}
+      .formula{font-family:Georgia,'Times New Roman',serif;font-size:23px;fill:#111827}
+      .note{font-family:Arial,Helvetica,sans-serif;font-size:18px;fill:#374151}
+    </style>
+  </defs>
+  <rect width="900" height="900" fill="#ffffff"/>
+  <text class="heading" x="450" y="45" text-anchor="middle">Невыпуклый многоугольник</text>
+  <text class="subheading" x="450" y="76" text-anchor="middle">При обходе A → B → C → D → E → A встречаются повороты разных знаков</text>
+  <rect class="plot" x="100" y="140" width="630" height="560"/>
+  <g aria-label="Координатная сетка">
+    <path class="grid" d="M100 140V700 M170 140V700 M240 140V700 M310 140V700 M380 140V700 M450 140V700 M520 140V700 M590 140V700 M660 140V700 M730 140V700"/>
+    <path class="grid" d="M100 140H730 M100 210H730 M100 280H730 M100 350H730 M100 420H730 M100 490H730 M100 560H730 M100 630H730 M100 700H730"/>
+  </g>
+  <g aria-label="Оси координат">
+    <line class="axis" x1="75" y1="700" x2="770" y2="700" marker-end="url(#axisArrow)"/>
+    <line class="axis" x1="100" y1="725" x2="100" y2="105" marker-end="url(#axisArrow)"/>
+    <text class="axisName" x="782" y="709">x</text>
+    <text class="axisName" x="88" y="95">y</text>
+  </g>
+  <g aria-label="Подписи оси X">
+    <text class="tick" x="100" y="730" text-anchor="middle">0</text>
+    <text class="tick" x="170" y="730" text-anchor="middle">1</text>
+    <text class="tick" x="240" y="730" text-anchor="middle">2</text>
+    <text class="tick" x="310" y="730" text-anchor="middle">3</text>
+    <text class="tick" x="380" y="730" text-anchor="middle">4</text>
+    <text class="tick" x="450" y="730" text-anchor="middle">5</text>
+    <text class="tick" x="520" y="730" text-anchor="middle">6</text>
+    <text class="tick" x="590" y="730" text-anchor="middle">7</text>
+    <text class="tick" x="660" y="730" text-anchor="middle">8</text>
+    <text class="tick" x="730" y="730" text-anchor="middle">9</text>
+  </g>
+  <g aria-label="Подписи оси Y">
+    <text class="tick" x="82" y="706" text-anchor="end">0</text>
+    <text class="tick" x="82" y="636" text-anchor="end">1</text>
+    <text class="tick" x="82" y="566" text-anchor="end">2</text>
+    <text class="tick" x="82" y="496" text-anchor="end">3</text>
+    <text class="tick" x="82" y="426" text-anchor="end">4</text>
+    <text class="tick" x="82" y="356" text-anchor="end">5</text>
+    <text class="tick" x="82" y="286" text-anchor="end">6</text>
+    <text class="tick" x="82" y="216" text-anchor="end">7</text>
+    <text class="tick" x="82" y="146" text-anchor="end">8</text>
+  </g>
+  <g aria-label="Невыпуклый пятиугольник ABCDE">
+    <path class="polygon" d="M170 630 L590 630 L380 490 L590 280 L170 280 Z"/>
+  </g>
+  <g aria-label="Направление обхода A B C D E A">
+    <line class="direction" x1="285" y1="630" x2="415" y2="630" marker-end="url(#edgeArrow)"/>
+    <line class="direction" x1="540" y1="596.67" x2="465" y2="546.67" marker-end="url(#edgeArrow)"/>
+    <line class="direction" x1="430" y1="440" x2="500" y2="370" marker-end="url(#edgeArrow)"/>
+    <line class="direction" x1="495" y1="280" x2="385" y2="280" marker-end="url(#edgeArrow)"/>
+    <line class="direction" x1="170" y1="375" x2="170" y2="505" marker-end="url(#edgeArrow)"/>
+  </g>
+  <g aria-label="Знаки поворотов">
+    <line class="turnLinkPositive" x1="145" y1="652" x2="163" y2="636"/>
+    <circle class="turnPositive" cx="134" cy="662" r="18"/>
+    <text class="turnTextPositive" x="134" y="671" text-anchor="middle">+</text>
+    <line class="turnLinkPositive" x1="615" y1="650" x2="596" y2="635"/>
+    <circle class="turnPositive" cx="627" cy="660" r="18"/>
+    <text class="turnTextPositive" x="627" y="669" text-anchor="middle">+</text>
+    <line class="turnLinkNegative" x1="349" y1="490" x2="370" y2="490"/>
+    <circle class="turnNegative" cx="330" cy="490" r="18"/>
+    <text class="turnTextNegative" x="330" y="499" text-anchor="middle">−</text>
+    <line class="turnLinkPositive" x1="615" y1="257" x2="596" y2="275"/>
+    <circle class="turnPositive" cx="628" cy="245" r="18"/>
+    <text class="turnTextPositive" x="628" y="254" text-anchor="middle">+</text>
+    <line class="turnLinkPositive" x1="146" y1="258" x2="163" y2="274"/>
+    <circle class="turnPositive" cx="134" cy="247" r="18"/>
+    <text class="turnTextPositive" x="134" y="256" text-anchor="middle">+</text>
+  </g>
+  <g aria-label="Вершины многоугольника">
+    <circle class="point" cx="170" cy="630" r="10" filter="url(#shadow)"/>
+    <circle class="point" cx="590" cy="630" r="10" filter="url(#shadow)"/>
+    <circle class="point" cx="380" cy="490" r="10" filter="url(#shadow)"/>
+    <circle class="point" cx="590" cy="280" r="10" filter="url(#shadow)"/>
+    <circle class="point" cx="170" cy="280" r="10" filter="url(#shadow)"/>
+    <text class="vertex" x="108" y="611">A(1, 1)</text>
+    <text class="vertex" x="606" y="612">B(7, 1)</text>
+    <text class="vertex" x="403" y="516">C(4, 3)</text>
+    <text class="vertex" x="608" y="310">D(7, 6)</text>
+    <text class="vertex" x="106" y="310">E(1, 6)</text>
+  </g>
+  <g aria-label="Результаты проверки поворотов">
+    <rect x="75" y="760" width="750" height="110" rx="16" fill="#fef2f2" stroke="#fca5a5" stroke-width="2"/>
+    <text class="cardTitle" x="450" y="795" text-anchor="middle">В вершине C знак векторного произведения меняется</text>
+    <text class="formula" x="450" y="831" text-anchor="middle">30, 12, −15, 18, 30</text>
+    <text class="note" x="450" y="858" text-anchor="middle">Есть положительные и отрицательные значения — многоугольник невыпуклый</text>
+  </g>
+</svg>

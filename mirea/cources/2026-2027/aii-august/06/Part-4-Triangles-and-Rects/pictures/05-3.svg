@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="900" viewBox="0 0 900 900" role="img" aria-labelledby="title desc">
+  <title id="title">Формула шнурка</title>
+  <desc id="desc">Четырёхугольник с вершинами P0 1,1, P1 6,1, P2 5,5 и P3 2,6. Стрелки показывают обход против часовой стрелки. Удвоенная ориентированная площадь равна 36, площадь равна 18.</desc>
+  <defs>
+    <marker id="axisArrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#111827"/>
+    </marker>
+    <marker id="edgeArrow" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#1d4ed8"/>
+    </marker>
+    <filter id="shadow" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="1" stdDeviation="1.3" flood-color="#000000" flood-opacity="0.28"/>
+    </filter>
+    <style>
+      .plot{fill:#fafafa;stroke:#9ca3af;stroke-width:1.2}
+      .grid{stroke:#d1d5db;stroke-width:1}
+      .axis{stroke:#111827;stroke-width:2.4}
+      .polygon{fill:#3b82f6;fill-opacity:0.13;stroke:#1d4ed8;stroke-width:3.5;stroke-linejoin:round}
+      .direction{fill:none;stroke:#1d4ed8;stroke-width:3.2;stroke-linecap:round}
+      .point{fill:#2563eb;stroke:#ffffff;stroke-width:2}
+      .tick{font-family:Arial,Helvetica,sans-serif;font-size:18px;fill:#4b5563}
+      .axisName{font-family:Georgia,'Times New Roman',serif;font-size:28px;font-style:italic;fill:#111827}
+      .heading{font-family:Arial,Helvetica,sans-serif;font-size:31px;font-weight:700;fill:#111827}
+      .subheading{font-family:Arial,Helvetica,sans-serif;font-size:19px;fill:#4b5563}
+      .vertex{font-family:Georgia,'Times New Roman',serif;font-size:23px;font-style:italic;fill:#111827;stroke:#ffffff;stroke-width:7;paint-order:stroke fill;stroke-linejoin:round}
+      .term{font-family:Georgia,'Times New Roman',serif;font-size:21px;font-style:italic;fill:#1e3a8a}
+      .cardTitle{font-family:Arial,Helvetica,sans-serif;font-size:22px;font-weight:700;fill:#1e3a8a}
+      .formula{font-family:Georgia,'Times New Roman',serif;font-size:25px;fill:#111827}
+      .note{font-family:Arial,Helvetica,sans-serif;font-size:18px;fill:#374151}
+    </style>
+  </defs>
+  <rect width="900" height="900" fill="#ffffff"/>
+  <text class="heading" x="450" y="44" text-anchor="middle">Формула шнурка</text>
+  <text class="subheading" x="450" y="75" text-anchor="middle">Обход P₀ → P₁ → P₂ → P₃ → P₀ выполняется против часовой стрелки</text>
+  <rect class="plot" x="120" y="130" width="576" height="576"/>
+  <g aria-label="Координатная сетка">
+    <path class="grid" d="M120 130V706 M192 130V706 M264 130V706 M336 130V706 M408 130V706 M480 130V706 M552 130V706 M624 130V706 M696 130V706"/>
+    <path class="grid" d="M120 130H696 M120 202H696 M120 274H696 M120 346H696 M120 418H696 M120 490H696 M120 562H696 M120 634H696 M120 706H696"/>
+  </g>
+  <g aria-label="Оси координат">
+    <line class="axis" x1="88" y1="706" x2="742" y2="706" marker-end="url(#axisArrow)"/>
+    <line class="axis" x1="120" y1="740" x2="120" y2="94" marker-end="url(#axisArrow)"/>
+    <text class="axisName" x="755" y="716">x</text>
+    <text class="axisName" x="107" y="85">y</text>
+  </g>
+  <g aria-label="Подписи оси X">
+    <text class="tick" x="120" y="736" text-anchor="middle">0</text>
+    <text class="tick" x="192" y="736" text-anchor="middle">1</text>
+    <text class="tick" x="264" y="736" text-anchor="middle">2</text>
+    <text class="tick" x="336" y="736" text-anchor="middle">3</text>
+    <text class="tick" x="408" y="736" text-anchor="middle">4</text>
+    <text class="tick" x="480" y="736" text-anchor="middle">5</text>
+    <text class="tick" x="552" y="736" text-anchor="middle">6</text>
+    <text class="tick" x="624" y="736" text-anchor="middle">7</text>
+    <text class="tick" x="696" y="736" text-anchor="middle">8</text>
+  </g>
+  <g aria-label="Подписи оси Y">
+    <text class="tick" x="102" y="712" text-anchor="end">0</text>
+    <text class="tick" x="102" y="640" text-anchor="end">1</text>
+    <text class="tick" x="102" y="568" text-anchor="end">2</text>
+    <text class="tick" x="102" y="496" text-anchor="end">3</text>
+    <text class="tick" x="102" y="424" text-anchor="end">4</text>
+    <text class="tick" x="102" y="352" text-anchor="end">5</text>
+    <text class="tick" x="102" y="280" text-anchor="end">6</text>
+    <text class="tick" x="102" y="208" text-anchor="end">7</text>
+    <text class="tick" x="102" y="136" text-anchor="end">8</text>
+  </g>
+  <g aria-label="Многоугольник P0 P1 P2 P3">
+    <path class="polygon" d="M192 634 L552 634 L480 346 L264 274 Z"/>
+  </g>
+  <g aria-label="Направление обхода многоугольника">
+    <line class="direction" x1="302" y1="634" x2="425" y2="634" marker-end="url(#edgeArrow)"/>
+    <line class="direction" x1="532" y1="554" x2="510" y2="466" marker-end="url(#edgeArrow)"/>
+    <line class="direction" x1="427" y1="328.33" x2="337" y2="298.33" marker-end="url(#edgeArrow)"/>
+    <line class="direction" x1="246" y1="364" x2="222" y2="484" marker-end="url(#edgeArrow)"/>
+  </g>
+  <g aria-label="Вершины многоугольника">
+    <circle class="point" cx="192" cy="634" r="10" filter="url(#shadow)"/>
+    <circle class="point" cx="552" cy="634" r="10" filter="url(#shadow)"/>
+    <circle class="point" cx="480" cy="346" r="10" filter="url(#shadow)"/>
+    <circle class="point" cx="264" cy="274" r="10" filter="url(#shadow)"/>
+    <text class="vertex" x="132" y="619">
+      <tspan>P</tspan><tspan baseline-shift="sub" font-size="16">0</tspan><tspan>(1, 1)</tspan>
+    </text>
+    <text class="vertex" x="570" y="665">
+      <tspan>P</tspan><tspan baseline-shift="sub" font-size="16">1</tspan><tspan>(6, 1)</tspan>
+    </text>
+    <text class="vertex" x="500" y="334">
+      <tspan>P</tspan><tspan baseline-shift="sub" font-size="16">2</tspan><tspan>(5, 5)</tspan>
+    </text>
+    <text class="vertex" x="205" y="247">
+      <tspan>P</tspan><tspan baseline-shift="sub" font-size="16">3</tspan><tspan>(2, 6)</tspan>
+    </text>
+  </g>
+  <g aria-label="Слагаемые формулы шнурка">
+    <g>
+      <rect x="313" y="589" width="176" height="34" rx="9" fill="#ffffff" fill-opacity="0.94" stroke="#bfdbfe" stroke-width="1.5"/>
+      <text class="term" x="401" y="613" text-anchor="middle">
+        <tspan>P</tspan><tspan baseline-shift="sub" font-size="14">0</tspan>
+        <tspan> × P</tspan><tspan baseline-shift="sub" font-size="14">1</tspan>
+        <tspan> = −5</tspan>
+      </text>
+    </g>
+    <g>
+      <rect x="548" y="464" width="174" height="34" rx="9" fill="#ffffff" fill-opacity="0.94" stroke="#bfdbfe" stroke-width="1.5"/>
+      <text class="term" x="635" y="488" text-anchor="middle">
+        <tspan>P</tspan><tspan baseline-shift="sub" font-size="14">1</tspan>
+        <tspan> × P</tspan><tspan baseline-shift="sub" font-size="14">2</tspan>
+        <tspan> = 25</tspan>
+      </text>
+    </g>
+    <g>
+      <rect x="316" y="245" width="176" height="34" rx="9" fill="#ffffff" fill-opacity="0.94" stroke="#bfdbfe" stroke-width="1.5"/>
+      <text class="term" x="404" y="269" text-anchor="middle">
+        <tspan>P</tspan><tspan baseline-shift="sub" font-size="14">2</tspan>
+        <tspan> × P</tspan><tspan baseline-shift="sub" font-size="14">3</tspan>
+        <tspan> = 20</tspan>
+      </text>
+    </g>
+    <g>
+      <rect x="120" y="438" width="173" height="34" rx="9" fill="#ffffff" fill-opacity="0.94" stroke="#bfdbfe" stroke-width="1.5"/>
+      <text class="term" x="206.5" y="462" text-anchor="middle">
+        <tspan>P</tspan><tspan baseline-shift="sub" font-size="14">3</tspan>
+        <tspan> × P</tspan><tspan baseline-shift="sub" font-size="14">0</tspan>
+        <tspan> = −4</tspan>
+      </text>
+    </g>
+  </g>
+  <g aria-label="Вычисление площади">
+    <rect x="75" y="760" width="750" height="112" rx="16" fill="#eff6ff" stroke="#93c5fd" stroke-width="2"/>
+    <text class="cardTitle" x="450" y="793" text-anchor="middle">Удвоенная ориентированная площадь</text>
+    <text class="formula" x="450" y="829" text-anchor="middle">
+      <tspan font-style="italic">S</tspan><tspan baseline-shift="sub" font-size="17">2</tspan>
+      <tspan> = −5 + 25 + 20 − 4 = 36</tspan>
+    </text>
+    <text class="formula" x="450" y="860" text-anchor="middle">
+      <tspan>2</tspan><tspan font-style="italic">S</tspan>
+      <tspan> = |36|, </tspan><tspan font-style="italic">S</tspan><tspan> = 18</tspan>
+    </text>
+  </g>
+</svg>
