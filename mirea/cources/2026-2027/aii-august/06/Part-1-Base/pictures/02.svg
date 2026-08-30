@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="820" viewBox="0 0 1400 820">
+<defs>
+<marker id="arrowBlack" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#111"/></marker>
+<marker id="arrowBlue" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#1557e8"/></marker>
+<marker id="arrowRed" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#e21b16"/></marker>
+<style>
+.axis{stroke:#111;stroke-width:3}
+.grid{stroke:#c9ced3;stroke-width:1.5}
+.tick{stroke:#111;stroke-width:3}
+.dash{stroke:#111;stroke-width:3;stroke-dasharray:9 10;stroke-linecap:round}
+.num{font:30px "Times New Roman",serif;fill:#111}
+.lbl{font:italic 36px "Times New Roman",serif;fill:#111}
+.text{font:34px "Times New Roman",serif;fill:#111}
+.blue{fill:#1557e8}
+.red{fill:#e21b16}
+</style>
+</defs>
+<rect width="1400" height="820" fill="white"/>
+<g class="grid">
+<line x1="160" y1="620" x2="160" y2="120"/><line x1="360" y1="620" x2="360" y2="120"/><line x1="560" y1="620" x2="560" y2="120"/><line x1="760" y1="620" x2="760" y2="120"/><line x1="960" y1="620" x2="960" y2="120"/><line x1="1160" y1="620" x2="1160" y2="120"/>
+<line x1="160" y1="620" x2="1160" y2="620"/><line x1="160" y1="520" x2="1160" y2="520"/><line x1="160" y1="420" x2="1160" y2="420"/><line x1="160" y1="320" x2="1160" y2="320"/><line x1="160" y1="220" x2="1160" y2="220"/><line x1="160" y1="120" x2="1160" y2="120"/>
+</g>
+<line class="axis" x1="160" y1="620" x2="1230" y2="620" marker-end="url(#arrowBlack)"/>
+<line class="axis" x1="160" y1="680" x2="160" y2="50" marker-end="url(#arrowBlack)"/>
+<g class="tick">
+<line x1="360" y1="608" x2="360" y2="632"/><line x1="560" y1="608" x2="560" y2="632"/><line x1="760" y1="608" x2="760" y2="632"/><line x1="960" y1="608" x2="960" y2="632"/><line x1="1160" y1="608" x2="1160" y2="632"/>
+<line x1="148" y1="520" x2="172" y2="520"/><line x1="148" y1="420" x2="172" y2="420"/><line x1="148" y1="320" x2="172" y2="320"/><line x1="148" y1="220" x2="172" y2="220"/><line x1="148" y1="120" x2="172" y2="120"/>
+</g>
+<text class="num" x="145" y="670">0</text>
+<text class="num" x="350" y="670">1</text><text class="num" x="550" y="670">2</text><text class="num" x="750" y="670">3</text><text class="num" x="950" y="670">4</text><text class="num" x="1150" y="670">5</text>
+<text class="num" x="115" y="530">1</text><text class="num" x="115" y="430">2</text><text class="num" x="115" y="330">3</text><text class="num" x="115" y="230">4</text><text class="num" x="115" y="130">5</text>
+<text class="lbl" x="1245" y="634">x</text><text class="lbl" x="185" y="72">y</text>
+<line x1="160" y1="620" x2="360" y2="420" stroke="#1557e8" stroke-width="5" marker-end="url(#arrowBlue)"/>
+<line x1="360" y1="420" x2="960" y2="220" stroke="#e21b16" stroke-width="5" marker-end="url(#arrowRed)"/>
+<line class="dash" x1="360" y1="420" x2="960" y2="420"/>
+<line class="dash" x1="960" y1="420" x2="960" y2="220"/>
+<circle cx="160" cy="620" r="9" fill="#111"/><circle cx="360" cy="420" r="9" fill="#111"/><circle cx="960" cy="220" r="9" fill="#111"/>
+<text class="text" x="175" y="670"><tspan font-style="italic">O</tspan>(0, 0)</text>
+<text class="text" x="365" y="370"><tspan font-style="italic">A</tspan>(1, 2)</text>
+<text class="text" x="980" y="205"><tspan font-style="italic">B</tspan>(4, 4)</text>
+<text class="text blue" x="265" y="560"><tspan font-style="italic">OA</tspan> = (1, 2)</text>
+<text class="text red" x="590" y="280"><tspan font-style="italic">AB</tspan> = (3, 2)</text>
+<text class="text" x="620" y="485">Δx = 3</text>
+<text class="text" x="985" y="335">Δy = 2</text>
+<g fill="#111" stroke="#111">
+  <text x="660" y="375" font-family="Times New Roman, serif" font-size="34">
+    |<tspan font-style="italic">AB</tspan>| =
+  </text>
+  <path d="M 748 360 L 756 370 L 766 340 L 810 340"
+        fill="none" stroke-width="2.2"
+        stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="770" y="375" font-family="Times New Roman, serif" font-size="34">13</text>
+</g>
+</svg>

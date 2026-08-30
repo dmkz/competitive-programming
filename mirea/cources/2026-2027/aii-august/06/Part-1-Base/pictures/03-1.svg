@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="520" viewBox="0 0 1400 520">
+<defs>
+<marker id="blackArrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#111"/></marker>
+<marker id="redArrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#e21b16"/></marker>
+<marker id="blueArrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#1557e8"/></marker>
+<style>
+.grid{stroke:#d4d8dc;stroke-width:1}
+.axis{stroke:#111;stroke-width:2.3}
+.vecA{stroke:#e21b16;stroke-width:4;fill:none}
+.vecB{stroke:#1557e8;stroke-width:4;fill:none}
+.title{font:bold 34px Arial,sans-serif;fill:#111;text-anchor:middle}
+.sub{font:bold 22px Arial,sans-serif;fill:#111;text-anchor:middle}
+.math{font:italic 28px "Times New Roman",serif}
+.num{font:18px Arial,sans-serif;fill:#111}
+.formula{font:bold 27px Arial,sans-serif;fill:#111;text-anchor:middle}
+</style>
+</defs>
+<rect width="1400" height="520" fill="white"/>
+<text class="title" x="700" y="48">СКАЛЯРНОЕ ПРОИЗВЕДЕНИЕ</text>
+<text class="sub" x="700" y="82">ЗНАК СКАЛЯРНОГО ПРОИЗВЕДЕНИЯ ОПРЕДЕЛЯЕТ ТИП УГЛА</text>
+<line x1="40" y1="108" x2="1360" y2="108" stroke="#888"/>
+<g transform="translate(55 145)">
+<text class="sub" x="190" y="0">ОСТРЫЙ УГОЛ</text>
+<g class="grid">
+<path d="M50 250H350M50 200H350M50 150H350M50 100H350M50 50H350M100 50V250M150 50V250M200 50V250M250 50V250M300 50V250M350 50V250"/>
+</g>
+<path class="axis" d="M50 250H375" marker-end="url(#blackArrow)"/>
+<path class="axis" d="M50 270V25" marker-end="url(#blackArrow)"/>
+<path class="vecA" d="M50 250H300" marker-end="url(#redArrow)"/>
+<path class="vecB" d="M50 250L250 100" marker-end="url(#blueArrow)"/>
+<text class="math" x="290" y="237" fill="#e21b16">a</text>
+<text class="math" x="235" y="94" fill="#1557e8">b</text>
+<text class="num" x="360" y="270">x</text>
+<text class="num" x="25" y="38">y</text>
+<text class="formula" x="190" y="315">a · b = 6 &gt; 0</text>
+</g>
+<g transform="translate(505 145)">
+<text class="sub" x="190" y="0">ПРЯМОЙ УГОЛ</text>
+<g class="grid">
+<path d="M50 250H350M50 200H350M50 150H350M50 100H350M50 50H350M100 50V250M150 50V250M200 50V250M250 50V250M300 50V250M350 50V250"/>
+</g>
+<path class="axis" d="M50 250H375" marker-end="url(#blackArrow)"/>
+<path class="axis" d="M50 270V25" marker-end="url(#blackArrow)"/>
+<path class="vecA" d="M50 250H300" marker-end="url(#redArrow)"/>
+<path class="vecB" d="M50 250V75" marker-end="url(#blueArrow)"/>
+<path d="M50 230H70V250" fill="none" stroke="#111" stroke-width="2.4"/>
+<text class="math" x="290" y="237" fill="#e21b16">a</text>
+<text class="math" x="66" y="70" fill="#1557e8">b</text>
+<text class="num" x="360" y="270">x</text>
+<text class="num" x="25" y="38">y</text>
+<text class="formula" x="190" y="315">a · b = 0</text>
+</g>
+<g transform="translate(955 145)">
+<text class="sub" x="190" y="0">ТУПОЙ УГОЛ</text>
+<g class="grid">
+<path d="M50 250H350M50 200H350M50 150H350M50 100H350M50 50H350M100 50V250M150 50V250M200 50V250M250 50V250M300 50V250M350 50V250"/>
+</g>
+<path class="axis" d="M50 250H375" marker-end="url(#blackArrow)"/>
+<path class="axis" d="M50 270V25" marker-end="url(#blackArrow)"/>
+<path class="vecA" d="M50 250H300" marker-end="url(#redArrow)"/>
+<path class="vecB" d="M50 250L-100 160" marker-end="url(#blueArrow)"/>
+<text class="math" x="290" y="237" fill="#e21b16">a</text>
+<text class="math" x="-90" y="153" fill="#1557e8">b</text>
+<text class="num" x="360" y="270">x</text>
+<text class="num" x="25" y="38">y</text>
+<text class="formula" x="190" y="315">a · b = −6 &lt; 0</text>
+</g>
+</svg>
