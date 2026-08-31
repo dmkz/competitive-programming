@@ -1,10 +1,14 @@
 #include <bits/stdc++.h>
 using namespace std;
 void solve() {
+    // читаем правую границу запроса:
     int64_t r; cin >> r;
-    std::vector<int64_t> fib={1,1};
+    // считаем и складываем в вектор числа Фибоначчи <= r:
+    // на соседних числах алгоритм Евклида делает максимум итераций
+    vector<int64_t> fib = {1, 1};
     for (int i = 2; fib[i-2] + fib[i-1] <= r; i++)
         fib.push_back(fib[i-2] + fib[i-1]);
+    // ответ: последнее и предпоследнее числа Фибоначчи:
     cout << *(fib.end()-1) << ' ' << *(fib.end()-2) << '\n';
 }
 main() {
