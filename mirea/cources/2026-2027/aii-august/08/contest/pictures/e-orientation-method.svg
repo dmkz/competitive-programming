@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="650" viewBox="0 0 1000 650">
+  <defs>
+    <marker id="blueArrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 Z" fill="#2563eb"/>
+    </marker>
+    <marker id="redArrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 Z" fill="#dc2626"/>
+    </marker>
+  </defs>
+  <rect x="2" y="2" width="996" height="646" rx="20" fill="#ffffff" stroke="#cbd5e1" stroke-width="3"/>
+  <text x="500" y="46" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#0f172a">
+    Проверка точки по ориентациям
+  </text>
+  <text x="500" y="79" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#475569">
+    При обходе A → B → C внутренняя область остаётся слева от каждой стороны
+  </text>
+  <polygon points="130,490 700,490 425,125" fill="#dbeafe" fill-opacity="0.48" stroke="none"/>
+  <line x1="130" y1="490" x2="700" y2="490" stroke="#2563eb" stroke-width="5" marker-end="url(#blueArrow)"/>
+  <line x1="700" y1="490" x2="425" y2="125" stroke="#2563eb" stroke-width="5" marker-end="url(#blueArrow)"/>
+  <line x1="425" y1="125" x2="130" y2="490" stroke="#2563eb" stroke-width="5" marker-end="url(#blueArrow)"/>
+  <circle cx="130" cy="490" r="11" fill="#0f172a"/>
+  <circle cx="700" cy="490" r="11" fill="#0f172a"/>
+  <circle cx="425" cy="125" r="11" fill="#0f172a"/>
+  <text x="101" y="522" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0f172a">A</text>
+  <text x="716" y="522" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0f172a">B</text>
+  <text x="438" y="119" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0f172a">C</text>
+  <circle cx="425" cy="365" r="12" fill="#16a34a"/>
+  <text x="444" y="360" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#15803d">P</text>
+  <rect x="290" y="430" width="250" height="39" rx="10" fill="#ffffff" stroke="#93c5fd" stroke-width="2"/>
+  <text x="415" y="456" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#1d4ed8">
+    P находится слева от AB
+  </text>
+  <rect x="500" y="285" width="250" height="39" rx="10" fill="#ffffff" stroke="#93c5fd" stroke-width="2"/>
+  <text x="625" y="311" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#1d4ed8">
+    P находится слева от BC
+  </text>
+  <rect x="175" y="285" width="250" height="39" rx="10" fill="#ffffff" stroke="#93c5fd" stroke-width="2"/>
+  <text x="300" y="311" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#1d4ed8">
+    P находится слева от CA
+  </text>
+  <circle cx="805" cy="260" r="12" fill="#dc2626"/>
+  <text x="824" y="254" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#b91c1c">Q</text>
+  <path d="M790,274 L630,350" fill="none" stroke="#dc2626" stroke-width="3" stroke-dasharray="9 7" marker-end="url(#redArrow)"/>
+  <rect x="735" y="125" width="225" height="90" rx="12" fill="#fef2f2" stroke="#fca5a5" stroke-width="2"/>
+  <text x="847" y="154" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#b91c1c">
+    <tspan x="847" dy="0">Q находится справа</tspan>
+    <tspan x="847" dy="25">от ориентированной</tspan>
+    <tspan x="847" dy="25">стороны BC</tspan>
+  </text>
+  <rect x="95" y="555" width="810" height="69" rx="14" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="500" y="584" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#166534">
+    Для внутренней точки все три векторных произведения неотрицательны
+  </text>
+  <text x="500" y="611" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#475569">
+    Для внешней точки хотя бы одно из них отрицательно
+  </text>
+</svg>
