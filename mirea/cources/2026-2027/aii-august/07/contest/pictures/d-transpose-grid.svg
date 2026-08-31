@@ -1,0 +1,151 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="660" viewBox="0 0 1200 660">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8.5" refY="5"
+            orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#475569"/>
+    </marker>
+  </defs>
+  <style>
+    text {
+      font-family: Arial, sans-serif;
+      fill: #172033;
+    }
+    .title {
+      font-size: 30px;
+      font-weight: 700;
+      text-anchor: middle;
+    }
+    .subtitle {
+      font-size: 21px;
+      font-weight: 700;
+      text-anchor: middle;
+    }
+    .cell-text {
+      font-size: 18px;
+      font-weight: 600;
+      text-anchor: middle;
+      dominant-baseline: middle;
+    }
+    .side-label {
+      font-size: 17px;
+      fill: #475569;
+      text-anchor: middle;
+    }
+    .point-label {
+      font-size: 16px;
+      font-weight: 700;
+      text-anchor: middle;
+    }
+    .formula {
+      font-size: 21px;
+      font-weight: 700;
+      text-anchor: middle;
+    }
+    .note {
+      font-size: 18px;
+      text-anchor: middle;
+      fill: #475569;
+    }
+    .grid-line {
+      stroke: #334155;
+      stroke-width: 2;
+    }
+  </style>
+  <rect width="1200" height="660" fill="#ffffff"/>
+  <text x="600" y="43" class="title">
+    Приведение таблицы к двум столбцам
+  </text>
+  <text x="320" y="102" class="subtitle">
+    Исходная таблица 2 × k
+  </text>
+  <text x="900" y="102" class="subtitle">
+    После транспонирования: k × 2
+  </text>
+  <text x="320" y="128" class="side-label">
+    строки исходной таблицы
+  </text>
+  <rect x="70" y="180" width="100" height="100" fill="#bbf7d0"/>
+  <rect x="170" y="180" width="100" height="100" fill="#dbeafe"/>
+  <rect x="270" y="180" width="100" height="100" fill="#fef3c7"/>
+  <rect x="370" y="180" width="100" height="100" fill="#ede9fe"/>
+  <rect x="470" y="180" width="100" height="100" fill="#cffafe"/>
+  <rect x="70" y="280" width="100" height="100" fill="#fee2e2"/>
+  <rect x="170" y="280" width="100" height="100" fill="#ffedd5"/>
+  <rect x="270" y="280" width="100" height="100" fill="#fce7f3"/>
+  <rect x="370" y="280" width="100" height="100" fill="#e0e7ff"/>
+  <rect x="470" y="280" width="100" height="100" fill="#fecaca"/>
+  <g class="grid-line" fill="none">
+    <rect x="70" y="180" width="500" height="200"/>
+    <line x1="170" y1="180" x2="170" y2="380"/>
+    <line x1="270" y1="180" x2="270" y2="380"/>
+    <line x1="370" y1="180" x2="370" y2="380"/>
+    <line x1="470" y1="180" x2="470" y2="380"/>
+    <line x1="70" y1="280" x2="570" y2="280"/>
+  </g>
+  <g class="cell-text">
+    <text x="120" y="230">a₀,₀</text>
+    <text x="220" y="230">a₀,₁</text>
+    <text x="320" y="230">a₀,₂</text>
+    <text x="420" y="230">a₀,₃</text>
+    <text x="520" y="230">a₀,₄</text>
+    <text x="120" y="330">a₁,₀</text>
+    <text x="220" y="330">a₁,₁</text>
+    <text x="320" y="330">a₁,₂</text>
+    <text x="420" y="330">a₁,₃</text>
+    <text x="520" y="330">a₁,₄</text>
+  </g>
+  <circle cx="91" cy="201" r="11" fill="#16a34a" stroke="#ffffff" stroke-width="3"/>
+  <circle cx="549" cy="359" r="11" fill="#dc2626" stroke="#ffffff" stroke-width="3"/>
+  <text x="120" y="410" class="point-label" fill="#15803d">старт</text>
+  <line x1="120" y1="395" x2="96" y2="211" stroke="#15803d" stroke-width="2"/>
+  <text x="520" y="410" class="point-label" fill="#b91c1c">финиш</text>
+  <line x1="520" y1="395" x2="544" y2="369" stroke="#b91c1c" stroke-width="2"/>
+  <rect x="800" y="150" width="100" height="80" fill="#bbf7d0"/>
+  <rect x="900" y="150" width="100" height="80" fill="#fee2e2"/>
+  <rect x="800" y="230" width="100" height="80" fill="#dbeafe"/>
+  <rect x="900" y="230" width="100" height="80" fill="#ffedd5"/>
+  <rect x="800" y="310" width="100" height="80" fill="#fef3c7"/>
+  <rect x="900" y="310" width="100" height="80" fill="#fce7f3"/>
+  <rect x="800" y="390" width="100" height="80" fill="#ede9fe"/>
+  <rect x="900" y="390" width="100" height="80" fill="#e0e7ff"/>
+  <rect x="800" y="470" width="100" height="80" fill="#cffafe"/>
+  <rect x="900" y="470" width="100" height="80" fill="#fecaca"/>
+  <g class="grid-line" fill="none">
+    <rect x="800" y="150" width="200" height="400"/>
+    <line x1="900" y1="150" x2="900" y2="550"/>
+    <line x1="800" y1="230" x2="1000" y2="230"/>
+    <line x1="800" y1="310" x2="1000" y2="310"/>
+    <line x1="800" y1="390" x2="1000" y2="390"/>
+    <line x1="800" y1="470" x2="1000" y2="470"/>
+  </g>
+  <g class="cell-text">
+    <text x="850" y="190">a₀,₀</text>
+    <text x="950" y="190">a₁,₀</text>
+    <text x="850" y="270">a₀,₁</text>
+    <text x="950" y="270">a₁,₁</text>
+    <text x="850" y="350">a₀,₂</text>
+    <text x="950" y="350">a₁,₂</text>
+    <text x="850" y="430">a₀,₃</text>
+    <text x="950" y="430">a₁,₃</text>
+    <text x="850" y="510">a₀,₄</text>
+    <text x="950" y="510">a₁,₄</text>
+  </g>
+  <circle cx="821" cy="171" r="11" fill="#16a34a" stroke="#ffffff" stroke-width="3"/>
+  <circle cx="979" cy="529" r="11" fill="#dc2626" stroke="#ffffff" stroke-width="3"/>
+  <text x="765" y="171" class="point-label" fill="#15803d">старт</text>
+  <text x="1045" y="535" class="point-label" fill="#b91c1c">финиш</text>
+  <line x1="788" y1="171" x2="832" y2="171" stroke="#15803d" stroke-width="2"/>
+  <line x1="1012" y1="529" x2="990" y2="529" stroke="#b91c1c" stroke-width="2"/>
+  <line x1="625" y1="310" x2="742" y2="310"
+        stroke="#475569" stroke-width="5" marker-end="url(#arrow)"/>
+  <rect x="590" y="245" width="190" height="46" rx="11"
+        fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="685" y="275" class="formula">
+    b[c][r] = a[r][c]
+  </text>
+  <rect x="110" y="584" width="980" height="54" rx="14"
+        fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="600" y="618" class="note">
+    Начальная клетка остаётся верхней левой, а конечная — нижней правой.
+  </text>
+</svg>

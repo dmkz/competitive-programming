@@ -1,0 +1,202 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <marker id="arrow-blue" markerWidth="12" markerHeight="12" refX="11" refY="6"
+            orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#2563eb"/>
+    </marker>
+    <marker id="arrow-orange" markerWidth="12" markerHeight="12" refX="11" refY="6"
+            orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#ea580c"/>
+    </marker>
+  </defs>
+  <style>
+    text {
+      font-family: Arial, sans-serif;
+      fill: #172033;
+    }
+    .title {
+      font-size: 30px;
+      font-weight: 700;
+      text-anchor: middle;
+    }
+    .section-title {
+      font-size: 22px;
+      font-weight: 700;
+      text-anchor: middle;
+    }
+    .case-title {
+      font-size: 17px;
+      font-weight: 700;
+      text-anchor: middle;
+    }
+    .state {
+      font-size: 15px;
+      font-weight: 700;
+      text-anchor: middle;
+    }
+    .row-label {
+      font-size: 16px;
+      font-weight: 700;
+      text-anchor: end;
+      dominant-baseline: middle;
+    }
+    .formula {
+      font-size: 18px;
+      text-anchor: middle;
+    }
+    .legend {
+      font-size: 19px;
+      font-weight: 700;
+      text-anchor: middle;
+    }
+    .note {
+      font-size: 17px;
+      text-anchor: middle;
+      fill: #475569;
+    }
+    .grid {
+      stroke: #334155;
+      stroke-width: 2.5;
+      fill: none;
+    }
+    .straight {
+      fill: none;
+      stroke: #2563eb;
+      stroke-width: 5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      marker-end: url(#arrow-blue);
+    }
+    .switch {
+      fill: none;
+      stroke: #ea580c;
+      stroke-width: 5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      marker-end: url(#arrow-orange);
+    }
+  </style>
+  <rect width="1200" height="800" fill="#ffffff"/>
+  <text x="600" y="44" class="title">
+    Переходы динамики при добавлении новой строки
+  </text>
+  <text x="300" y="88" class="section-title">
+    Варианты для dp[i][0]
+  </text>
+  <text x="900" y="88" class="section-title">
+    Варианты для dp[i][1]
+  </text>
+  <line x1="600" y1="75" x2="600" y2="615"
+        stroke="#cbd5e1" stroke-width="2"/>
+  <text x="165" y="123" class="case-title" fill="#1d4ed8">
+    Тот же столбец
+  </text>
+  <rect x="55" y="145" width="110" height="95" fill="#eff6ff"/>
+  <rect x="165" y="145" width="110" height="95" fill="#eff6ff"/>
+  <rect x="55" y="295" width="110" height="95" fill="#f0fdf4"/>
+  <rect x="165" y="295" width="110" height="95" fill="#f0fdf4"/>
+  <g class="grid">
+    <rect x="55" y="145" width="220" height="95"/>
+    <line x1="165" y1="145" x2="165" y2="240"/>
+    <rect x="55" y="295" width="220" height="95"/>
+    <line x1="165" y1="295" x2="165" y2="390"/>
+  </g>
+  <text x="43" y="193" class="row-label">i − 1</text>
+  <text x="43" y="343" class="row-label">i</text>
+  <text x="110" y="173" class="state">dp[i−1][0]</text>
+  <text x="220" y="173" class="state">dp[i−1][1]</text>
+  <text x="110" y="363" class="state">a[i][0]</text>
+  <text x="220" y="363" class="state">a[i][1]</text>
+  <path d="M110 205 L110 343" class="straight"/>
+  <text x="435" y="123" class="case-title" fill="#c2410c">
+    Смена столбца
+  </text>
+  <rect x="325" y="145" width="110" height="95" fill="#eff6ff"/>
+  <rect x="435" y="145" width="110" height="95" fill="#eff6ff"/>
+  <rect x="325" y="295" width="110" height="95" fill="#f0fdf4"/>
+  <rect x="435" y="295" width="110" height="95" fill="#f0fdf4"/>
+  <g class="grid">
+    <rect x="325" y="145" width="220" height="95"/>
+    <line x1="435" y1="145" x2="435" y2="240"/>
+    <rect x="325" y="295" width="220" height="95"/>
+    <line x1="435" y1="295" x2="435" y2="390"/>
+  </g>
+  <text x="313" y="193" class="row-label">i − 1</text>
+  <text x="313" y="343" class="row-label">i</text>
+  <text x="380" y="173" class="state">dp[i−1][0]</text>
+  <text x="490" y="173" class="state">dp[i−1][1]</text>
+  <text x="380" y="363" class="state">a[i][0]</text>
+  <text x="490" y="363" class="state">a[i][1]</text>
+  <path d="M490 205 L490 343 L380 343" class="switch"/>
+  <text x="765" y="123" class="case-title" fill="#1d4ed8">
+    Тот же столбец
+  </text>
+  <rect x="655" y="145" width="110" height="95" fill="#eff6ff"/>
+  <rect x="765" y="145" width="110" height="95" fill="#eff6ff"/>
+  <rect x="655" y="295" width="110" height="95" fill="#f0fdf4"/>
+  <rect x="765" y="295" width="110" height="95" fill="#f0fdf4"/>
+  <g class="grid">
+    <rect x="655" y="145" width="220" height="95"/>
+    <line x1="765" y1="145" x2="765" y2="240"/>
+    <rect x="655" y="295" width="220" height="95"/>
+    <line x1="765" y1="295" x2="765" y2="390"/>
+  </g>
+  <text x="643" y="193" class="row-label">i − 1</text>
+  <text x="643" y="343" class="row-label">i</text>
+  <text x="710" y="173" class="state">dp[i−1][0]</text>
+  <text x="820" y="173" class="state">dp[i−1][1]</text>
+  <text x="710" y="363" class="state">a[i][0]</text>
+  <text x="820" y="363" class="state">a[i][1]</text>
+  <path d="M820 205 L820 343" class="straight"/>
+  <text x="1035" y="123" class="case-title" fill="#c2410c">
+    Смена столбца
+  </text>
+  <rect x="925" y="145" width="110" height="95" fill="#eff6ff"/>
+  <rect x="1035" y="145" width="110" height="95" fill="#eff6ff"/>
+  <rect x="925" y="295" width="110" height="95" fill="#f0fdf4"/>
+  <rect x="1035" y="295" width="110" height="95" fill="#f0fdf4"/>
+  <g class="grid">
+    <rect x="925" y="145" width="220" height="95"/>
+    <line x1="1035" y1="145" x2="1035" y2="240"/>
+    <rect x="925" y="295" width="220" height="95"/>
+    <line x1="1035" y1="295" x2="1035" y2="390"/>
+  </g>
+  <text x="913" y="193" class="row-label">i − 1</text>
+  <text x="913" y="343" class="row-label">i</text>
+  <text x="980" y="173" class="state">dp[i−1][0]</text>
+  <text x="1090" y="173" class="state">dp[i−1][1]</text>
+  <text x="980" y="363" class="state">a[i][0]</text>
+  <text x="1090" y="363" class="state">a[i][1]</text>
+  <path d="M980 205 L980 343 L1090 343" class="switch"/>
+  <rect x="55" y="430" width="490" height="66" rx="13"
+        fill="#eff6ff" stroke="#60a5fa" stroke-width="2"/>
+  <text x="300" y="470" class="formula">
+    dp[i−1][0] + a[i][0]
+  </text>
+  <rect x="55" y="515" width="490" height="66" rx="13"
+        fill="#fff7ed" stroke="#fb923c" stroke-width="2"/>
+  <text x="300" y="555" class="formula">
+    dp[i−1][1] + a[i][1] + a[i][0]
+  </text>
+  <rect x="655" y="430" width="490" height="66" rx="13"
+        fill="#eff6ff" stroke="#60a5fa" stroke-width="2"/>
+  <text x="900" y="470" class="formula">
+    dp[i−1][1] + a[i][1]
+  </text>
+  <rect x="655" y="515" width="490" height="66" rx="13"
+        fill="#fff7ed" stroke="#fb923c" stroke-width="2"/>
+  <text x="900" y="555" class="formula">
+    dp[i−1][0] + a[i][0] + a[i][1]
+  </text>
+  <rect x="75" y="630" width="1050" height="135" rx="17"
+        fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="600" y="671" class="legend" fill="#1d4ed8">
+    Синяя стрелка: спуститься в том же столбце и посетить одну новую клетку.
+  </text>
+  <text x="600" y="708" class="legend" fill="#c2410c">
+    Оранжевая стрелка: войти в другую клетку строки и перейти в нужный столбец.
+  </text>
+  <text x="600" y="742" class="note">
+    Угловой переход проходит через центры обеих клеток новой строки.
+  </text>
+</svg>

@@ -1,0 +1,207 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760">
+  <defs>
+    <marker id="path-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4"
+            orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#7c3aed"/>
+    </marker>
+  </defs>
+  <style>
+    text {
+      font-family: Arial, sans-serif;
+      fill: #172033;
+    }
+    .title {
+      font-size: 30px;
+      font-weight: 700;
+      text-anchor: middle;
+    }
+    .subtitle {
+      font-size: 20px;
+      font-weight: 700;
+      text-anchor: middle;
+    }
+    .cell-label {
+      font-size: 16px;
+      fill: #64748b;
+      text-anchor: middle;
+      dominant-baseline: middle;
+    }
+    .point-label {
+      font-size: 17px;
+      font-weight: 700;
+      text-anchor: middle;
+    }
+    .cut-label {
+      font-size: 18px;
+      font-weight: 700;
+      fill: #b91c1c;
+      text-anchor: middle;
+    }
+    .box-title {
+      font-size: 21px;
+      font-weight: 700;
+      text-anchor: middle;
+    }
+    .box-text {
+      font-size: 18px;
+      text-anchor: middle;
+    }
+    .conclusion {
+      font-size: 21px;
+      font-weight: 700;
+      text-anchor: middle;
+    }
+    .grid {
+      stroke: #334155;
+      stroke-width: 2.5;
+      fill: none;
+    }
+    .graph-edge {
+      stroke: #94a3b8;
+      stroke-width: 4;
+    }
+    .path-edge {
+      stroke: #7c3aed;
+      stroke-width: 7;
+      stroke-linecap: round;
+      marker-end: url(#path-arrow);
+    }
+  </style>
+  <rect width="1200" height="760" fill="#ffffff"/>
+  <text x="600" y="44" class="title">
+    Путь пересекает каждую границу между строками ровно один раз
+  </text>
+  <text x="255" y="91" class="subtitle">Таблица из двух столбцов</text>
+  <rect x="115" y="120" width="140" height="80" fill="#ecfdf5"/>
+  <rect x="255" y="120" width="140" height="80" fill="#f8fafc"/>
+  <rect x="115" y="200" width="140" height="80" fill="#f8fafc"/>
+  <rect x="255" y="200" width="140" height="80" fill="#f8fafc"/>
+  <rect x="115" y="280" width="140" height="80" fill="#f8fafc"/>
+  <rect x="255" y="280" width="140" height="80" fill="#f8fafc"/>
+  <rect x="115" y="380" width="140" height="80" fill="#f8fafc"/>
+  <rect x="255" y="380" width="140" height="80" fill="#f8fafc"/>
+  <rect x="115" y="460" width="140" height="80" fill="#f8fafc"/>
+  <rect x="255" y="460" width="140" height="80" fill="#f8fafc"/>
+  <rect x="115" y="540" width="140" height="80" fill="#f8fafc"/>
+  <rect x="255" y="540" width="140" height="80" fill="#fee2e2"/>
+  <g class="grid">
+    <rect x="115" y="120" width="280" height="240"/>
+    <line x1="255" y1="120" x2="255" y2="360"/>
+    <line x1="115" y1="200" x2="395" y2="200"/>
+    <line x1="115" y1="280" x2="395" y2="280"/>
+    <rect x="115" y="380" width="280" height="240"/>
+    <line x1="255" y1="380" x2="255" y2="620"/>
+    <line x1="115" y1="460" x2="395" y2="460"/>
+    <line x1="115" y1="540" x2="395" y2="540"/>
+  </g>
+  <g class="cell-label">
+    <text x="140" y="145">0,0</text>
+    <text x="360" y="145">0,1</text>
+    <text x="140" y="225">1,0</text>
+    <text x="360" y="225">1,1</text>
+    <text x="140" y="305">2,0</text>
+    <text x="360" y="305">2,1</text>
+    <text x="140" y="405">3,0</text>
+    <text x="360" y="405">3,1</text>
+    <text x="140" y="485">4,0</text>
+    <text x="360" y="485">4,1</text>
+    <text x="140" y="565">5,0</text>
+    <text x="360" y="565">5,1</text>
+  </g>
+  <g class="graph-edge">
+    <line x1="185" y1="160" x2="325" y2="160"/>
+    <line x1="185" y1="240" x2="325" y2="240"/>
+    <line x1="185" y1="320" x2="325" y2="320"/>
+    <line x1="185" y1="420" x2="325" y2="420"/>
+    <line x1="185" y1="500" x2="325" y2="500"/>
+    <line x1="185" y1="580" x2="325" y2="580"/>
+    <line x1="185" y1="160" x2="185" y2="240"/>
+    <line x1="185" y1="240" x2="185" y2="320"/>
+    <line x1="185" y1="320" x2="185" y2="420"/>
+    <line x1="185" y1="420" x2="185" y2="500"/>
+    <line x1="185" y1="500" x2="185" y2="580"/>
+    <line x1="325" y1="160" x2="325" y2="240"/>
+    <line x1="325" y1="240" x2="325" y2="320"/>
+    <line x1="325" y1="320" x2="325" y2="420"/>
+    <line x1="325" y1="420" x2="325" y2="500"/>
+    <line x1="325" y1="500" x2="325" y2="580"/>
+  </g>
+  <rect x="75" y="361" width="360" height="18" fill="#ffffff"/>
+  <line x1="65" y1="370" x2="445" y2="370"
+        stroke="#dc2626" stroke-width="4" stroke-dasharray="11 8"/>
+  <circle cx="185" cy="370" r="13" fill="#fee2e2"
+          stroke="#dc2626" stroke-width="3"/>
+  <circle cx="325" cy="370" r="13" fill="#fee2e2"
+          stroke="#dc2626" stroke-width="3"/>
+  <g class="path-edge">
+    <line x1="199" y1="160" x2="309" y2="160"/>
+    <line x1="325" y1="176" x2="325" y2="224"/>
+    <line x1="325" y1="256" x2="325" y2="304"/>
+    <line x1="309" y1="320" x2="201" y2="320"/>
+    <line x1="185" y1="336" x2="185" y2="404"/>
+    <line x1="185" y1="436" x2="185" y2="484"/>
+    <line x1="185" y1="516" x2="185" y2="564"/>
+    <line x1="201" y1="580" x2="309" y2="580"/>
+  </g>
+  <g>
+    <circle cx="185" cy="160" r="12" fill="#16a34a" stroke="#ffffff" stroke-width="3"/>
+    <circle cx="325" cy="160" r="9" fill="#7c3aed" stroke="#ffffff" stroke-width="2"/>
+    <circle cx="325" cy="240" r="9" fill="#7c3aed" stroke="#ffffff" stroke-width="2"/>
+    <circle cx="325" cy="320" r="9" fill="#7c3aed" stroke="#ffffff" stroke-width="2"/>
+    <circle cx="185" cy="320" r="9" fill="#7c3aed" stroke="#ffffff" stroke-width="2"/>
+    <circle cx="185" cy="420" r="9" fill="#7c3aed" stroke="#ffffff" stroke-width="2"/>
+    <circle cx="185" cy="500" r="9" fill="#7c3aed" stroke="#ffffff" stroke-width="2"/>
+    <circle cx="185" cy="580" r="9" fill="#7c3aed" stroke="#ffffff" stroke-width="2"/>
+    <circle cx="325" cy="580" r="12" fill="#dc2626" stroke="#ffffff" stroke-width="3"/>
+  </g>
+  <text x="185" y="112" class="point-label" fill="#15803d">старт</text>
+  <text x="325" y="651" class="point-label" fill="#b91c1c">финиш</text>
+  <text x="255" y="696" class="box-text" fill="#6d28d9">
+    Пример допустимого пути
+  </text>
+  <text x="255" y="723" class="box-text" fill="#6d28d9">
+    через выбранную границу проходит один раз
+  </text>
+  <rect x="480" y="112" width="650" height="118" rx="16"
+        fill="#eff6ff" stroke="#60a5fa" stroke-width="2"/>
+  <text x="805" y="149" class="box-title" fill="#1d4ed8">
+    1. Пересечений должно быть нечётное число
+  </text>
+  <text x="805" y="183" class="box-text">
+    Старт находится выше границы, а финиш — ниже.
+  </text>
+  <text x="805" y="210" class="box-text">
+    Каждый переход через границу меняет её сторону.
+  </text>
+  <rect x="480" y="255" width="650" height="118" rx="16"
+        fill="#fff7ed" stroke="#fb923c" stroke-width="2"/>
+  <text x="805" y="292" class="box-title" fill="#c2410c">
+    2. Пересечений не может быть больше двух
+  </text>
+  <text x="805" y="326" class="box-text">
+    Между двумя соседними строками есть только два ребра.
+  </text>
+  <text x="805" y="353" class="box-text">
+    Простому пути нельзя использовать одно ребро повторно.
+  </text>
+  <rect x="480" y="398" width="650" height="118" rx="16"
+        fill="#f5f3ff" stroke="#a78bfa" stroke-width="2"/>
+  <text x="805" y="435" class="box-title" fill="#6d28d9">
+    3. Единственная возможность — одно пересечение
+  </text>
+  <text x="805" y="469" class="box-text">
+    Положительное нечётное число, не превосходящее двух,
+  </text>
+  <text x="805" y="496" class="box-text">
+    может быть только равно единице.
+  </text>
+  <rect x="480" y="555" width="650" height="108" rx="16"
+        fill="#ecfdf5" stroke="#4ade80" stroke-width="2"/>
+  <text x="805" y="594" class="conclusion" fill="#166534">
+    После перехода в следующую строку
+  </text>
+  <text x="805" y="627" class="conclusion" fill="#166534">
+    черепашка уже не возвращается назад.
+  </text>
+  <text x="255" y="351" class="cut-label">выбранная граница</text>
+</svg>
