@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="600" viewBox="0 0 1100 600">
+  <defs>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#2563eb"/>
+    </marker>
+    <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#dc2626"/>
+    </marker>
+  </defs>
+  <style>
+    text {
+      font-family: Arial, sans-serif;
+      fill: #202124;
+    }
+    .title {
+      font-size: 28px;
+      font-weight: 700;
+    }
+    .subtitle {
+      font-size: 19px;
+      fill: #4b5563;
+    }
+    .label {
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .small {
+      font-size: 17px;
+    }
+    .boxText {
+      font-size: 18px;
+      font-weight: 700;
+      text-anchor: middle;
+      dominant-baseline: middle;
+    }
+  </style>
+  <rect width="1100" height="600" fill="#ffffff"/>
+  <text x="550" y="42" text-anchor="middle" class="title">Монотонность проверки в сложной версии</text>
+  <text x="550" y="73" text-anchor="middle" class="subtitle">
+    Если сет размера n подходит, то любой больший сет тоже подходит
+  </text>
+  <rect x="80" y="125" width="440" height="94" rx="14" fill="#fecaca" stroke="#dc2626" stroke-width="3"/>
+  <rect x="520" y="125" width="500" height="94" rx="14" fill="#bbf7d0" stroke="#16a34a" stroke-width="3"/>
+  <text x="300" y="158" class="boxText">check(n) = false</text>
+  <text x="300" y="190" class="boxText">хотя бы один друг не наелся</text>
+  <text x="770" y="158" class="boxText">check(n) = true</text>
+  <text x="770" y="190" class="boxText">все трое получили достаточно</text>
+  <line x1="80" y1="275" x2="1020" y2="275" stroke="#374151" stroke-width="4"/>
+  <g stroke="#374151" stroke-width="3">
+    <line x1="150" y1="262" x2="150" y2="288"/>
+    <line x1="420" y1="262" x2="420" y2="288"/>
+    <line x1="520" y1="255" x2="520" y2="295"/>
+    <line x1="760" y1="262" x2="760" y2="288"/>
+    <line x1="950" y1="262" x2="950" y2="288"/>
+  </g>
+  <text x="150" y="319" text-anchor="middle" class="small">0</text>
+  <text x="420" y="319" text-anchor="middle" class="small">n* − 1</text>
+  <text x="520" y="319" text-anchor="middle" class="label">n*</text>
+  <text x="760" y="319" text-anchor="middle" class="small">подходящие n</text>
+  <text x="950" y="319" text-anchor="middle" class="small">10¹⁸</text>
+  <path d="M520 240 L520 102" stroke="#16a34a" stroke-width="4" marker-end="url(#arrowBlue)"/>
+  <text x="540" y="104" class="label" fill="#15803d">минимальный ответ</text>
+  <rect x="105" y="385" width="890" height="156" rx="18" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="550" y="419" text-anchor="middle" class="label">Инвариант двоичного поиска</text>
+  <circle cx="260" cy="475" r="13" fill="#ef4444"/>
+  <text x="260" y="512" text-anchor="middle" class="label">low</text>
+  <text x="260" y="535" text-anchor="middle" class="small">не подходит</text>
+  <circle cx="550" cy="475" r="13" fill="#f59e0b"/>
+  <text x="550" y="512" text-anchor="middle" class="label">mid</text>
+  <circle cx="840" cy="475" r="13" fill="#22c55e"/>
+  <text x="840" y="512" text-anchor="middle" class="label">high</text>
+  <text x="840" y="535" text-anchor="middle" class="small">подходит</text>
+  <line x1="278" y1="475" x2="530" y2="475" stroke="#dc2626" stroke-width="4" marker-end="url(#arrowRed)"/>
+  <line x1="822" y1="475" x2="570" y2="475" stroke="#2563eb" stroke-width="4" marker-end="url(#arrowBlue)"/>
+  <text x="400" y="458" text-anchor="middle" class="small" fill="#b91c1c">если mid не подходит: low = mid</text>
+  <text x="700" y="458" text-anchor="middle" class="small" fill="#1d4ed8">если mid подходит: high = mid</text>
+</svg>

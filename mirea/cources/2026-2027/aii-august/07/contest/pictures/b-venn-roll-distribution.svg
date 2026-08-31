@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="960" viewBox="0 0 1200 960">
+  <style>
+    text {
+      font-family: Arial, sans-serif;
+      fill: #172033;
+    }
+    .title {
+      font-size: 32px;
+      font-weight: 700;
+    }
+    .set-label {
+      font-size: 23px;
+      font-weight: 700;
+    }
+    .owner {
+      font-size: 21px;
+      font-weight: 700;
+      text-anchor: middle;
+    }
+    .region {
+      font-size: 17px;
+      text-anchor: middle;
+      fill: #374151;
+    }
+    .formula {
+      font-size: 22px;
+      text-anchor: middle;
+    }
+    .hint {
+      font-size: 17px;
+      text-anchor: middle;
+      fill: #4b5563;
+    }
+  </style>
+  <rect width="1200" height="960" fill="#ffffff"/>
+  <text x="600" y="48" text-anchor="middle" class="title">
+    Кому достаются номера из пересекающихся множеств
+  </text>
+  <text x="220" y="99" class="set-label" fill="#a63f16">
+    A: номера, кратные a
+  </text>
+  <text x="980" y="99" text-anchor="end" class="set-label" fill="#185aa8">
+    B: номера, кратные b
+  </text>
+  <circle cx="600" cy="555" r="235"
+          fill="#83dc8c" fill-opacity="0.72"
+          stroke="#21853a" stroke-width="5"/>
+  <circle cx="770" cy="355" r="235"
+          fill="#82aff3" fill-opacity="0.72"
+          stroke="#2464ae" stroke-width="5"/>
+  <circle cx="430" cy="355" r="235"
+          fill="#ffad80" fill-opacity="0.72"
+          stroke="#bd491c" stroke-width="5"/>
+  <line x1="375" y1="108" x2="402" y2="136"
+        stroke="#a63f16" stroke-width="3"/>
+  <line x1="825" y1="108" x2="798" y2="136"
+        stroke="#185aa8" stroke-width="3"/>
+  <g>
+    <rect x="250" y="307" width="190" height="82" rx="13"
+          fill="#ffffff" fill-opacity="0.88"
+          stroke="#bd491c" stroke-opacity="0.35"/>
+    <text x="345" y="338" class="owner">Антон</text>
+    <text x="345" y="366" class="region">номера только из A</text>
+  </g>
+  <g>
+    <rect x="760" y="307" width="190" height="82" rx="13"
+          fill="#ffffff" fill-opacity="0.88"
+          stroke="#2464ae" stroke-opacity="0.35"/>
+    <text x="855" y="338" class="owner">Борис</text>
+    <text x="855" y="366" class="region">номера только из B</text>
+  </g>
+  <g>
+    <rect x="510" y="177" width="180" height="82" rx="13"
+          fill="#ffffff" fill-opacity="0.9"
+          stroke="#9a5b42" stroke-opacity="0.45"/>
+    <text x="600" y="208" class="owner">Антон</text>
+    <text x="600" y="236" class="region">A ∩ B вне C</text>
+  </g>
+  <g>
+    <rect x="505" y="362" width="190" height="82" rx="13"
+          fill="#ffffff" fill-opacity="0.92"
+          stroke="#667085" stroke-opacity="0.45"/>
+    <text x="600" y="393" class="owner">Антон</text>
+    <text x="600" y="421" class="region">A ∩ B ∩ C</text>
+  </g>
+  <g>
+    <rect x="355" y="485" width="190" height="82" rx="13"
+          fill="#ffffff" fill-opacity="0.9"
+          stroke="#788d52" stroke-opacity="0.45"/>
+    <text x="450" y="516" class="owner">Антон</text>
+    <text x="450" y="544" class="region">(A ∩ C) \ B</text>
+  </g>
+  <g>
+    <rect x="655" y="485" width="190" height="82" rx="13"
+          fill="#ffffff" fill-opacity="0.9"
+          stroke="#477f73" stroke-opacity="0.45"/>
+    <text x="750" y="516" class="owner">Борис</text>
+    <text x="750" y="544" class="region">(B ∩ C) \ A</text>
+  </g>
+  <g>
+    <rect x="500" y="651" width="200" height="82" rx="13"
+          fill="#ffffff" fill-opacity="0.9"
+          stroke="#21853a" stroke-opacity="0.35"/>
+    <text x="600" y="682" class="owner">Вадим</text>
+    <text x="600" y="710" class="region">C \ (A ∪ B)</text>
+  </g>
+  <text x="600" y="817" text-anchor="middle" class="set-label" fill="#16732d">
+    C: номера, кратные c
+  </text>
+  <line x1="600" y1="795" x2="600" y2="780"
+        stroke="#16732d" stroke-width="3"/>
+  <rect x="70" y="850" width="1060" height="72" rx="16"
+        fill="#f3f4f6" stroke="#cbd1da" stroke-width="2"/>
+  <text x="600" y="892" class="formula">
+    |C \ (A ∪ B)| = ⌊n/c⌋ − ⌊n/(ac)⌋ − ⌊n/(bc)⌋ + ⌊n/(abc)⌋
+  </text>
+  <text x="600" y="946" class="hint">
+    Если номер подходит нескольким друзьям, ролл получает тот, кто ест раньше.
+  </text>
+</svg>
