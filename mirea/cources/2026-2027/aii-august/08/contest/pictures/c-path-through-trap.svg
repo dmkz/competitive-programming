@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="640" viewBox="0 0 1000 640">
+  <defs>
+    <pattern id="trapHatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="10" height="10" fill="#fee2e2"/>
+      <line x1="0" y1="0" x2="0" y2="10" stroke="#f87171" stroke-width="3"/>
+    </pattern>
+  </defs>
+  <rect x="2" y="2" width="996" height="636" rx="20" fill="#ffffff" stroke="#cbd5e1" stroke-width="3"/>
+  <text x="500" y="43" text-anchor="middle" font-family="Arial, sans-serif" font-size="27" font-weight="700" fill="#0f172a">
+    Любой маршрут через ловушку состоит из двух независимых частей
+  </text>
+  <text x="500" y="76" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#475569">
+    Путь до ловушки можно совместить с любым путём от неё до конечной клетки
+  </text>
+  <rect x="70" y="110" width="455" height="390" fill="#ffffff"/>
+  <rect x="265" y="240" width="65" height="65" fill="url(#trapHatch)"/>
+  <g stroke="#cbd5e1" stroke-width="2">
+    <line x1="70" y1="110" x2="70" y2="500"/>
+    <line x1="135" y1="110" x2="135" y2="500"/>
+    <line x1="200" y1="110" x2="200" y2="500"/>
+    <line x1="265" y1="110" x2="265" y2="500"/>
+    <line x1="330" y1="110" x2="330" y2="500"/>
+    <line x1="395" y1="110" x2="395" y2="500"/>
+    <line x1="460" y1="110" x2="460" y2="500"/>
+    <line x1="525" y1="110" x2="525" y2="500"/>
+    <line x1="70" y1="110" x2="525" y2="110"/>
+    <line x1="70" y1="175" x2="525" y2="175"/>
+    <line x1="70" y1="240" x2="525" y2="240"/>
+    <line x1="70" y1="305" x2="525" y2="305"/>
+    <line x1="70" y1="370" x2="525" y2="370"/>
+    <line x1="70" y1="435" x2="525" y2="435"/>
+    <line x1="70" y1="500" x2="525" y2="500"/>
+  </g>
+  <rect x="70" y="110" width="455" height="390" fill="none" stroke="#64748b" stroke-width="3"/>
+  <polyline points="102.5,142.5 167.5,142.5 167.5,207.5 232.5,207.5 232.5,272.5 297.5,272.5"
+            fill="none" stroke="#2563eb" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="297.5,272.5 362.5,272.5 362.5,337.5 427.5,337.5 427.5,402.5 492.5,402.5 492.5,467.5"
+            fill="none" stroke="#f97316" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <polygon points="280,267.5 280,277.5 291,272.5" fill="#2563eb"/>
+  <polygon points="487.5,450 497.5,450 492.5,461" fill="#f97316"/>
+  <circle cx="102.5" cy="142.5" r="11" fill="#16a34a" stroke="#ffffff" stroke-width="3"/>
+  <circle cx="297.5" cy="272.5" r="12" fill="#dc2626" stroke="#ffffff" stroke-width="3"/>
+  <circle cx="492.5" cy="467.5" r="11" fill="#7c3aed" stroke="#ffffff" stroke-width="3"/>
+  <text x="80" y="132" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#166534">S</text>
+  <text x="311" y="258" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#b91c1c">X</text>
+  <text x="506" y="490" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#6d28d9">F</text>
+  <text x="297.5" y="282" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" font-weight="700" fill="#ffffff">×</text>
+  <rect x="565" y="112" width="370" height="113" rx="14" fill="#eff6ff" stroke="#93c5fd" stroke-width="2"/>
+  <text x="750" y="143" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#1d4ed8">
+    Первая часть: S → X
+  </text>
+  <text x="750" y="178" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#334155">
+    C((r − 1) + (c − 1), r − 1)
+  </text>
+  <text x="750" y="207" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#475569">
+    выбираем позиции ходов вниз
+  </text>
+  <rect x="565" y="247" width="370" height="113" rx="14" fill="#fff7ed" stroke="#fdba74" stroke-width="2"/>
+  <text x="750" y="278" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#c2410c">
+    Вторая часть: X → F
+  </text>
+  <text x="750" y="313" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#334155">
+    C((n − r) + (m − c), n − r)
+  </text>
+  <text x="750" y="342" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#475569">
+    снова выбираем позиции ходов вниз
+  </text>
+  <rect x="565" y="390" width="370" height="110" rx="14" fill="#f0fdf4" stroke="#86efac" stroke-width="2"/>
+  <text x="750" y="421" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#166534">
+    Количество маршрутов через X
+  </text>
+  <text x="750" y="454" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#334155">
+    пути S → X × пути X → F
+  </text>
+  <text x="750" y="482" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#475569">
+    выборы двух частей независимы
+  </text>
+  <rect x="80" y="545" width="840" height="63" rx="14" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="500" y="572" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#0f172a">
+    Каждый маршрут через X однозначно разбивается в клетке X
+  </text>
+  <text x="500" y="597" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" fill="#475569">
+    и однозначно восстанавливается по выбранным левой и правой частям
+  </text>
+</svg>

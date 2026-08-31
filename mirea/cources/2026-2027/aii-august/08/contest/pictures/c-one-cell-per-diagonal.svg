@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="650" viewBox="0 0 1000 650">
+  <defs>
+    <pattern id="redHatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="10" height="10" fill="#fee2e2"/>
+      <line x1="0" y1="0" x2="0" y2="10" stroke="#fca5a5" stroke-width="3"/>
+    </pattern>
+    <pattern id="orangeHatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="10" height="10" fill="#ffedd5"/>
+      <line x1="0" y1="0" x2="0" y2="10" stroke="#fdba74" stroke-width="3"/>
+    </pattern>
+  </defs>
+  <rect x="2" y="2" width="996" height="646" rx="20" fill="#ffffff" stroke="#cbd5e1" stroke-width="3"/>
+  <text x="500" y="43" text-anchor="middle" font-family="Arial, sans-serif" font-size="27" font-weight="700" fill="#0f172a">
+    Маршрут посещает ровно одну клетку каждой диагонали
+  </text>
+  <text x="500" y="76" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#475569">
+    После каждого хода вниз или вправо сумма координат r + c увеличивается на 1
+  </text>
+  <rect x="80" y="105" width="490" height="420" fill="#ffffff"/>
+  <rect x="430" y="105" width="70" height="70" fill="url(#redHatch)"/>
+  <rect x="360" y="175" width="70" height="70" fill="url(#redHatch)"/>
+  <rect x="290" y="245" width="70" height="70" fill="url(#orangeHatch)"/>
+  <rect x="220" y="315" width="70" height="70" fill="url(#redHatch)"/>
+  <rect x="150" y="385" width="70" height="70" fill="url(#redHatch)"/>
+  <rect x="80" y="455" width="70" height="70" fill="url(#redHatch)"/>
+  <g stroke="#cbd5e1" stroke-width="2">
+    <line x1="80" y1="105" x2="80" y2="525"/>
+    <line x1="150" y1="105" x2="150" y2="525"/>
+    <line x1="220" y1="105" x2="220" y2="525"/>
+    <line x1="290" y1="105" x2="290" y2="525"/>
+    <line x1="360" y1="105" x2="360" y2="525"/>
+    <line x1="430" y1="105" x2="430" y2="525"/>
+    <line x1="500" y1="105" x2="500" y2="525"/>
+    <line x1="570" y1="105" x2="570" y2="525"/>
+    <line x1="80" y1="105" x2="570" y2="105"/>
+    <line x1="80" y1="175" x2="570" y2="175"/>
+    <line x1="80" y1="245" x2="570" y2="245"/>
+    <line x1="80" y1="315" x2="570" y2="315"/>
+    <line x1="80" y1="385" x2="570" y2="385"/>
+    <line x1="80" y1="455" x2="570" y2="455"/>
+    <line x1="80" y1="525" x2="570" y2="525"/>
+  </g>
+  <rect x="80" y="105" width="490" height="420" fill="none" stroke="#64748b" stroke-width="3"/>
+  <g font-family="Arial, sans-serif" font-size="16" fill="#475569" text-anchor="middle">
+    <text x="115" y="96">1</text>
+    <text x="185" y="96">2</text>
+    <text x="255" y="96">3</text>
+    <text x="325" y="96">4</text>
+    <text x="395" y="96">5</text>
+    <text x="465" y="96">6</text>
+    <text x="535" y="96">7</text>
+    <text x="65" y="146">1</text>
+    <text x="65" y="216">2</text>
+    <text x="65" y="286">3</text>
+    <text x="65" y="356">4</text>
+    <text x="65" y="426">5</text>
+    <text x="65" y="496">6</text>
+  </g>
+  <text x="325" y="554" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" fill="#475569">
+    Номер столбца c
+  </text>
+  <text x="25" y="315" text-anchor="middle" transform="rotate(-90 25 315)" font-family="Arial, sans-serif" font-size="17" fill="#475569">
+    Номер строки r
+  </text>
+  <g font-family="Arial, sans-serif" font-size="25" font-weight="700" text-anchor="middle">
+    <text x="465" y="148" fill="#dc2626">×</text>
+    <text x="395" y="218" fill="#dc2626">×</text>
+    <text x="325" y="288" fill="#c2410c">×</text>
+    <text x="255" y="358" fill="#dc2626">×</text>
+    <text x="185" y="428" fill="#dc2626">×</text>
+    <text x="115" y="498" fill="#dc2626">×</text>
+  </g>
+  <polyline points="115,140 185,140 185,210 255,210 255,280 325,280 395,280 395,350 465,350 465,420 535,420 535,490"
+            fill="none" stroke="#2563eb" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <polygon points="530,476 540,476 535,486" fill="#2563eb"/>
+  <circle cx="115" cy="140" r="11" fill="#16a34a" stroke="#ffffff" stroke-width="3"/>
+  <circle cx="325" cy="280" r="11" fill="#f59e0b" stroke="#ffffff" stroke-width="3"/>
+  <circle cx="535" cy="490" r="11" fill="#7c3aed" stroke="#ffffff" stroke-width="3"/>
+  <text x="91" y="128" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#166534">S</text>
+  <text x="339" y="269" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#b45309">X</text>
+  <text x="550" y="513" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#6d28d9">F</text>
+  <rect x="615" y="112" width="325" height="130" rx="14" fill="#eff6ff" stroke="#93c5fd" stroke-width="2"/>
+  <text x="777" y="145" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#1e40af">
+    <tspan x="777" dy="0">Заштрихованные клетки</tspan>
+    <tspan x="777" dy="27">лежат на одной диагонали:</tspan>
+    <tspan x="777" dy="27">для всех них r + c = 7</tspan>
+  </text>
+  <rect x="615" y="270" width="325" height="162" rx="14" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="777" y="304" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#334155">
+    <tspan x="777" dy="0">Синий маршрут посещает</tspan>
+    <tspan x="777" dy="27">только одну клетку диагонали —</tspan>
+    <tspan x="777" dy="27">оранжевую клетку X.</tspan>
+    <tspan x="777" dy="34" font-weight="700" fill="#b45309">Две ловушки одного набора</tspan>
+    <tspan x="777" dy="27" font-weight="700" fill="#b45309">он посетить не может.</tspan>
+  </text>
+  <rect x="615" y="462" width="325" height="63" rx="14" fill="#f0fdf4" stroke="#86efac" stroke-width="2"/>
+  <text x="777" y="489" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#166534">
+    <tspan x="777" dy="0">Группы маршрутов через разные</tspan>
+    <tspan x="777" dy="24">ловушки не пересекаются</tspan>
+  </text>
+  <rect x="105" y="575" width="790" height="48" rx="12" fill="#fff7ed" stroke="#fdba74" stroke-width="2"/>
+  <text x="500" y="606" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#9a3412">
+    Поэтому маршруты через ловушки можно вычитать независимо
+  </text>
+</svg>
