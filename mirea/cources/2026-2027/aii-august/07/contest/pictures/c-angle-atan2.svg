@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760">
+  <defs>
+    <marker id="arrow-blue" markerWidth="12" markerHeight="12" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#2563eb"/>
+    </marker>
+    <marker id="arrow-orange" markerWidth="12" markerHeight="12" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#ea580c"/>
+    </marker>
+  </defs>
+  <style>
+    text {
+      font-family: Arial, sans-serif;
+      fill: #172033;
+    }
+    .title {
+      font-size: 32px;
+      font-weight: 700;
+      text-anchor: middle;
+    }
+    .vector {
+      font-size: 25px;
+      font-weight: 700;
+    }
+    .angle {
+      font-size: 25px;
+      font-weight: 700;
+      text-anchor: middle;
+    }
+    .formula-title {
+      font-size: 18px;
+      font-weight: 700;
+      text-anchor: middle;
+    }
+    .formula {
+      font-size: 22px;
+      text-anchor: middle;
+    }
+    .result {
+      font-size: 24px;
+      font-weight: 700;
+      text-anchor: middle;
+    }
+  </style>
+  <rect width="1200" height="760" fill="#ffffff"/>
+  <text x="600" y="48" class="title">Вычисление угла между двумя направлениями</text>
+  <polygon points="230,450 820,450 700,170"
+           fill="#ede9fe" fill-opacity="0.6"/>
+  <line x1="230" y1="450" x2="820" y2="450"
+        stroke="#2563eb" stroke-width="7" marker-end="url(#arrow-blue)"/>
+  <line x1="230" y1="450" x2="700" y2="170"
+        stroke="#ea580c" stroke-width="7" marker-end="url(#arrow-orange)"/>
+  <path d="M385,450 A155,155 0 0 0 363,371"
+        fill="none" stroke="#7c3aed" stroke-width="7"/>
+  <circle cx="230" cy="450" r="12" fill="#334155"/>
+  <circle cx="820" cy="450" r="9" fill="#2563eb"/>
+  <circle cx="700" cy="170" r="9" fill="#ea580c"/>
+  <text x="842" y="458" class="vector" fill="#1d4ed8">u</text>
+  <text x="715" y="158" class="vector" fill="#c2410c">v</text>
+  <text x="205" y="485" class="vector">O</text>
+  <rect x="343" y="376" width="74" height="52" rx="11"
+        fill="#ffffff" stroke="#7c3aed" stroke-width="2"/>
+  <text x="380" y="410" class="angle" fill="#6d28d9">θ</text>
+  <rect x="55" y="540" width="340" height="110" rx="16"
+        fill="#eff6ff" stroke="#60a5fa" stroke-width="2"/>
+  <text x="225" y="573" class="formula-title" fill="#1d4ed8">
+    Скалярное произведение
+  </text>
+  <text x="225" y="616" class="formula">
+    u · v = |u||v| cos(θ)
+  </text>
+  <rect x="430" y="540" width="340" height="110" rx="16"
+        fill="#fff7ed" stroke="#fb923c" stroke-width="2"/>
+  <text x="600" y="573" class="formula-title" fill="#c2410c">
+    Модуль векторного произведения
+  </text>
+  <text x="600" y="616" class="formula">
+    |u × v| = |u||v| sin(θ)
+  </text>
+  <rect x="805" y="540" width="340" height="110" rx="16"
+        fill="#f5f3ff" stroke="#a78bfa" stroke-width="2"/>
+  <text x="975" y="573" class="formula-title" fill="#6d28d9">
+    Искомый угол
+  </text>
+  <text x="975" y="616" class="result">
+    θ = atan2(|u × v|, u · v)
+  </text>
+  <rect x="180" y="685" width="840" height="48" rx="12"
+        fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="600" y="716" class="formula">
+    Знак u · v позволяет различать острые и тупые углы.
+  </text>
+</svg>

@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760">
+  <defs>
+    <marker id="arrow-left" markerWidth="12" markerHeight="12" refX="2" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M10,0 L0,5 L10,10 Z" fill="#2563eb"/>
+    </marker>
+    <marker id="arrow-move" markerWidth="12" markerHeight="12" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#16803c"/>
+    </marker>
+  </defs>
+  <style>
+    text {
+      font-family: Arial, sans-serif;
+      fill: #172033;
+    }
+    .title {
+      font-size: 32px;
+      font-weight: 700;
+      text-anchor: middle;
+    }
+    .time {
+      font-size: 21px;
+      font-weight: 700;
+    }
+    .label {
+      font-size: 19px;
+      font-weight: 700;
+      text-anchor: middle;
+    }
+    .small {
+      font-size: 17px;
+      fill: #475569;
+      text-anchor: middle;
+    }
+    .formula {
+      font-size: 23px;
+      text-anchor: middle;
+    }
+    .conclusion {
+      font-size: 22px;
+      font-weight: 700;
+      text-anchor: middle;
+    }
+  </style>
+  <rect width="1200" height="760" fill="#ffffff"/>
+  <text x="600" y="48" class="title">На последнем отрезке направление прицела не меняется</text>
+  <rect x="70" y="90" width="1060" height="140" rx="18"
+        fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="105" y="132" class="time">Начало</text>
+  <line x1="220" y1="175" x2="1010" y2="175"
+        stroke="#94a3b8" stroke-width="3" stroke-dasharray="10 8"/>
+  <line x1="1010" y1="175" x2="260" y2="175"
+        stroke="#2563eb" stroke-width="6" marker-end="url(#arrow-left)"/>
+  <circle cx="260" cy="175" r="13" fill="#16803c"/>
+  <circle cx="1010" cy="175" r="14" fill="#dc2626"/>
+  <text x="260" y="145" class="label">A</text>
+  <text x="1010" y="145" class="label">O</text>
+  <text x="635" y="211" class="small">прицел направлен от O к A</text>
+  <rect x="70" y="255" width="1060" height="140" rx="18"
+        fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="105" y="297" class="time">Позже</text>
+  <line x1="220" y1="340" x2="1010" y2="340"
+        stroke="#94a3b8" stroke-width="3" stroke-dasharray="10 8"/>
+  <line x1="1010" y1="340" x2="550" y2="340"
+        stroke="#2563eb" stroke-width="6" marker-end="url(#arrow-left)"/>
+  <circle cx="550" cy="340" r="13" fill="#16803c"/>
+  <circle cx="1010" cy="340" r="14" fill="#dc2626"/>
+  <text x="550" y="310" class="label">P₁</text>
+  <text x="1010" y="310" class="label">O</text>
+  <text x="780" y="376" class="small">вектор стал короче, но направлен так же</text>
+  <rect x="70" y="420" width="1060" height="140" rx="18"
+        fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="105" y="462" class="time">Перед прибытием</text>
+  <line x1="220" y1="505" x2="1010" y2="505"
+        stroke="#94a3b8" stroke-width="3" stroke-dasharray="10 8"/>
+  <line x1="1010" y1="505" x2="815" y2="505"
+        stroke="#2563eb" stroke-width="6" marker-end="url(#arrow-left)"/>
+  <circle cx="815" cy="505" r="13" fill="#16803c"/>
+  <circle cx="1010" cy="505" r="14" fill="#dc2626"/>
+  <text x="815" y="475" class="label">P₂</text>
+  <text x="1010" y="475" class="label">O</text>
+  <text x="912" y="541" class="small">направление всё ещё прежнее</text>
+  <line x1="280" y1="585" x2="930" y2="585"
+        stroke="#16803c" stroke-width="5" marker-end="url(#arrow-move)"/>
+  <text x="605" y="617" class="small">движение по последнему отрезку: A → O</text>
+  <rect x="120" y="645" width="960" height="88" rx="16"
+        fill="#ecfdf5" stroke="#4ade80" stroke-width="2"/>
+  <text x="600" y="680" class="formula">
+    P(t) − O = (1 − t)(A − O), где 0 ≤ t &lt; 1
+  </text>
+  <text x="600" y="714" class="conclusion" fill="#166534">
+    Меняется только длина вектора, поэтому вклад в ответ равен нулю.
+  </text>
+</svg>

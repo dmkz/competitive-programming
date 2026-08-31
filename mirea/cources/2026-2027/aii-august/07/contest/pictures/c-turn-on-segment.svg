@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <defs>
+    <marker id="arrow-green" markerWidth="12" markerHeight="12" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#16803c"/>
+    </marker>
+    <marker id="arrow-red" markerWidth="12" markerHeight="12" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#c2413b"/>
+    </marker>
+  </defs>
+  <style>
+    text {
+      font-family: Arial, sans-serif;
+      fill: #172033;
+    }
+    .title {
+      font-size: 32px;
+      font-weight: 700;
+      text-anchor: middle;
+    }
+    .label {
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .small {
+      font-size: 18px;
+      fill: #475569;
+    }
+    .angle {
+      font-size: 24px;
+      font-weight: 700;
+      text-anchor: middle;
+    }
+    .note {
+      font-size: 20px;
+      text-anchor: middle;
+    }
+  </style>
+  <rect width="1200" height="700" fill="#ffffff"/>
+  <text x="600" y="48" class="title">Поворот прицела во время движения по одному отрезку</text>
+  <polygon points="180,470 500,180 970,430"
+           fill="#dbeafe" fill-opacity="0.5"/>
+  <line x1="970" y1="430" x2="292" y2="368"
+        stroke="#94a3b8" stroke-width="2.5" stroke-dasharray="9 8"/>
+  <line x1="970" y1="430" x2="398" y2="272"
+        stroke="#94a3b8" stroke-width="2.5" stroke-dasharray="9 8"/>
+  <line x1="180" y1="470" x2="500" y2="180"
+        stroke="#16803c" stroke-width="6" marker-end="url(#arrow-green)"/>
+  <line x1="970" y1="430" x2="180" y2="470"
+        stroke="#c2413b" stroke-width="5" marker-end="url(#arrow-red)"/>
+  <line x1="970" y1="430" x2="500" y2="180"
+        stroke="#c2413b" stroke-width="5" marker-end="url(#arrow-red)"/>
+  <path d="M820,438 A150,150 0 0 1 838,360"
+        fill="none" stroke="#7c3aed" stroke-width="7"/>
+  <circle cx="180" cy="470" r="10" fill="#16803c"/>
+  <circle cx="500" cy="180" r="10" fill="#16803c"/>
+  <circle cx="292" cy="368" r="7" fill="#64748b"/>
+  <circle cx="398" cy="272" r="7" fill="#64748b"/>
+  <circle cx="970" cy="430" r="12" fill="#dc2626"/>
+  <rect x="764" y="373" width="90" height="54" rx="12"
+        fill="#ffffff" stroke="#7c3aed" stroke-width="2"/>
+  <text x="809" y="408" class="angle" fill="#6d28d9">θ</text>
+  <rect x="96" y="486" width="150" height="56" rx="12"
+        fill="#ffffff" stroke="#16803c" stroke-width="2"/>
+  <text x="171" y="521" text-anchor="middle" class="label">A</text>
+  <rect x="462" y="104" width="150" height="56" rx="12"
+        fill="#ffffff" stroke="#16803c" stroke-width="2"/>
+  <text x="537" y="139" text-anchor="middle" class="label">B</text>
+  <text x="993" y="466" class="label" fill="#b91c1c">O</text>
+  <text x="563" y="472" class="small">начальное направление OA</text>
+  <text x="684" y="279" class="small">конечное направление OB</text>
+  <rect x="70" y="580" width="1060" height="84" rx="16"
+        fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="600" y="616" class="note">
+    Промежуточные направления непрерывно проходят между OA и OB
+  </text>
+  <text x="600" y="646" class="note">
+    и не меняют сторону вращения, поэтому весь поворот равен углу θ.
+  </text>
+</svg>
