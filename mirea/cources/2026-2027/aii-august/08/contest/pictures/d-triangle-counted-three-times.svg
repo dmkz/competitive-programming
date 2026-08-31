@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1050" height="440" viewBox="0 0 1050 440">
+  <rect x="1" y="1" width="1048" height="438" rx="18" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="525" y="42" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" font-weight="700" fill="#0f172a">
+    Один невырожденный треугольник учитывается три раза
+  </text>
+  <g transform="translate(40,70)">
+    <rect x="0" y="0" width="300" height="275" rx="14" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="150" y="32" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#0f172a">
+      Фиксируем вершину A
+    </text>
+    <polygon points="65,220 235,220 170,75" fill="#dbeafe" fill-opacity="0.55" stroke="#64748b" stroke-width="3"/>
+    <line x1="65" y1="220" x2="235" y2="220" stroke="#f97316" stroke-width="5"/>
+    <line x1="65" y1="220" x2="170" y2="75" stroke="#f97316" stroke-width="5"/>
+    <circle cx="65" cy="220" r="11" fill="#f97316"/>
+    <circle cx="235" cy="220" r="8" fill="#334155"/>
+    <circle cx="170" cy="75" r="8" fill="#334155"/>
+    <text x="42" y="246" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#c2410c">A</text>
+    <text x="244" y="228" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#334155">B</text>
+    <text x="178" y="70" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#334155">C</text>
+    <text x="150" y="260" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#475569">
+      Пара остальных точек: B и C
+    </text>
+  </g>
+  <g transform="translate(375,70)">
+    <rect x="0" y="0" width="300" height="275" rx="14" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="150" y="32" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#0f172a">
+      Фиксируем вершину B
+    </text>
+    <polygon points="65,220 235,220 170,75" fill="#dbeafe" fill-opacity="0.55" stroke="#64748b" stroke-width="3"/>
+    <line x1="235" y1="220" x2="65" y2="220" stroke="#f97316" stroke-width="5"/>
+    <line x1="235" y1="220" x2="170" y2="75" stroke="#f97316" stroke-width="5"/>
+    <circle cx="65" cy="220" r="8" fill="#334155"/>
+    <circle cx="235" cy="220" r="11" fill="#f97316"/>
+    <circle cx="170" cy="75" r="8" fill="#334155"/>
+    <text x="42" y="246" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#334155">A</text>
+    <text x="244" y="228" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#c2410c">B</text>
+    <text x="178" y="70" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#334155">C</text>
+    <text x="150" y="260" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#475569">
+      Пара остальных точек: A и C
+    </text>
+  </g>
+  <g transform="translate(710,70)">
+    <rect x="0" y="0" width="300" height="275" rx="14" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="150" y="32" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#0f172a">
+      Фиксируем вершину C
+    </text>
+    <polygon points="65,220 235,220 170,75" fill="#dbeafe" fill-opacity="0.55" stroke="#64748b" stroke-width="3"/>
+    <line x1="170" y1="75" x2="65" y2="220" stroke="#f97316" stroke-width="5"/>
+    <line x1="170" y1="75" x2="235" y2="220" stroke="#f97316" stroke-width="5"/>
+    <circle cx="65" cy="220" r="8" fill="#334155"/>
+    <circle cx="235" cy="220" r="8" fill="#334155"/>
+    <circle cx="170" cy="75" r="11" fill="#f97316"/>
+    <text x="42" y="246" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#334155">A</text>
+    <text x="244" y="228" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#334155">B</text>
+    <text x="178" y="70" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#c2410c">C</text>
+    <text x="150" y="260" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#475569">
+      Пара остальных точек: A и B
+    </text>
+  </g>
+  <rect x="185" y="372" width="680" height="47" rx="12" fill="#fff7ed" stroke="#fdba74" stroke-width="2"/>
+  <text x="525" y="402" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#9a3412">
+    Три учёта одного треугольника → итоговую сумму делим на 3
+  </text>
+</svg>

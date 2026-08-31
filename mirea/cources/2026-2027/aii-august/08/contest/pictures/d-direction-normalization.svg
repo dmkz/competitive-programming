@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="560" viewBox="0 0 900 560">
+  <defs>
+    <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 Z" fill="#dc2626"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 Z" fill="#2563eb"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 Z" fill="#16a34a"/>
+    </marker>
+  </defs>
+  <rect x="1" y="1" width="898" height="558" rx="18" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="450" y="42" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" font-weight="700" fill="#0f172a">
+    Группировка точек относительно фиксированной точки O
+  </text>
+  <text x="450" y="72" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#475569">
+    Противоположные направления задают одну и ту же прямую
+  </text>
+  <line x1="120" y1="390" x2="720" y2="90" stroke="#fecaca" stroke-width="7" stroke-linecap="round"/>
+  <line x1="90" y1="240" x2="750" y2="240" stroke="#bfdbfe" stroke-width="7" stroke-linecap="round"/>
+  <line x1="420" y1="75" x2="420" y2="435" stroke="#bbf7d0" stroke-width="7" stroke-linecap="round"/>
+  <line x1="420" y1="240" x2="185" y2="357" stroke="#dc2626" stroke-width="3" marker-end="url(#arrowRed)"/>
+  <line x1="420" y1="240" x2="655" y2="123" stroke="#dc2626" stroke-width="3" marker-end="url(#arrowRed)"/>
+  <line x1="420" y1="240" x2="135" y2="240" stroke="#2563eb" stroke-width="3" marker-end="url(#arrowBlue)"/>
+  <line x1="420" y1="240" x2="705" y2="240" stroke="#2563eb" stroke-width="3" marker-end="url(#arrowBlue)"/>
+  <line x1="420" y1="240" x2="420" y2="110" stroke="#16a34a" stroke-width="3" marker-end="url(#arrowGreen)"/>
+  <line x1="420" y1="240" x2="420" y2="405" stroke="#16a34a" stroke-width="3" marker-end="url(#arrowGreen)"/>
+  <circle cx="420" cy="240" r="11" fill="#0f172a"/>
+  <text x="439" y="229" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#0f172a">O</text>
+  <circle cx="170" cy="365" r="9" fill="#dc2626"/>
+  <text x="145" y="393" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#991b1b">A</text>
+  <circle cx="670" cy="115" r="9" fill="#dc2626"/>
+  <text x="686" y="108" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#991b1b">B</text>
+  <circle cx="120" cy="240" r="9" fill="#2563eb"/>
+  <text x="104" y="220" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#1d4ed8">C</text>
+  <circle cx="720" cy="240" r="9" fill="#2563eb"/>
+  <text x="735" y="220" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#1d4ed8">D</text>
+  <circle cx="420" cy="95" r="9" fill="#16a34a"/>
+  <text x="439" y="99" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#15803d">E</text>
+  <circle cx="420" cy="420" r="9" fill="#16a34a"/>
+  <text x="439" y="427" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#15803d">F</text>
+  <rect x="85" y="462" width="730" height="70" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+  <circle cx="120" cy="485" r="7" fill="#dc2626"/>
+  <text x="140" y="491" font-family="Arial, sans-serif" font-size="16" fill="#334155">
+    A и B имеют один ключ направления
+  </text>
+  <circle cx="475" cy="485" r="7" fill="#2563eb"/>
+  <text x="495" y="491" font-family="Arial, sans-serif" font-size="16" fill="#334155">
+    C и D имеют один ключ
+  </text>
+  <circle cx="120" cy="514" r="7" fill="#16a34a"/>
+  <text x="140" y="520" font-family="Arial, sans-serif" font-size="16" fill="#334155">
+    E и F имеют один ключ
+  </text>
+  <text x="325" y="520" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#0f172a">
+    В каждой цветной группе получаются вырожденные тройки
+  </text>
+</svg>
