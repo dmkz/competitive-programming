@@ -1,0 +1,213 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="790" viewBox="0 0 1200 790">
+  <defs>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="9" refY="5"
+            orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#2563eb"/>
+    </marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="9" refY="5"
+            orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#16a34a"/>
+    </marker>
+  </defs>
+  <style>
+    text {
+      font-family: Arial, sans-serif;
+      fill: #172033;
+    }
+    .title {
+      font-size: 31px;
+      font-weight: 700;
+      text-anchor: middle;
+    }
+    .subtitle {
+      font-size: 19px;
+      fill: #475569;
+      text-anchor: middle;
+    }
+    .section {
+      font-size: 23px;
+      font-weight: 700;
+      text-anchor: middle;
+    }
+    .limit {
+      font-size: 18px;
+      font-weight: 700;
+      text-anchor: middle;
+    }
+    .box-title {
+      font-size: 19px;
+      font-weight: 700;
+      text-anchor: middle;
+    }
+    .box-text {
+      font-size: 17px;
+      text-anchor: middle;
+    }
+    .candidate {
+      font-size: 18px;
+      font-weight: 700;
+      text-anchor: middle;
+      dominant-baseline: middle;
+    }
+    .formula {
+      font-size: 20px;
+      font-weight: 700;
+      text-anchor: middle;
+    }
+    .note {
+      font-size: 17px;
+      fill: #475569;
+      text-anchor: middle;
+    }
+  </style>
+  <rect width="1200" height="790" fill="#ffffff"/>
+  <text x="600" y="45" class="title">
+    Различие факторизации в простой и сложной версиях
+  </text>
+  <text x="600" y="77" class="subtitle">
+    Математическая характеристика одинакова — различается только набор проверяемых делителей
+  </text>
+
+  <line x1="600" y1="104" x2="600" y2="665"
+        stroke="#cbd5e1" stroke-width="2"/>
+
+  <text x="300" y="125" class="section" fill="#1d4ed8">
+    E1: перебор всех кандидатов
+  </text>
+  <text x="300" y="155" class="limit">
+    |a| ≤ 10⁶, поэтому √|a| ≤ 1000
+  </text>
+
+  <rect x="55" y="185" width="490" height="92" rx="15"
+        fill="#eff6ff" stroke="#60a5fa" stroke-width="2"/>
+  <text x="300" y="219" class="box-title" fill="#1d4ed8">
+    Проверяются все целые числа
+  </text>
+  <text x="300" y="251" class="box-text">
+    2, 3, 4, 5, 6, 7, 8, 9, …
+  </text>
+
+  <g>
+    <rect x="72" y="315" width="54" height="54" rx="10"
+          fill="#dcfce7" stroke="#22c55e" stroke-width="2"/>
+    <text x="99" y="343" class="candidate">2</text>
+
+    <rect x="139" y="315" width="54" height="54" rx="10"
+          fill="#dcfce7" stroke="#22c55e" stroke-width="2"/>
+    <text x="166" y="343" class="candidate">3</text>
+
+    <rect x="206" y="315" width="54" height="54" rx="10"
+          fill="#fee2e2" stroke="#ef4444" stroke-width="2"/>
+    <text x="233" y="343" class="candidate">4</text>
+
+    <rect x="273" y="315" width="54" height="54" rx="10"
+          fill="#dcfce7" stroke="#22c55e" stroke-width="2"/>
+    <text x="300" y="343" class="candidate">5</text>
+
+    <rect x="340" y="315" width="54" height="54" rx="10"
+          fill="#fee2e2" stroke="#ef4444" stroke-width="2"/>
+    <text x="367" y="343" class="candidate">6</text>
+
+    <rect x="407" y="315" width="54" height="54" rx="10"
+          fill="#dcfce7" stroke="#22c55e" stroke-width="2"/>
+    <text x="434" y="343" class="candidate">7</text>
+
+    <rect x="474" y="315" width="54" height="54" rx="10"
+          fill="#fee2e2" stroke="#ef4444" stroke-width="2"/>
+    <text x="501" y="343" class="candidate">8</text>
+  </g>
+
+  <text x="300" y="405" class="box-text">
+    Красные кандидаты составные, но тоже проверяются
+  </text>
+
+  <path d="M300 430 L300 475"
+        fill="none" stroke="#2563eb" stroke-width="4"
+        marker-end="url(#arrow-blue)"/>
+
+  <rect x="90" y="490" width="420" height="105" rx="15"
+        fill="#f8fafc" stroke="#94a3b8" stroke-width="2"/>
+  <text x="300" y="527" class="box-title">
+    Факторизация одного числа
+  </text>
+  <text x="300" y="559" class="formula">
+    до O(√A) проверок
+  </text>
+  <text x="300" y="582" class="note">
+    Для ограничения 10⁶ этого достаточно
+  </text>
+
+  <text x="900" y="125" class="section" fill="#15803d">
+    E2: перебор только простых
+  </text>
+  <text x="900" y="155" class="limit">
+    |a| ≤ 10⁹, поэтому √|a| &lt; 40000
+  </text>
+
+  <rect x="655" y="185" width="490" height="92" rx="15"
+        fill="#ecfdf5" stroke="#4ade80" stroke-width="2"/>
+  <text x="900" y="219" class="box-title" fill="#15803d">
+    Сначала строится список простых решетом
+  </text>
+  <text x="900" y="251" class="box-text">
+    2, 3, 5, 7, 11, 13, 17, 19, …
+  </text>
+
+  <g>
+    <rect x="672" y="315" width="54" height="54" rx="10"
+          fill="#dcfce7" stroke="#22c55e" stroke-width="2"/>
+    <text x="699" y="343" class="candidate">2</text>
+
+    <rect x="739" y="315" width="54" height="54" rx="10"
+          fill="#dcfce7" stroke="#22c55e" stroke-width="2"/>
+    <text x="766" y="343" class="candidate">3</text>
+
+    <rect x="806" y="315" width="54" height="54" rx="10"
+          fill="#dcfce7" stroke="#22c55e" stroke-width="2"/>
+    <text x="833" y="343" class="candidate">5</text>
+
+    <rect x="873" y="315" width="54" height="54" rx="10"
+          fill="#dcfce7" stroke="#22c55e" stroke-width="2"/>
+    <text x="900" y="343" class="candidate">7</text>
+
+    <rect x="940" y="315" width="60" height="54" rx="10"
+          fill="#dcfce7" stroke="#22c55e" stroke-width="2"/>
+    <text x="970" y="343" class="candidate">11</text>
+
+    <rect x="1013" y="315" width="60" height="54" rx="10"
+          fill="#dcfce7" stroke="#22c55e" stroke-width="2"/>
+    <text x="1043" y="343" class="candidate">13</text>
+  </g>
+
+  <text x="900" y="405" class="box-text">
+    Составные кандидаты пропускаются
+  </text>
+
+  <path d="M900 430 L900 475"
+        fill="none" stroke="#16a34a" stroke-width="4"
+        marker-end="url(#arrow-green)"/>
+
+  <rect x="690" y="490" width="420" height="105" rx="15"
+        fill="#f8fafc" stroke="#94a3b8" stroke-width="2"/>
+  <text x="900" y="527" class="box-title">
+    Факторизация одного числа
+  </text>
+  <text x="900" y="559" class="formula">
+    проверяются только простые p
+  </text>
+  <text x="900" y="582" class="note">
+    Перебор прекращается при p² &gt; a
+  </text>
+
+  <rect x="85" y="630" width="1030" height="125" rx="17"
+        fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="600" y="668" class="formula">
+    В обеих версиях степень каждого найденного простого учитывается только по чётности
+  </text>
+  <text x="600" y="704" class="box-text">
+    нечётная степень → включить простой множитель в core
+  </text>
+  <text x="600" y="733" class="box-text">
+    чётная степень → не включать его в core
+  </text>
+</svg>
