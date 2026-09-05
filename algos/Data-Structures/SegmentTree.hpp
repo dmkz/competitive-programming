@@ -1,5 +1,7 @@
 #ifndef __SEGMENTTREE_HPP__
 #define __SEGMENTTREE_HPP__
+// The file "SegmentTree.hpp" is a part of library "algos", written by dmkz.
+// You can find it here: https://github.com/dmkz/competitive-programming/tree/master/algos
 namespace algos {
 /**
  *  Efficient template SegmentTree<ItemType, ItemTraits> bottom-to-top implementation.
@@ -47,9 +49,10 @@ namespace SegmentTree {
          */ 
         void resize(const int n_){
             n = n_;
-            int pow = 1;
-            while (pow < n) { pow *= 2; }
-            data.assign(2 * pow, ItemTraits::neutral());
+            data.assign(4*n,ItemTraits::neutral());
+            //int pow = 1;
+            //while (pow < n) { pow *= 2; }
+            //data.assign(2 * pow, ItemTraits::neutral());
         }
         
         template<typename T>
