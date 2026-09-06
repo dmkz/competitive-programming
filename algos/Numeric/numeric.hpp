@@ -1,5 +1,9 @@
 #ifndef __NUMERIC_HPP__
 #define __NUMERIC_HPP__
+/*******************************************************************************************
+ * The file "numeric.hpp" is a part of competitive programming C++ library "algos".        *
+ * You can find it here: https://github.com/dmkz/competitive-programming/tree/master/algos *
+ *******************************************************************************************/
 namespace algos {
 namespace numeric {
     

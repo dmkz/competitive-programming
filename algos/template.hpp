@@ -1,7 +1,9 @@
 #ifndef __TEMPLATE_HPP__
 #define __TEMPLATE_HPP__
-// The file "template.hpp" is a part of library "algos", written by dmkz.
-// You can find it here: https://github.com/dmkz/competitive-programming/tree/master/algos
+/*******************************************************************************************
+ * The file "template.hpp" is a part of competitive programming C++ library "algos".       *
+ * You can find it here: https://github.com/dmkz/competitive-programming/tree/master/algos *
+ *******************************************************************************************/
 #include <climits>
 #include <unordered_map>
 #include <random>
