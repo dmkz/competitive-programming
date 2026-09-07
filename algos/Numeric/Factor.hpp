@@ -7,6 +7,9 @@
 namespace algos {
 namespace factor {
     
+    /**
+     * Generates the list of all primes not greater than `n`
+     */
     inline std::vector<int> genPrimes(int n) {
         std::vector<bool> isPrime(1+n, 1);
         isPrime[0] = isPrime[1] = 0;
@@ -19,6 +22,37 @@ namespace factor {
             if (isPrime[i])
                 res.push_back(i);
         return res;
+    }
+
+    /**
+     * Generates the least prime factor for every integer from `0` to `n`
+     */
+    inline std::vector<int> genMinPrime(int n) {
+        std::vector<int> minPrime(n+1);
+        for (int i = 2; i <= n; i++) {
+            if (minPrime[i]) continue;
+            minPrime[i] = i;
+            if (1LL*i*i <= n)
+                for (int j = i*i; j <= n; j += i)
+                    if (!minPrime[j])
+                        minPrime[j] = i;
+        }
+        return minPrime;
+    }
+
+    /**
+     * Calls `func` for every prime power occurring in the factorization of `x`
+     */
+    template<typename T, typename Func>
+    inline void forEachPrimePower(T x, const std::vector<int> &minPrime, Func func) {
+        while (x > 1) {
+            int p = minPrime[x];
+            T pw = 1;
+            while (x % p == 0) {
+                x /= p;
+                func(pw *= p);
+            }
+        }
     }
 
     template<typename A, typename B>
