@@ -1,5 +1,9 @@
 #ifndef __FACTOR_HPP__
 #define __FACTOR_HPP__
+/*******************************************************************************************
+ * The file "Factor.hpp" is a part of competitive programming C++ library "algos".         *
+ * You can find it here: https://github.com/dmkz/competitive-programming/tree/master/algos *
+ *******************************************************************************************/
 namespace algos {
 namespace factor {
     

@@ -1,8 +1,13 @@
-#ifndef __SEGMENTTREELAZY_HPP__
-#define __SEGMENTTREELAZY_HPP__
+#ifndef __SEGTREELAZY_HPP__
+#define __SEGTREELAZY_HPP__
+/*******************************************************************************************
+ * The file "SegTreeLazy.hpp" is a part of competitive programming C++ library "algos".    *
+ * You can find it here: https://github.com/dmkz/competitive-programming/tree/master/algos *
+ *******************************************************************************************/
+#include "SegTreeLazyTraits.hpp"
 namespace algos {
-namespace SegmentTreeLazy {
-using namespace algos::SegmentTreeLazyTraits;
+namespace SegTreeLazy {
+using namespace algos::SegTreeLazyTraits;
     /*******************************************************************************
      *  SegmentTree<Value, Extra, Traits> - segment tree class with lazy propagation, 0-indexed
      *  Default operations: minimal value on segment and addition on segment for int64_t type
@@ -21,8 +26,10 @@ using namespace algos::SegmentTreeLazyTraits;
     template<typename Value, typename Extra> using TraitsMinAdd = LazyMinAdd<Value,Extra>;
     template<typename Value, typename Extra> using TraitsMaxAdd = LazyMaxAdd<Value,Extra>;
     template<typename Value, typename Extra> using TraitsSumSet = LazySumSet<Value,Extra>;
+    template<typename Value, typename Extra> using TraitsSumAdd = LazySumAdd<Value,Extra>;
     template<typename Value, typename Extra> using TraitsSumMul = LazySumMul<Value,Extra>;
-    
+    template<typename Value, typename Extra, auto Base>
+    using TraitsGeomSumMul = LazyGeomSumMul<Value, Extra, Base>;
     /*******************************************************************************
      *  SegmentTree, see description above
      ******************************************************************************/
@@ -37,8 +44,15 @@ using namespace algos::SegmentTreeLazyTraits;
             
             Extra extra;
             
-            Node(Value value_ = Traits::valueNeutral(), Extra extra_ = Traits::extraNeutral())
-                : value(value_), extra(extra_) { }
+            bool hasExtra{};
+            
+            bool hasValue{};
+            
+            Node(Value value_ = Traits::valueNeutral(),
+                 Extra extra_ = Traits::extraNeutral(),
+                 bool hasExtra_ = false,
+                 bool hasValue_ = false)
+                : value(value_), extra(extra_), hasExtra(hasExtra_), hasValue(hasValue_) { }
             
             Value getValue(int l, int r) const { return Traits::getValue(NodeWrapper<Node>(l, r, *this)); }
         };
@@ -58,8 +72,12 @@ using namespace algos::SegmentTreeLazyTraits;
             int   len() const { return r - l + 1; }
             Value& value() { return node.value; }
             Extra& extra() { return node.extra; }
+            bool& hasExtra() { return node.hasExtra; }
+            bool& hasValue() { return node.hasValue; }
             const Value& value() const { return node.value; }
             const Extra& extra() const { return node.extra; }
+            const bool& hasExtra() const { return node.hasExtra; }
+            const bool& hasValue() const { return node.hasValue; }
         };
         
         /*******************************************************************************
@@ -73,23 +91,33 @@ using namespace algos::SegmentTreeLazyTraits;
          ******************************************************************************/
         void resize(int n_) {
             n = n_;
-            data.assign(2 * n - 1, Node());
+            data.assign(n == 0 ? 0 : 2 * n - 1, Node());
+        }
+        
+        /*******************************************************************************
+         *  Apply a lazy operation to a node
+         ******************************************************************************/
+        template<typename NodeDst, typename NodeSrc>
+        static void apply(NodeDst dst, const NodeSrc& src) {
+            Traits::push(dst, src);
+            dst.hasExtra() = true;
         }
         
         /*******************************************************************************
          *  Lazy propagation from node to its children
          ******************************************************************************/
         void push(int v, int l, int r, int m) {
-            if (data[v].extra != Traits::extraNeutral()) {
-                Traits::push(
-                    NodeWrapper<Node&>(l, m, data[v+1]), 
+            if (data[v].hasExtra) {
+                apply(
+                    NodeWrapper<Node&>(l, m, data[v+1]),
                     NodeWrapper<const Node&>(l, r, data[v])
                 );
-                Traits::push(
-                    NodeWrapper<Node&>(m+1, r, data[v+2*(m-l+1)]), 
-                    NodeWrapper<const Node&>(  l, r, data[v])
+                apply(
+                    NodeWrapper<Node&>(m+1, r, data[v+2*(m-l+1)]),
+                    NodeWrapper<const Node&>(l, r, data[v])
                 );
                 data[v].extra = Traits::extraNeutral();
+                data[v].hasExtra = false;
             }
         }
         
@@ -97,7 +125,7 @@ using namespace algos::SegmentTreeLazyTraits;
          *  Update node using children values
          ******************************************************************************/
         void pull(int v, int l, int r, int m) {
-            assert(data[v].extra == Traits::extraNeutral());
+            assert(!data[v].hasExtra);
             Traits::pull(
                 NodeWrapper<Node&>(  l, r, data[v]), 
                 NodeWrapper<const Node&>(  l, m, data[v+1]), 
@@ -111,7 +139,7 @@ using namespace algos::SegmentTreeLazyTraits;
         template<typename T>
         void build(const std::vector<T>& arr, const int v, const int tl, const int tr) {
             if (tl == tr) {
-                data[v] = Node(arr[tl]);
+                data[v] = Node(arr[tl], Traits::extraNeutral(), false, true);
             } else {
                 const int tm = (tl + tr) / 2;
                 build(arr, v+1,   tl, tm);
@@ -123,7 +151,8 @@ using namespace algos::SegmentTreeLazyTraits;
         template<typename T>
         void build(const std::vector<T>& arr) { 
             resize((int)arr.size());
-            build(arr, 0, 0, n-1);
+            if (n > 0)
+                build(arr, 0, 0, n-1);
         }
 
         /*******************************************************************************
@@ -161,9 +190,9 @@ using namespace algos::SegmentTreeLazyTraits;
          ******************************************************************************/
         void update(const int ql, const int qr, const Extra& extra, const int v, const int tl, const int tr) {
             if (ql == tl && tr == qr) {
-                Traits::push(
+                apply(
                     NodeWrapper<Node&>(tl, tr, data[v]),
-                    NodeWrapper<Node>(ql, qr, Node(Traits::valueNeutral(), extra))
+                    NodeWrapper<Node>(ql, qr, Node(Traits::valueNeutral(), extra, true))
                 );
             } else {
                 int tm = (tl + tr) / 2;
@@ -186,6 +215,6 @@ using namespace algos::SegmentTreeLazyTraits;
 
     };
     
-} // namespace SegmentTreeLazy
+} // namespace SegTreeLazy
 } // namespace algos
-#endif // __SEGMENTTREELAZY_HPP__
+#endif // __SEGTREELAZY_HPP__

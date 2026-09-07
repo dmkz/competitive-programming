@@ -7,7 +7,21 @@
 namespace algos {
 namespace numeric {
     
-    template<typename T, typename N> 
+    template<typename T>
+    inline T invMod(T a, T mod) {
+        T b = mod, x = 1, y = 0;
+        while (b) {
+            T q = a / b;
+            a -= q * b; std::swap(a,b);
+            x -= q * y; std::swap(x,y);
+        }
+        assert(a == T(1));
+        x %= mod;
+        if (x < 0) x += mod;
+        return x;
+    }
+    
+    template<typename T, typename N>
     inline T binpow(T a, N n) {
         T r(1);
         while (n > 0) {

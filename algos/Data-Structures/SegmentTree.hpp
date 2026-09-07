@@ -1,7 +1,9 @@
 #ifndef __SEGMENTTREE_HPP__
 #define __SEGMENTTREE_HPP__
-// The file "SegmentTree.hpp" is a part of library "algos", written by dmkz.
-// You can find it here: https://github.com/dmkz/competitive-programming/tree/master/algos
+/*******************************************************************************************
+ * The file "SegmentTree.hpp" is a part of competitive programming C++ library "algos".    *
+ * You can find it here: https://github.com/dmkz/competitive-programming/tree/master/algos *
+ *******************************************************************************************/
 namespace algos {
 /**
  *  Efficient template SegmentTree<ItemType, ItemTraits> bottom-to-top implementation.
@@ -33,7 +35,6 @@ namespace SegmentTree {
     template<typename T> struct TraitsMaxAdd; // max on segment, add to single element
     template<typename T> struct TraitsSumAdd; // sum on segment, add to single element
     template<typename T> struct TraitsGCDAdd; // gcd on segment, add to single element
-    
     /**
      * SegmentTree class. Effective bottom-to-top implementation
      */
@@ -41,46 +42,47 @@ namespace SegmentTree {
     struct SegmentTree {
         /**
          * Public data: `n` - number of items in array and `data` - tree's container
-         */ 
+         */
         int n; std::vector<ItemType> data;
-
         /**
          * Main methods: resize(nItems), build(array), get(left, right), where 0 <= left <= right < nItems
          */ 
-        void resize(const int n_){
+        void resize(const int n_) {
             n = n_;
-            data.assign(4*n,ItemTraits::neutral());
-            //int pow = 1;
-            //while (pow < n) { pow *= 2; }
-            //data.assign(2 * pow, ItemTraits::neutral());
+            data.assign(2*n,ItemTraits::neutral());
         }
-        
         template<typename T>
-        void build(const std::vector<T>& arr) {
+        void build(const std::vector<T> &arr) {
             resize((int)arr.size());
-            for (int v = 0; v < n; ++v) {
-                data[v + n] = arr[v]; 
-            }
-            for (int v = n-1; v >= 1; --v) {
-                ItemTraits::merge(data[v], data[2*v], data[2*v+1]);
-            }
+            for (int v = 0; v < n; v++)
+                data[v+n] = arr[v];
+            for (int v = n-1; v >= 1; v--)
+                ItemTraits::merge(data[v],data[2*v],data[2*v+1]);
         }
-        
         ItemType get(int ql, int qr) const {
-            ItemType ret = ItemTraits::neutral();
-            for (ql += n, qr += n; ql <= qr; ql /= 2, qr /= 2) {
-                if (ql % 2 == 1) { ItemTraits::merge(ret, ret, data[ql++]); }
-                if (qr % 2 == 0) { ItemTraits::merge(ret, ret, data[qr--]); }
+            ItemType left = ItemTraits::neutral();
+            ItemType right = ItemTraits::neutral();
+            for (ql += n, qr += n+1; ql < qr; ql /= 2, qr /= 2) {
+                if (ql%2 == 1) {
+                    ItemType next = ItemTraits::neutral();
+                    ItemTraits::merge(next,left,data[ql++]);
+                    left = next;
+                }
+                if (qr%2 == 1) {
+                    ItemType next = ItemTraits::neutral();
+                    ItemTraits::merge(next,data[--qr],right);
+                    right = next;
+                }
             }
-            return ret;
+            ItemType result = ItemTraits::neutral();
+            ItemTraits::merge(result,left,right);
+            return result;
         }
-        
-        void update(int pos, ItemType val) {
-            int v = pos + n;
-            ItemTraits::update(data[v], val);
-            for (v /= 2; v > 0; v /= 2) {
-                ItemTraits::merge(data[v], data[2*v], data[2*v+1]);
-            }
+        void update(int pos, ItemType value) {
+            int v = pos+n;
+            ItemTraits::update(data[v],value);
+            for (v /= 2; v > 0; v /= 2)
+                ItemTraits::merge(data[v],data[2*v],data[2*v+1]);
         }
     }; /** SegmentTree class end */
     
@@ -91,12 +93,10 @@ namespace SegmentTree {
 
         /**
          * Main methods: resize(nItems), build(array), get(left, right), where 0 <= left <= right < nItems
-         */ 
-        void resize(const int n_){
+         */
+        void resize(const int n_) {
             n = n_;
-            int pow = 1;
-            while (pow < n) { pow *= 2; }
-            data.assign(2 * pow, ItemTraits::neutral());
+            data.assign(4*n,ItemTraits::neutral());
         }
         
         template<typename T>

@@ -1,175 +1,350 @@
 #include <bits/stdc++.h>
 const std::string libpath = "C:\\Users\\dkozyrev\\Documents\\GitHub\\competitive-programming\\algos";
 namespace fs = std::filesystem;
-bool isSuffix(std::string where, std::string what) {
-    if (what.size() > where.size())return false;
-    return where.substr(where.size()-what.size(),what.size()) == what;
-}
-bool remPrefix(std::string& where, std::string what) {
-    if (auto p = where.find(what); p != where.npos) {
-        where = where.substr(p + what.size());
-        return true;
-    }
-    return false;
-}
-std::map<std::string, std::string> headers;
+/*******************************************************************************
+ * Information about one library header.
+ *
+ * key   - lowercase filename used for lookup;
+ * name  - original filename used when writing #include;
+ * path  - absolute filesystem path;
+ * guard - include guard without #ifndef;
+ * deps  - direct dependencies on other algos headers.
+ ******************************************************************************/
+struct Header {
+    std::string key;
+    std::string name;
+    std::string path;
+    std::string guard;
+    std::vector<std::string> lines;
+    std::vector<int> deps;
+};
+std::vector<Header> headers;
+std::map<std::string, int> headerByName;
+std::map<std::string, int> headerByGuard;
 std::string tolower(std::string s) {
-    for (auto &it : s) {
-        if ('A' <= it && it <= 'Z')
-            it = (char)std::tolower(it);
-    }
+    for (auto &it : s)
+        it = (char)std::tolower((unsigned char)it);
     return s;
 }
-void scanFiles() {
-    // Iterate over the `std::filesystem::directory_entry` elements explicitly
-    std::cout << "List of hpp files: {";
-    bool isFirst = true;
-    for (const fs::directory_entry& dir_entry : 
-        fs::recursive_directory_iterator(libpath))
-    {
-        auto path = dir_entry.path().string();
-        auto filename = dir_entry.path().filename().string();
-        if (isSuffix(filename, "hpp"))
-        {
-            auto key = tolower(filename);
-            headers[key] = path;
-            if (!isFirst) {
-                std::cout << ", ";
-            } else isFirst = false;
-            std::cout << filename;
-        }
-    }
-    std::cout << "}\n";
-}
-std::string trim(std::string s, bool onlyEnds = false) {
-    if (onlyEnds) {
-        for (int rot = 0; rot < 2; rot++) {
-            while (s.size() && std::isspace(s.back()))
-                s.pop_back();
-            std::reverse(s.begin(), s.end());
-        }
-        return s;
-    }
-    int p = 0;
-    char prev = ' ';
-    for (int i = 0; i < (int)s.size(); i++) {
-        if (std::isspace(s[i]) && std::isspace(prev))
-            continue;
-        prev = s[p++] = s[i];
-    }
-    s.resize(p);
-    while (p - 1 >= 0 && std::isspace(s[p-1])) {
-        p--;
+std::string trim(std::string s) {
+    while (!s.empty() && std::isspace((unsigned char)s.back()))
         s.pop_back();
-    }
-    return s;
+    int p = 0;
+    while (p < (int)s.size() && std::isspace((unsigned char)s[p]))
+        p++;
+    return s.substr(p);
 }
-
-auto fileToStrings(std::string path) {
+bool startsWith(const std::string &s, const std::string &pref) {
+    return s.size() >= pref.size() && s.compare(0, pref.size(), pref) == 0;
+}
+std::vector<std::string> fileToStrings(const std::string &path) {
     std::ifstream fin(path);
-    std::vector<std::string> res;
+    std::vector<std::string> result;
     std::string s;
-    while(std::getline(fin, s)) {
-        res.emplace_back(s);
-    }
-    return res;
+    while (std::getline(fin, s))
+        result.emplace_back(s);
+    return result;
 }
-
-void writeFile(std::string path, const std::vector<std::string>& content) {
+void writeFile(const std::string &path, const std::vector<std::string> &content) {
     std::ofstream fout(path);
-    for (auto &it : content) {
-        fout << it << '\n';
-    }
+    for (const auto &line : content)
+        fout << line << '\n';
     std::cout << content.size() << " lines have been written." << std::endl;
 }
-
-auto expandFile(std::string path) {
-    std::ifstream fin(path);
-    std::string s;
-    std::vector<std::string> result;
-    while(std::getline(fin, s)) {
-        auto t = trim(s);
-        if (remPrefix(t, "#include \"")) {
-            while (t.size() && t.back() == '\"') t.pop_back();
-            int p = (int)t.size()-1;
-            while (p >= 0 && t[p] != '/') p--;
-            if (p >= 0) {
-                t = t.substr(p+1);
-            }
-            t = tolower(t);
-            if (auto it = headers.find(t); it != headers.end())
-            {
-                std::cout << "Header '" << t << "' " << "have been found." << std::endl;
-                for (const auto &line : fileToStrings(it->second))
-                {
-                    result.emplace_back(line);
-                }
+/*******************************************************************************
+ * Parse a quoted include.
+ *
+ * Returns:
+ *     #include "path/Header.hpp" -> Header.hpp
+ *     #include <vector>          -> empty string
+ *     arbitrary source line     -> empty string
+ ******************************************************************************/
+std::string parseInclude(const std::string &line) {
+    std::string s = trim(line);
+    const std::string pref = "#include";
+    if (!startsWith(s, pref))
+        return {};
+    s = trim(s.substr(pref.size()));
+    if (s.size() < 2 || s.front() != '"')
+        return {};
+    auto pos = s.find('"', 1);
+    if (pos == std::string::npos)
+        return {};
+    std::string path = s.substr(1, pos-1);
+    auto slash = path.find_last_of("/\\");
+    if (slash != std::string::npos)
+        path = path.substr(slash+1);
+    return tolower(path);
+}
+/*******************************************************************************
+ * Find the conventional include guard:
+ *
+ *     #ifndef GUARD
+ *     #define GUARD
+ *
+ * Empty lines and comments between these directives are allowed only in the
+ * simple sense that the first matching #define after #ifndef is inspected.
+ ******************************************************************************/
+std::string findGuard(const std::vector<std::string> &lines) {
+    for (int i = 0; i < (int)lines.size(); i++) {
+        std::string s = trim(lines[i]);
+        if (!startsWith(s, "#ifndef"))
+            continue;
+        std::string guard = trim(s.substr(std::string("#ifndef").size()));
+        for (int j = i+1; j < (int)lines.size(); j++) {
+            std::string t = trim(lines[j]);
+            if (t.empty() || startsWith(t, "//") || startsWith(t, "/*") ||
+                startsWith(t, "*") || startsWith(t, "*/"))
                 continue;
-            }
+            if (!startsWith(t, "#define"))
+                break;
+            std::string defined = trim(t.substr(std::string("#define").size()));
+            auto pos = defined.find_first_of(" \t");
+            if (pos != std::string::npos)
+                defined.resize(pos);
+            if (defined == guard)
+                return guard;
+            break;
         }
-        result.push_back(s);
+    }
+    return {};
+}
+void scanFiles() {
+    headers.clear();
+    headerByName.clear();
+    headerByGuard.clear();
+    for (const auto &entry : fs::recursive_directory_iterator(libpath)) {
+        if (!entry.is_regular_file())
+            continue;
+        auto path = entry.path();
+        if (tolower(path.extension().string()) != ".hpp")
+            continue;
+        Header header;
+        header.name = path.filename().string();
+        header.key = tolower(header.name);
+        header.path = path.string();
+        header.lines = fileToStrings(header.path);
+        header.guard = findGuard(header.lines);
+        if (headerByName.contains(header.key)) {
+            std::cerr << "Duplicate header filename: " << header.name << std::endl;
+            std::exit(1);
+        }
+        headerByName[header.key] = (int)headers.size();
+        headers.emplace_back(std::move(header));
+    }
+    for (int i = 0; i < (int)headers.size(); i++) {
+        if (headers[i].guard.empty()) {
+            std::cerr << "Include guard was not found in header '"
+                      << headers[i].name << "'." << std::endl;
+            std::exit(1);
+        }
+        if (headerByGuard.contains(headers[i].guard)) {
+            std::cerr << "Duplicate include guard '" << headers[i].guard
+                      << "' in headers '" << headers[headerByGuard[headers[i].guard]].name
+                      << "' and '" << headers[i].name << "'." << std::endl;
+            std::exit(1);
+        }
+        headerByGuard[headers[i].guard] = i;
+    }
+    for (auto &header : headers) {
+        std::set<int> deps;
+        for (const auto &line : header.lines) {
+            std::string name = parseInclude(line);
+            auto iter = headerByName.find(name);
+            if (iter != headerByName.end())
+                deps.insert(iter->second);
+        }
+        header.deps.assign(deps.begin(), deps.end());
+    }
+    std::cout << "List of hpp files: {";
+    for (int i = 0; i < (int)headers.size(); i++) {
+        if (i > 0)
+            std::cout << ", ";
+        std::cout << headers[i].name;
+    }
+    std::cout << "}" << std::endl;
+}
+/*******************************************************************************
+ * Recursively emit one header.
+ *
+ * state:
+ *     0 - header has not been visited;
+ *     1 - header is currently in the DFS stack;
+ *     2 - header has already been emitted.
+ *
+ * Dependencies are emitted before the header itself. Therefore the resulting
+ * order is topological. A header is emitted at most once.
+ ******************************************************************************/
+void expandHeader(int id, std::vector<int> &state, std::vector<std::string> &result) {
+    if (state[id] == 2)
+        return;
+    if (state[id] == 1) {
+        std::cerr << "Cyclic dependency involving header '"
+                  << headers[id].name << "'." << std::endl;
+        std::exit(1);
+    }
+    state[id] = 1;
+    for (int dep : headers[id].deps)
+        expandHeader(dep, state, result);
+    for (const auto &line : headers[id].lines) {
+        std::string name = parseInclude(line);
+        if (headerByName.contains(name))
+            continue;
+        result.emplace_back(line);
+    }
+    state[id] = 2;
+    std::cout << "Header '" << headers[id].name
+              << "' has been expanded." << std::endl;
+}
+std::vector<std::string> expandFile(const std::string &path) {
+    auto content = fileToStrings(path);
+    std::vector<std::string> result;
+    std::vector<int> state(headers.size());
+    for (const auto &line : content) {
+        std::string name = parseInclude(line);
+        auto iter = headerByName.find(name);
+        if (iter == headerByName.end()) {
+            result.emplace_back(line);
+            continue;
+        }
+        expandHeader(iter->second, state, result);
     }
     return result;
 }
-auto collapseFile(std::string path, const std::vector<std::string> &content) {
-    std::string dir = path;
-    while (dir.size() && !(dir.back() == '/' || dir.back() == '\\'))
-        dir.pop_back();
-    std::ofstream fout(path);
-    int nLines{};
-    for (int i = 0; i < (int)content.size(); i++) {
-        auto s = content[i];
-        if (remPrefix(s, "#ifndef"))
-        {
-            auto variable = s = trim(s);
-            for (int rotate = 0; rotate < 2; rotate++) {
-                while (s.size() && s.back() == '_') s.pop_back();
-                std::reverse(s.begin(),s.end());
-            }
-            s = tolower(s);
-            for (auto &it : s) {
-                if (it == '_') it = '.';
-            }
-            if (auto header = headers.find(s); header != headers.end())
-            {
-                auto what = trim("#endif // " + variable);
-                int j;
-                for (j = i; j < (int)content.size() &&
-                            trim(content[j]) != what; j++)
-                { };
-                if (j >= (int)content.size()) {
-                    std::cout << "Can't find where '" << variable << "' is closed" << std::endl;
-                    std::cout << "What = '" << what << "'" << std::endl;
-                } else {
-                    assert(j < (int)content.size());
-                    i = j;
-                    fout << "#include \"" << header->first << "\"" << "\n";
-                    nLines++;
-                    //writeFile(dir+s, fileToStrings(header->second));
-                    //std::cout << "Header '" << header->first << "' have been collapsed." << std::endl;
-                    continue;
-                }
-            }
+bool isIfDirective(const std::string &line) {
+    std::string s = trim(line);
+    return startsWith(s, "#if ") || startsWith(s, "#if\t") ||
+           startsWith(s, "#ifdef ") || startsWith(s, "#ifdef\t") ||
+           startsWith(s, "#ifndef ") || startsWith(s, "#ifndef\t");
+}
+bool isEndifDirective(const std::string &line) {
+    std::string s = trim(line);
+    return s == "#endif" || startsWith(s, "#endif ") ||
+           startsWith(s, "#endif\t");
+}
+/*******************************************************************************
+ * Find the #endif matching the #ifndef at position begin.
+ *
+ * Nested conditional preprocessing directives are counted, so an #if inside a
+ * library header does not terminate the outer include guard prematurely.
+ ******************************************************************************/
+int findMatchingEndif(const std::vector<std::string> &content, int begin) {
+    int depth = 0;
+    for (int i = begin; i < (int)content.size(); i++) {
+        if (isIfDirective(content[i]))
+            depth++;
+        else if (isEndifDirective(content[i])) {
+            depth--;
+            if (depth == 0)
+                return i;
         }
-        fout << content[i] << '\n';
-        nLines++;
     }
-    std::cout << "OK, " << nLines << " lines have been written!" << std::endl;
+    return -1;
+}
+std::string parseIfndef(const std::string &line) {
+    std::string s = trim(line);
+    if (!startsWith(s, "#ifndef"))
+        return {};
+    return trim(s.substr(std::string("#ifndef").size()));
+}
+void markReachable(int v, std::vector<bool> &reachable) {
+    for (int dep : headers[v].deps) {
+        if (reachable[dep])
+            continue;
+        reachable[dep] = true;
+        markReachable(dep, reachable);
+    }
+}
+/*******************************************************************************
+ * Remove duplicate and transitively redundant library includes.
+ *
+ * If A.hpp includes B.hpp and both blocks were collapsed, only A.hpp remains.
+ * This restores the set of root headers that the solution included before
+ * expansion.
+ ******************************************************************************/
+std::vector<std::string> removeRedundantIncludes(
+    const std::vector<std::string> &content
+) {
+    std::set<int> included;
+    for (const auto &line : content) {
+        std::string name = parseInclude(line);
+        auto iter = headerByName.find(name);
+        if (iter != headerByName.end())
+            included.insert(iter->second);
+    }
+    std::vector<bool> redundant(headers.size());
+    for (int root : included) {
+        std::vector<bool> reachable(headers.size());
+        markReachable(root, reachable);
+        for (int dep : included)
+            if (dep != root && reachable[dep])
+                redundant[dep] = true;
+    }
+    std::vector<std::string> result;
+    std::vector<bool> written(headers.size());
+    for (const auto &line : content) {
+        std::string name = parseInclude(line);
+        auto iter = headerByName.find(name);
+        if (iter == headerByName.end()) {
+            result.emplace_back(line);
+            continue;
+        }
+        int id = iter->second;
+        if (redundant[id] || written[id])
+            continue;
+        written[id] = true;
+        result.emplace_back("#include \"" + headers[id].name + "\"");
+    }
+    return result;
+}
+std::vector<std::string> collapseContent(
+    const std::vector<std::string> &content
+) {
+    std::vector<std::string> result;
+    for (int i = 0; i < (int)content.size(); i++) {
+        std::string guard = parseIfndef(content[i]);
+        auto iter = headerByGuard.find(guard);
+        if (iter == headerByGuard.end()) {
+            result.emplace_back(content[i]);
+            continue;
+        }
+        int end = findMatchingEndif(content, i);
+        if (end == -1) {
+            std::cerr << "Can't find where include guard '" << guard
+                      << "' is closed." << std::endl;
+            std::exit(1);
+        }
+        int id = iter->second;
+        result.emplace_back("#include \"" + headers[id].name + "\"");
+        std::cout << "Header '" << headers[id].name
+                  << "' has been collapsed." << std::endl;
+        i = end;
+    }
+    return removeRedundantIncludes(result);
+}
+void collapseFile(const std::string &path) {
+    auto content = fileToStrings(path);
+    auto result = collapseContent(content);
+    writeFile(path, result);
 }
 int main(int argc, char *argv[]) {
+    if (argc != 3) {
+        std::cerr << "Usage: libexpand <-e|-c> <source-file>" << std::endl;
+        return 1;
+    }
     scanFiles();
-    assert(argc == 3);
-    if (std::string(argv[1]) == "-e") {
-    	// expand
-        std::cout << "Trying to expand file '" << argv[2] << "'" << std::endl;
-        auto content = expandFile(argv[2]);
+    std::string mode = argv[1];
+    std::string path = argv[2];
+    if (mode == "-e") {
+        std::cout << "Trying to expand file '" << path << "'" << std::endl;
+        auto content = expandFile(path);
         std::cout << "After expand: " << content.size() << " lines" << std::endl;
-        writeFile(argv[2], content);
+        writeFile(path, content);
+    } else if (mode == "-c") {
+        std::cout << "Trying to collapse file '" << path << "'" << std::endl;
+        collapseFile(path);
     } else {
-        assert(std::string(argv[1]) == "-c");
-    	// collapse
-        std::cout << "Trying to collapse file '" << argv[2] << "'" << std::endl;
-        auto content = fileToStrings(argv[2]);
-        collapseFile(argv[2], content);
+        std::cerr << "Unknown mode '" << mode << "'." << std::endl;
+        return 1;
     }
 }
