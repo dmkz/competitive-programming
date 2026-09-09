@@ -1,6 +1,9 @@
 #ifndef __ALGEBRA_HPP__
 #define __ALGEBRA_HPP__
-
+/*******************************************************************************************
+ * The file "Algebra.hpp" is a part of competitive programming C++ library "algos".        *
+ * You can find it here: https://github.com/dmkz/competitive-programming/tree/master/algos *
+ *******************************************************************************************/
 namespace algos {
 namespace algebra {
 
@@ -96,18 +99,29 @@ struct XorBasis {
     }
     T max() const { return std::accumulate(vec,vec+sz,T(0),std::bit_xor<T>()); }
 };
+/*******************************************************************************
+ * Return the binary reflected Gray code of x
+ ******************************************************************************/
+template<typename T>
+T grayCode(T x) {
+    return x ^ (x >> 1);
+}
+/*******************************************************************************
+ * Enumerate all non-zero steps of an n-bit Gray code
+ *
+ * Consecutive states differ in exactly one bit.
+ * The callback receives the changed bit and its new value.
+ * The supported range is 0 <= n < 64.
+ ******************************************************************************/
+void forEachGrayCodeChange(int n, auto f) {
+    ull prev = 0;
+    for (ull step = 1; step < (ull(1) << n); step++) {
+        ull curr = grayCode(step);
+        int bit = __builtin_ctzll(curr ^ prev);
+        f(bit,bool(curr >> bit & 1));
+        prev = curr;
+    }
+}
 } // namespace algebra
 } // namespace algos
-namespace std {
-    template<typename T>
-    auto begin(const algos::algebra::XorBasis<T>& basis) { return basis.begin(); }
-    template<typename T>
-    auto begin(algos::algebra::XorBasis<T>& basis) { return basis.begin(); }
-    template<typename T>
-    auto end(const algos::algebra::XorBasis<T>& basis) { return basis.begin(); }
-    template<typename T>
-    auto end(algos::algebra::XorBasis<T>& basis) { return basis.begin(); }
-    template<typename T>
-    auto size(const algos::algebra::XorBasis<T>& basis) { return basis.size(); }
-}
 #endif // __ALGEBRA_HPP__
