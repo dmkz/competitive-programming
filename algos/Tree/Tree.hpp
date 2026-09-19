@@ -1,6 +1,9 @@
 #ifndef __TREE_HPP__
 #define __TREE_HPP__
-
+/*******************************************************************************************
+ * The file "Tree.hpp" is a part of competitive programming C++ library "algos".           *
+ * You can find it here: https://github.com/dmkz/competitive-programming/tree/master/algos *
+ *******************************************************************************************/
 namespace algos {
 namespace tree {
 inline vvi par2adj(int n, const vi &par) {

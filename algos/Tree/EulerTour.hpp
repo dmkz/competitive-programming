@@ -1,5 +1,9 @@
 #ifndef __EULERTOUR_HPP__
 #define __EULERTOUR_HPP__
+/*******************************************************************************************
+ * The file "EulerTour.hpp" is a part of competitive programming C++ library "algos".      *
+ * You can find it here: https://github.com/dmkz/competitive-programming/tree/master/algos *
+ *******************************************************************************************/
 namespace algos {
 namespace euler {
 struct EulerTour {

@@ -107,19 +107,23 @@ template<typename T> std::istream& operator>>(std::istream& is, std::vector<T>& 
 }
 
 // ---- ---- ---- ---- ---- ---- OPERATORS FOR STL CONTAINERS ---- ---- ---- ---- ---- ----
-#define INSERT(cont, to_front, to_back)  \
-template<typename X, typename Y, typename... T> cont<X,T...>& operator<<(cont<X,T...>& c, const Y& x) { return to_back, c; } \
-template<typename X, typename Y, typename... T> cont<X,T...>& operator>>(const Y& x, cont<X,T...>& c) { return to_front, c; }
- 
-INSERT(std::vector, (c.insert(c.begin(), x)), (c.push_back(x)))
-INSERT(std::queue, (c.push(x)), (c.push(x)))
-INSERT(std::stack, (c.push(x)), (c.push(x)))
-INSERT(std::priority_queue, (c.push(x)), (c.push(x)))
-INSERT(std::deque, (c.push_front(x)), (c.push_back(x)))
-INSERT(std::list, (c.push_front(x)), (c.push_back(x)))
-INSERT(std::set, (c.insert(x)), (c.insert(x)))
-INSERT(std::unordered_set, (c.insert(x)), (c.insert(x)))
-INSERT(std::multiset, (c.insert(x)), (c.insert(x)))
+#define INSERT(cont, to_front, to_back) \
+template<typename X, typename... T> \
+cont<X,T...>& operator<<(cont<X,T...>& c, typename cont<X,T...>::value_type x) { return to_back, c; } \
+template<typename X, typename... T> \
+cont<X,T...>& operator>>(typename cont<X,T...>::value_type x, cont<X,T...>& c) { return to_front, c; }
+
+INSERT(std::vector, (c.insert(c.begin(), std::move(x))), (c.push_back(std::move(x))))
+INSERT(std::queue, (c.push(std::move(x))), (c.push(std::move(x))))
+INSERT(std::stack, (c.push(std::move(x))), (c.push(std::move(x))))
+INSERT(std::priority_queue, (c.push(std::move(x))), (c.push(std::move(x))))
+INSERT(std::deque, (c.push_front(std::move(x))), (c.push_back(std::move(x))))
+INSERT(std::list, (c.push_front(std::move(x))), (c.push_back(std::move(x))))
+INSERT(std::set, (c.insert(std::move(x))), (c.insert(std::move(x))))
+INSERT(std::unordered_set, (c.insert(std::move(x))), (c.insert(std::move(x))))
+INSERT(std::multiset, (c.insert(std::move(x))), (c.insert(std::move(x))))
+INSERT(std::map, (c.insert(std::move(x))), (c.insert(std::move(x))))
+INSERT(std::unordered_map, (c.insert(std::move(x))), (c.insert(std::move(x))))
 #undef INSERT
  
 #define REMOVE(cont, from_front, from_back) \
